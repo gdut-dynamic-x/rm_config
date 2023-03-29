@@ -17,11 +17,9 @@ rm_track:
       basic_range: [ 0., 999. ]
       double_check_range: [ 4.0, 6.0 ]
   selectors:
-    - last_armor
-    - same_id_armor
-    - closest_to_image_center
     - new_armor
-    - random_armor
+    - last_armor
+    - closest_to_image_center
   linear_kf:
     Q: [ 9, 9, 9, 9, 9, 9 ]
     R: [ 0.001, 0.001, 0.01 ]
