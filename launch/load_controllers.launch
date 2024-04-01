@@ -11,12 +11,12 @@
           args="load
           controllers/joint_state_controller
           controllers/robot_state_controller
+          controllers/arm_trajectory_controller
           controllers/trigger_calibration_controller
           controllers/cover_calibration_controller
           controllers/gimbal_calibration_controller
           controllers/anti_tip_bar_calibration_controller
           controllers/anti_tip_bar_controller
-          controllers/balance_controller
           controllers/yaw_calibration_controller
           controllers/chassis_controller
           controllers/orientation_controller
@@ -24,6 +24,7 @@
           controllers/shooter_controller
           controllers/scope_calibration_controller
           controllers/scope_controller
+          controllers/balance_controller
           controllers/legged_balance_controller
           controllers/four_link_vmc_controller
           controllers/leg_lf_calibration_controller

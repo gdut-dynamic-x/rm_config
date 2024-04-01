@@ -9,4 +9,6 @@ camera:
   frame_rate: 1000
   exposure_auto: false
   exposure_value: 1000
+  gamma_selector: 2
+  gamma_value: 0.5
   enable_imu_trigger: true
