@@ -33,5 +33,5 @@
 
 <!--     <include file="$(find buff_vision)/launch/buff_nodelet.launch"/> -->
 
-    <include file="$(find windmill)/launch/windmill.launch"/>
+<!--    <include file="$(find windmill)/launch/windmill.launch"/>-->
 </launch>

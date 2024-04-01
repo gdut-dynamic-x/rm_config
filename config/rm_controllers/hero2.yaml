@@ -28,12 +28,12 @@ controllers:
     type: rm_calibration_controllers/GpioCalibrationController
     actuator: [ yaw_joint_motor ]
     gpio: "yaw"
-    initial_gpio_state: false
+    initial_gpio_state: true
     velocity:
-      search_velocity: 4.5
+      search_velocity: 8.0
       slow_forward_velocity: 3.0
       joint: yaw_joint
-      pid: { p: 0.40, i: 0, d: 0.0, i_clamp_max: 0.0, i_clamp_min: 0.0, antiwindup: true }
+      pid: { p: 0.60, i: 0, d: 0.0, i_clamp_max: 0.0, i_clamp_min: 0.0, antiwindup: true }
     position:
       pos_threshold: 0.05
       backward_angle: 0.2
@@ -92,8 +92,9 @@ controllers:
     type: rm_gimbal_controllers/Controller
     yaw:
       joint: "yaw_joint"
-      pid: { p: 20.0, i: 5.0, d: 0.8, i_clamp_max: 0.15, i_clamp_min: -0.15, antiwindup: true, publish_state: true }
+      pid: { p: 0.51, i: 20.0, d: 0.0, i_clamp_max: 0.15, i_clamp_min: -0.15, antiwindup: true, publish_state: true }
       k_chassis_vel: 0.05
+      k_v: 1.7
       resistance_compensation:
         resistance: 0.0
         velocity_dead_zone: 0.3
@@ -101,7 +102,17 @@ controllers:
         error_tolerance: 0.0
     pitch:
       joint: "pitch_joint"
-      pid: { p: 42.0, i: 10.0, d: 1.4, i_clamp_max: 0.2, i_clamp_min: -0.2, antiwindup: true, publish_state: true }
+      pid: { p: 1.0, i: 20.0, d: 0.0, i_clamp_max: 0.2, i_clamp_min: -0.2, antiwindup: true, publish_state: true }
+      k_v: 0.40
+    pid_yaw_pos: { p: 20.0, i: 0, d: 0.0, i_max: 0.0, i_min: 0.0, antiwindup: true, publish_state: true, max_output: 99 }
+    pid_pitch_pos: { p: 30.0, i: 0, d: 0.0, i_max: 0.0, i_min: 0.0, antiwindup: true, publish_state: true, max_output: 99 }
+    gimbal_des_vel:
+      yaw:
+        lp_cutoff_frequency: 100
+        lp_debug: true
+      pitch:
+        lp_cutoff_frequency: 5
+        lp_debug: true
     imu_name: "gimbal_imu"
     feedforward:
       gravity: 0.0
@@ -110,14 +121,15 @@ controllers:
     bullet_solver:
       resistance_coff_qd_10: 0.0
       resistance_coff_qd_15: 1.0
-      resistance_coff_qd_16: 0.0
+      resistance_coff_qd_16: 1.4
       resistance_coff_qd_18: 0.55
       resistance_coff_qd_30: 3.0
       g: 9.81
-      delay: 0.1
+      delay: 0.5
       dt: 0.001
       timeout: 0.001
       publish_rate: 50
+      max_track_target_vel: 2.0
     chassis_vel:
       num_data: 20
       debug: true
@@ -146,3 +158,13 @@ controllers:
     anti_block_threshold: 0.1
     forward_push_threshold: 0.2
     exit_push_threshold: 0.23
+
+  joint_mit_cheetah_position_controller:
+    type: effort_controllers/JointEffortController
+    joint: "yaw_joint"
+    pid: { p: 5.0, i: 5.0, d: 0.3 }
+
+  joint_mit_cheetah_position_controller2:
+    type: effort_controllers/JointPositionController
+    joint: "yaw_joint"
+    pid: { p: 5.0, i: 5.0, d: 0.3 }

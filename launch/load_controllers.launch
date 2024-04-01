@@ -30,6 +30,8 @@
           controllers/leg_lb_calibration_controller
           controllers/leg_rf_calibration_controller
           controllers/leg_rb_calibration_controller
+          controllers/joint_mit_cheetah_position_controller
+          controllers/joint_mit_cheetah_position_controller2
           "/>
 
     <group if="$(arg balance)">
