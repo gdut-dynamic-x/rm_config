@@ -3,6 +3,7 @@ rm_referee:
   send_ui_queue_delay: 0.2
   add_ui_frequency: 0.5
   add_ui_max_times: 3
+  dbus_topic: "/rm_ecat_hw/dbus"
   ui:
     trigger_change:
       - name: "chassis"
@@ -14,11 +15,13 @@ rm_referee:
       - name: "target_view_angle"
         config: { type: "rectangle", start_position: [ 780, 719 ], end_position: [ 1123,447 ], width: 3 }
     time_change:
+      - name: "bullet"
+        config: { type: "int_num", start_position: [ 175, 610 ], size: 30, width: 3 , delay: 0.4 }
       - name: "capacitor"
         config: { type: "line", width: 5, delay: 0.2,
                   start_position: [ 610, 100 ], end_position: [ 1210, 100 ] }
       - name: "pitch"
-        config: { start_position: [ 775, 220 ], size: 25, width: 4, delay: 0.15, title: "pitch: " }
+        config: { start_position: [ 775, 220 ], size: 25, width: 4, delay: 0.4, title: "pitch: " }
       - name: "lane_line"
         config: { type: "line", width: 4, color: "cyan", delay: 0.2,
                   start_position: [ 800, 1080 ], end_position: [ 800, 600 ] }
@@ -50,6 +53,8 @@ rm_referee:
       - name: "mid"
         config: { type: "line", width: 2, color: "yellow",
                   start_position: [ 990, 400 ], end_position: [ 990, 540 ] }
+      - name: "bullet_string"
+        config: { type: "string", start_position: [ 30, 650 ], size: 25, width: 2, color: "pink", content: "BULLET:" }
     flash:
       - name: "spin"
         config: { start_position: [ 850, 750 ], size: 20, width: 2,

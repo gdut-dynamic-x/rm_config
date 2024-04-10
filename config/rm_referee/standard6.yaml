@@ -1,29 +1,31 @@
 rm_referee:
   robot_type: standard
-  send_ui_queue_delay: 0.15
+  send_ui_queue_delay: 0.10
   add_ui_frequency: 0.5
   add_ui_max_times: 3
   ui:
     trigger_change:
       - name: "chassis"
-        config: { start_position: [ 400, 850 ], size: 15, width: 2, title: "chassis: " }
+        config: { start_position: [ 100, 850 ], size: 15, width: 2, title: "chassis: " }
       - name: "gimbal"
-        config: { start_position: [ 400, 800 ], size: 15, width: 2, title: "gimbal:  " }
+        config: { start_position: [ 100, 800 ], size: 15, width: 2, title: "gimbal:  " }
       - name: "shooter"
-        config: { start_position: [ 400, 750 ], size: 15, width: 2, title: "shooter: " }
+        config: { start_position: [ 100, 750 ], size: 15, width: 2, title: "shooter: " }
       - name: "target"
-        config: { start_position: [ 400, 700 ], size: 15, width: 2, title: "target: " }
+        config: { start_position: [ 100, 700 ], size: 15, width: 2, title: "target: " }
       - name: "target_view_angle"
-        config: { type: "rectangle", start_position: [ 747, 398 ], end_position: [ 1100,671 ], width: 3 }
+        config: { type: "rectangle", start_position: [ 500, 240 ], end_position: [ 1420,840 ], width: 3 }
     time_change:
+      - name: "remaining_bullet"
+        config: { type: "int_num", start_position: [ 120, 600 ], size: 50, width: 5 , delay: 0.4 }
       - name: "capacitor"
         config: { type: "line", width: 5, delay: 0.5,
                   start_position: [ 610, 100 ], end_position: [ 1210, 100 ] }
       - name: "lane_line"
-        config: { type: "line", width: 4, color: "cyan", delay: 0.2,
+        config: { type: "line", width: 4, color: "cyan", delay: 0.15,
                   start_position: [ 800, 1080 ], end_position: [ 800, 600 ] }
         data: { radius: 0.38, height: 0.5, camera_range: 1.0, surface_coefficient: 1.0 }
-        reference_joint: "pitch_joint"
+        reference_frame: "pitch"
       - name: "rotation"
         config: { type: "arc", width: 4, delay: 0.15, color: "yellow",
                   start_position: [ 960, 520 ], end_position: [ 320, 320 ] , start_angle: 60, end_angle: 120 }
@@ -47,10 +49,12 @@ rm_referee:
       - name: "mid"
         config: { type: "line", width: 2, color: "yellow",
                   start_position: [ 960, 400 ], end_position: [ 960, 540 ] }
+      - name: "bullet_remain"
+        config: { type: "string", start_position: [ 100, 650 ], size: 20, width: 2, color: "pink", content: "BULLET:" }
     flash:
       - name: "cover"
         config: { start_position: [ 830, 700 ], size: 25, width: 2,
-                  color: "green", content: "cover open!!", delay: 0.8 }
+                  color: "green", content: "cover open!!", delay: 0.4 }
       - name: "ore"
         config: { start_position: [ 960, 720 ], size: 15, width: 2,
                   color: "yellow", content: "Ore will released after 10s", delay: 0.4 }

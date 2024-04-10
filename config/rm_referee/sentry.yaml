@@ -1,5 +1,3 @@
 rm_referee:
   robot_type: standard
   ui:
-    trigger_change:
-      - name: "chassis"
