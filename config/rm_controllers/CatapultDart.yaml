@@ -1,0 +1,122 @@
+controllers:
+  joint_state_controller:
+    type: joint_state_controller/JointStateController
+    publish_rate: 100
+  robot_state_controller:
+    type: robot_state_controller/RobotStateController
+    publish_rate: 100
+  trigger_position_controller:
+    type: effort_controllers/JointPositionController
+    joint: "trigger_position_joint"
+    pid: { p: 10000.0, i: 0, d: 15, i_clamp_max: 0.0, i_clamp_min: -0.0, antiwindup: true, publish_state: true }
+  trigger_switch_controller:
+    type: effort_controllers/JointPositionController
+    joint: "trigger_switch_joint"
+    pid: { p: 2.0, i: 0, d: 0 , i_clamp_max: 0.0, i_clamp_min: -0.0, antiwindup: true, publish_state: true }
+
+  trigger_switch_calibration_controller:
+    type: rm_calibration_controllers/MechanicalCalibrationController
+    joint: "trigger_switch_joint"
+    actuator: [ trigger_switch_motor ]
+    velocity:
+      search_velocity: 3.1415
+      vel_threshold: 0.2
+      joint: trigger_switch_joint
+      pid: { p: 0.3, i: 0, d: 0.0, i_clamp_max: 0.0, i_clamp_min: 0.0, antiwindup: true }
+
+  #  trigger_left_controller:
+  #    type: effort_controllers/JointPositionController
+  #    joint: "trigger_left_joint"
+  #    pid: { p: 500000, i: 0, d: 2000, i_clamp_max: 0.0, i_clamp_min: -0.0, antiwindup: true, publish_state: true }
+
+
+  trigger_left_controller:
+    type: effort_controllers/JointVelocityController
+    joint: "trigger_left_joint"
+    pid: { p: 5000, i: 0, d: 0, i_clamp_max: 0.0, i_clamp_min: -0.0, antiwindup: true, publish_state: true }
+
+
+  chassis_yaw_controller:
+    type: effort_controllers/JointPositionController
+    joint: "chassis_yaw_joint"
+    pid: { p: 2000000, i: 0, d: 1000, i_clamp_max: 0.4, i_clamp_min: -0.4, antiwindup: true, publish_state: true }
+
+  mimic_joint1_controller:
+    type: mimic_joint_controller/MimicJointController
+    target_joint_name: "trigger_left_joint"
+    joint: "trigger_right_joint"
+    pid: { p: 5000, i: 0, d: 0, i_clamp_max: 0.0, i_clamp_min: 0.0, antiwindup: true, publish_state: true }
+
+
+
+  trigger_position_calibration_controller:
+    type: rm_calibration_controllers/GpioCalibrationController
+    joint: trigger_position_joint
+    actuator: [ trigger_position_motor ]
+    gpio: "calibration_position"
+    initial_gpio_state: true
+    velocity:
+      search_velocity: 0.5
+      slow_forward_velocity: 0.25
+      joint: trigger_position_joint
+      pid: { p: 500, i: 0, d: 0.0, i_clamp_max: 0.0, i_clamp_min: 0.0, antiwindup: true }
+    position:
+      pos_threshold: 0.01
+      backward_angle: 0.02
+      joint: trigger_position_joint
+      pid: { p: 2000000, i: 0, d: 2000, i_clamp_max: 0.0, i_clamp_min: -0.0, antiwindup: true, publish_state: true }
+
+
+  trigger_left_calibration_controller:
+    type: rm_calibration_controllers/GpioCalibrationController
+    joint: trigger_left_joint
+    actuator: [ trigger_left_motor ]
+    gpio: "calibration_left"
+    initial_gpio_state: true
+    velocity:
+      search_velocity: 0.2
+      slow_forward_velocity: 0.13
+      joint: trigger_left_joint
+      pid: { p: 500, i: 0, d: 0.0, i_clamp_max: 0.0, i_clamp_min: 0.0, antiwindup: true }
+    position:
+      pos_threshold: 0.01
+      backward_angle: 0.02
+      joint: trigger_left_joint
+      pid: { p: 2000000, i: 0, d: 1000, i_clamp_max: 0.0, i_clamp_min: 0.0, antiwindup: true, publish_state: true }
+
+  #  trigger_right_calibration_controller:
+  #    type: rm_calibration_controllers/GpioCalibrationController
+  #    joint: trigger_right_joint
+  #    actuator: [ right_trigger_motor ]
+  #    gpio: "calibration_right"
+  #    initial_gpio_state: true
+  #    velocity:
+  #      search_velocity: 5.2
+  #      slow_forward_velocity: 1.0
+  #      joint: trigger_right_joint
+  #      pid: { p: 500, i: 0, d: 0.0, i_clamp_max: 0.0, i_clamp_min: 0.0, antiwindup: true }
+  #    position:
+  #      pos_threshold: 0.01
+  #      backward_angle: 0.03
+  #      joint: trigger_right_joint
+  #      pid: { p: 500, i: 0, d: 0.0, i_clamp_max: 0.0, i_clamp_min: 0.0, antiwindup: true, publish_state: true }
+  #
+  chassis_yaw_calibration_controller:
+    type: rm_calibration_controllers/GpioCalibrationController
+    joint: chassis_yaw_joint
+    actuator: [ chassis_yaw_motor ]
+    gpio: "calibration_yaw"
+    initial_gpio_state: true
+    velocity:
+      search_velocity: 8.0
+      slow_forward_velocity: 4.0
+      joint: chassis_yaw_joint
+      pid: { p: 85.0, i: 0, d: 0.0, i_clamp_max: 0.0, i_clamp_min: 0.0, antiwindup: true }
+    position:
+      pos_threshold: 0.01
+      backward_angle: 0.02
+      joint: chassis_yaw_joint
+      pid: { p: 2000000, i: 0, d: 1000, i_clamp_max: 0.0, i_clamp_min: 0.0, antiwindup: true, publish_state: true }
+
+
+
