@@ -22,14 +22,6 @@ controllers:
       search_velocity: 3.1415
       vel_threshold: 0.2
       pid: { p: 0.3, i: 0, d: 0.0, i_clamp_max: 0.0, i_clamp_min: 0.0, antiwindup: true }
-  scope_calibration_controller:
-    type: rm_calibration_controllers/MechanicalCalibrationController
-    actuator: [ scope_joint_motor ]
-    velocity:
-      search_velocity: -3.14
-      vel_threshold: 0.001
-      joint: scope_joint
-      pid: { p: 0.18, i: 0, d: 0.0, i_clamp_max: 0.0, i_clamp_min: 0.0, antiwindup: true }
 
   orientation_controller:
     type: rm_orientation_controller/Controller
@@ -45,7 +37,7 @@ controllers:
       pid: { p: 6.0, i: 0, d: 0.25, i_clamp_max: 0.3, i_clamp_min: -0.3, antiwindup: true, publish_state: true }
     pitch:
       joint: "pitch_joint"
-      pid: { p: 18.0, i: 80.0, d: 0.65, i_clamp_max: -0.6, i_clamp_min: 0.6, antiwindup: true, publish_state: true }
+      pid: { p: 18.0, i: 67.0, d: 0.65, i_clamp_max: -0.6, i_clamp_min: 0.6, antiwindup: true, publish_state: true }
     imu_name: "gimbal_imu"
     feedforward:
       gravity: 0.0
@@ -77,10 +69,10 @@ controllers:
         pid: { p: 0.001, i: 0.01, d: 0.0, i_clamp_max: 0.01, i_clamp_min: -0.01, antiwindup: true, publish_state: true }
     trigger:
       joint: "trigger_joint"
-      pid: { p: 70.0, i: 0.0, d: 1.8, i_clamp_max: 0.0, i_clamp_min: 0.0, antiwindup: true, publish_state: true }
+      pid: { p: 66.0, i: 0.0, d: 2.8, i_clamp_max: 0.0, i_clamp_min: 0.0, antiwindup: true, publish_state: true }
     push_per_rotation: 9
     push_qd_threshold: 0.90
-    block_effort: 0.88
+    block_effort: 1.00
     block_speed: 0.1
     block_duration: 0.05
     block_overtime: 0.5
@@ -91,8 +83,3 @@ controllers:
     qd_15: 400.0
     qd_18: 700.0
     qd_30: 690.0
-
-  scope_controller:
-    type: effort_controllers/JointPositionController
-    joint: "scope_joint"
-    pid: { p: 8.0, i: 0.0, d: 0.5, i_clamp_max: 0.0, i_clamp_min: 0.0, antiwindup: true, publish_state: true }

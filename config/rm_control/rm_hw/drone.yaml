@@ -14,19 +14,19 @@ rm_hw:
       lp_cutoff_frequency: 50
     trigger_joint_motor:
       bus: can0
-      id: 0x202
+      id: 0x207
       type: rm_2006
       lp_cutoff_frequency: 100
       need_calibration: true
     pitch_joint_motor:
       bus: can0
-      id: 0x206
+      id: 0x204
       type: rm_3508
       lp_cutoff_frequency: 50
       need_calibration: true
     left_friction_wheel_joint_motor:
       bus: can0
-      id: 0x204
+      id: 0x202
       type: rm_3508
       lp_cutoff_frequency: 60
     right_friction_wheel_joint_motor:
@@ -34,12 +34,6 @@ rm_hw:
       id: 0x203
       type: rm_3508
       lp_cutoff_frequency: 60
-    scope_joint_motor:
-      bus: can1
-      id: 0x206
-      type: rm_2006
-      lp_cutoff_frequency: 50
-      need_calibration: true
   imus:
     gimbal_imu:
       frame_id: gimbal_imu

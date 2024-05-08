@@ -1,8 +1,9 @@
 rm_referee:
   robot_type: drone
-  send_ui_queue_delay: 0.15
+  send_ui_queue_delay: 0.10
   add_ui_frequency: 5
   add_ui_max_times: 10
+  dbus_topic: "/dbus_data"
   ui:
     trigger_change:
       - name: "gimbal"
@@ -12,17 +13,14 @@ rm_referee:
       - name: "target"
         config: { start_position: [ 400, 700 ], size: 15, width: 2, title: "target: " }
       - name: "target_view_angle"
-        config: { type: "rectangle", start_position: [ 895, 460 ], end_position: [ 1045, 570 ], width: 3 }
+        config: { type: "rectangle", start_position: [ 862, 476 ], end_position: [ 1012, 597 ], width: 3 }
+    time_change:
+      - name: "target_distance"
+        config: { type: "float_num", start_position: [ 190, 650 ], size: 25, width: 3, color: "yellow", delay: 0.4 }
     fixed:
       - name: "9m"
         config: { type: "line", width: 1, color: "yellow",
-                  start_position: [ 945, 500 ], end_position: [ 990, 500 ] }
-      - name: "11m"
-        config: { type: "line", width: 1, color: "green",
-                  start_position: [ 950, 480 ], end_position: [ 985, 480 ] }
-      - name: "13m"
-        config: { type: "line", width: 1, color: "orange",
-                  start_position: [ 955, 465 ], end_position: [ 980, 465 ] }
+                  start_position: [ 950, 526 ], end_position: [ 970, 526 ] }
       - name: "15m"
         config: { type: "line", width: 1, color: "purple",
-                  start_position: [ 960, 450 ], end_position: [ 960, 450 ] }
+                  start_position: [ 950, 500 ], end_position: [ 970, 500 ] }
