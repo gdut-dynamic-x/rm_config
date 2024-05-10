@@ -10,11 +10,11 @@ rm_manual:
   dart_list:
     first_dart:
       id: 23
-      param: [ 0.0045, 405.0, 0.0, 464.0 ]
+      param: [ 0.0045, 405.0, -0.0001, 465.0 ]
       #outpost:offset,qd//base:offset,qd
     second_dart:
       id: 24
-      param: [ 0.004, 408.5, 0.0, 466.0 ]
+      param: [ 0.004, 408.5, 0.0, 466.5 ]
       #outpost:offset,qd//base:offset,qd
     third_dart:
       id: 25
@@ -22,7 +22,7 @@ rm_manual:
       #outpost:offset,qd//base:offset,qd
     fourth_dart:
       id: 26
-      param: [ 0.0045, 399.5, -0.0004, 457.0 ]
+      param: [ 0.0045, 399.5, -0.00025, 458.5 ]
       #outpost:offset,qd//base:offset,qd
     fifth_dart:
       id: 27
@@ -48,6 +48,7 @@ rm_manual:
       #blue -0.16246, 0.061345（四中二）
       position: [ -0.16246, 0.061345 ] #pitch yaw
     base:
+      #blue -0.003613, 0.26805
       position: [ -0.003613, 0.26805 ] #pitch yaw-0.003586, 0.26805
 
   left_pitch:

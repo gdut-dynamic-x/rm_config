@@ -5,27 +5,7 @@ rm_referee:
   add_ui_max_times: 10
   ui:
     trigger_change:
-      - name: "dart"
-        config: { start_position: [ 0, 0 ], size: 0, width: 0, title: "step:" }
     time_change:
-      - name: "temperature"
-        config: { start_position: [ 0, 0 ], size: 0, width: 0, delay: 0.5 }
-      - name: "lane_line"
-        config: { type: "line", width: 4, color: "cyan", delay: 0.15,
-                  start_position: [ 800, 1080 ], end_position: [ 800, 600 ] }
-        data: { radius: 0.38, height: 0.5, camera_range: 1.0, surface_coefficient: 1.0 }
-        reference_joint: "pitch_joint"
-      - name: "rotation"
-        config: { type: "arc", width: 4, delay: 0.15, color: "yellow",
-                  start_position: [ 960, 520 ], end_position: [ 320, 320 ] , start_angle: 60, end_angle: 120 }
-        data: { scale: 50, gimbal_reference_frame: "yaw", chassis_reference_frame: "base_link" }
     fixed:
-      - name: "ground_stone1"
-        config: { type: "line", width: 0, color: "orange",
-                  start_position: [ 0, 0 ], end_position: [ 0, 0 ] }
-
-
     flash:
-      - name: "spin"
-        config: { start_position: [ 0, 0 ], size: 0, width: 0,
-                  color: "yellow", content: "please spin!!", delay: 1.0 }
+

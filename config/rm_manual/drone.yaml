@@ -53,16 +53,17 @@ rm_manual:
       timeout: 0.05
   shooter:
     topic: "/controllers/shooter_controller/command"
-    gimbal_error_tolerance: 0.05
+    gimbal_error_tolerance: 1
     target_acceleration_tolerance: 99.
     speed_10m_per_speed: 10.0
     speed_15m_per_speed: 13.5
     speed_16m_per_speed: 16.0
     speed_18m_per_speed: 15.72
     speed_30m_per_speed: 27.5
-    wheel_speed_15: 450.0
-    wheel_speed_18: 500.0
-    wheel_speed_30: 720.0
+    wheel_speed_15: 800.0
+    wheel_speed_18: 800.0
+    wheel_speed_30: 800.0
+    extra_wheel_speed_once: 5.0
     heat_limit:
       low_shoot_frequency: 20
       high_shoot_frequency: 20
@@ -71,14 +72,9 @@ rm_manual:
       safe_shoot_frequency: 20
       heat_coeff: 8.0
       type: "ID1_17MM"
-  scope:
-    topic: "/controllers/scope_controller/command"
-    on_pos: 0.981
-    off_pos: 0.10
-  cover:
-    topic: "/controllers/cover_controller/command"
-    on_pos: 2.0
-    off_pos: 0.01
+  detection_switch:
+    fail_limit: 10
+    service_name: "/Processor/status_switch"
 
   controllers_list:
     state_controllers:
@@ -88,28 +84,21 @@ rm_manual:
       - controllers/orientation_controller
       - controllers/gimbal_controller
       - controllers/shooter_controller
-      - controllers/scope_controller
     calibration_controllers:
       - controllers/trigger_calibration_controller
       - controllers/gimbal_calibration_controller
-      - controllers/scope_calibration_controller
 
   gimbal_calibration:
     - start_controllers:
         - controllers/gimbal_calibration_controller
-        - controllers/scope_calibration_controller
-        - controllers/trigger_calibration_controller
       stop_controllers:
         - controllers/gimbal_controller
-        - controllers/scope_controller
-        - controllers/shooter_controller
       services_name:
         - /controllers/gimbal_calibration_controller/is_calibrated
-        - /controllers/scope_calibration_controller/is_calibrated
+  shooter_calibration:
+    - start_controllers:
+        - controllers/trigger_calibration_controller
+      stop_controllers:
+        - controllers/shooter_controller
+      services_name:
         - /controllers/trigger_calibration_controller/is_calibrated
-
-controllers:
-  scope_controller:
-    type: effort_controllers/JointPositionController
-    joint: "scope_joint"
-    pid: { p: 8.0, i: 0.0, d: 0.5, i_clamp_max: 0.0, i_clamp_min: 0.0, antiwindup: true, publish_state: true }

@@ -1,5 +1,5 @@
 rm_referee:
   robot_type: standard
+  interactive_data:
+    - name: "sentry_state"
   ui:
-    trigger_change:
-      - name: "chassis"

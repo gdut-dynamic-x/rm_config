@@ -1,8 +1,10 @@
 rm_referee:
   robot_type: standard
-  send_ui_queue_delay: 0.15
+  send_ui_queue_delay: 0.035
   add_ui_frequency: 0.5
   add_ui_max_times: 3
+  dbus_topic: "/rm_ecat_hw/dbus"
+  interactive_data:
   ui:
     trigger_change:
       - name: "chassis"
@@ -20,13 +22,13 @@ rm_referee:
       - name: "capacitor"
         config: { type: "line", width: 5, delay: 0.15,
                   start_position: [ 610, 100 ], end_position: [ 1210, 100 ] }
-      #      - name: "lane_line"
-      #        config: { type: "line", width: 4, color: "cyan", delay: 0.15,
-      #                  start_position: [ 800, 1080 ], end_position: [ 800, 600 ] }
-      #        data: { radius: 0.38, height: 0.5, camera_range: 1.0, surface_coefficient: 1.0 }
-      #        reference_frame: "pitch"
+      - name: "lane_line"
+        config: { type: "line", width: 4, color: "cyan", delay: 0.1,
+                  start_position: [ 800, 1080 ], end_position: [ 800, 600 ] }
+        data: { radius: 0.38, height: 0.5, camera_range: 1.0, surface_coefficient: 1.0 }
+        reference_frame: "pitch"
       - name: "rotation"
-        config: { type: "arc", width: 4, delay: 0.15, color: "yellow",
+        config: { type: "arc", width: 4, delay: 0.1, color: "yellow",
                   start_position: [ 960, 520 ], end_position: [ 320, 320 ] , start_angle: 60, end_angle: 120 }
         data: { scale: 50, gimbal_reference_frame: "yaw", chassis_reference_frame: "base_link" }
 
@@ -49,12 +51,6 @@ rm_referee:
       - name: "mid"
         config: { type: "line", width: 2, color: "yellow",
                   start_position: [ 960, 400 ], end_position: [ 960, 540 ] }
-      - name: "fixed_lane_line_1"
-        config: { type: "line", width: 2, color: "green",
-                  start_position: [ 1049, 713 ], end_position: [ 1351, 0 ] }
-      - name: "fixed_lane_line_2"
-        config: { type: "line", width: 2, color: "green",
-                  start_position: [ 871, 713 ], end_position: [ 569, 0 ] }
     flash:
       - name: "cover"
         config: { start_position: [ 830, 700 ], size: 25, width: 2,

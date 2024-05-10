@@ -1,0 +1,149 @@
+controllers:
+  joint_state_controller:
+    type: joint_state_controller/JointStateController
+    publish_rate: 100
+  robot_state_controller:
+    type: robot_state_controller/RobotStateController
+    publish_rate: 100
+
+  leg_rf_calibration_controller:
+    type: rm_calibration_controllers/MechanicalCalibrationController
+    actuator: [ right_front_leg_joint_motor ]
+    velocity:
+      joint: right_front_first_leg_joint
+      search_velocity: -1.4
+      vel_threshold: 0.05
+      pid: { p: 2.0, i: 0, d: 0.0, i_clamp_max: 0.0, i_clamp_min: 0.0, antiwindup: true }
+
+  leg_lf_calibration_controller:
+    type: rm_calibration_controllers/MechanicalCalibrationController
+    actuator: [ left_front_leg_joint_motor ]
+    velocity:
+      joint: left_front_first_leg_joint
+      search_velocity: -1.4
+      vel_threshold: 0.05
+      pid: { p: 2.0, i: 0, d: 0.0, i_clamp_max: 0.0, i_clamp_min: 0.0, antiwindup: true }
+
+  leg_lb_calibration_controller:
+    type: rm_calibration_controllers/MechanicalCalibrationController
+    actuator: [ left_back_leg_joint_motor ]
+    velocity:
+      joint: left_back_first_leg_joint
+      search_velocity: 1.4
+      vel_threshold: 0.05
+      pid: { p: 2.0, i: 0, d: 0.0, i_clamp_max: 0.0, i_clamp_min: 0.0, antiwindup: true }
+
+  leg_rb_calibration_controller:
+    type: rm_calibration_controllers/MechanicalCalibrationController
+    actuator: [ right_back_leg_joint_motor ]
+    velocity:
+      joint: right_back_first_leg_joint
+      search_velocity: 1.4
+      vel_threshold: 0.05
+      pid: { p: 2.0, i: 0, d: 0.0, i_clamp_max: 0.0, i_clamp_min: 0.0, antiwindup: true }
+
+  legged_balance_controller:
+    type: rm/LeggedBalanceController
+    left_wheel:
+      joint: left_wheel_joint
+      pid: { p: 0.6, i: 0, d: 0.0, i_max: 0.0, i_min: 0.0, antiwindup: true, publish_state: true }
+    right_wheel:
+      joint: right_wheel_joint
+      pid: { p: 0.6, i: 0, d: 0.0, i_max: 0.0, i_min: 0.0, antiwindup: true, publish_state: true }
+    pid_follow: { p: 7.0, i: 0, d: 0.3, i_max: 0.0, i_min: 0.0, antiwindup: true, publish_state: true }
+    pid_left_leg: { p: 420.0, i: 15, d: 70, i_clamp_max: 30.0, i_clamp_min: -30.0, antiwindup: true, publish_state: true }
+    pid_right_leg: { p: 420.0, i: 15, d: 70, i_clamp_max: 30.0, i_clamp_min: -30.0, antiwindup: true, publish_state: true }
+    pid_theta_diff: { p: 30.0, i: 0.0, d: 1.5, i_max: 0.0, i_min: 0.0, antiwindup: true, publish_state: true }
+    pid_roll: { p: 150.0, i: 0, d: 25, i_clamp_max: 15.0, i_clamp_min: -15.0, antiwindup: true, publish_state: true }
+    pid_center_gravity: { p: 0.0, i: 1300.0, d: 0, i_clamp_max: 10.5, i_clamp_min: -10.5, antiwindup: true, publish_state: true }
+    pid_length_diff: { p: 30.0, i: 0, d: 0, i_clamp_max: 0.0, i_clamp_min: -0.0, antiwindup: true, publish_state: true }
+    leg_protect_angle: 0.9  #0.9
+    pitch_protect_angle: 1.1 #1.1
+    roll_protect_angle: 1.0
+    leg_protect_length: 0.1
+    ground_support_threshold: 20
+    vmc_bias_angle: 3.49
+
+    gravity_compensation_vel_threshold: 0.1
+    gravity_compensation_pos_threshold: 0.5
+
+    jump_over_time: 2.0
+    p1: -241100
+    p2: 170300
+    p3: 39310
+    p4: 3234
+
+  orientation_controller:
+    type: rm_orientation_controller/Controller
+    publish_rate: 100
+    name: "gimbal_imu"
+    frame_source: "odom"
+    frame_target: "base_link"
+
+  gimbal_controller:
+    type: rm_gimbal_controllers/Controller
+    yaw:
+      joint: "yaw_joint"
+      pid: { p: 7.5, i: 0, d: 0.4, i_clamp_max: 0.3, i_clamp_min: -0.3, antiwindup: true, publish_state: true }
+      k_chassis_vel: 0.03
+    pitch:
+      joint: "pitch_joint"
+      pid: { p: 5.0, i: 0, d: 0.15, i_clamp_max: 0, i_clamp_min: 0, antiwindup: true, publish_state: true }
+      k_v: 0.0
+    chassis_vel:
+      num_data: 20
+      debug: true
+    imu_name: "gimbal_imu"
+    feedforward:
+      gravity: 8.05
+      enable_gravity_compensation: false
+      mass_origin: [ 0.0,0.005158,0.02901 ]
+    bullet_solver:
+      resistance_coff_qd_10: 0.45
+      resistance_coff_qd_15: 0.01
+      resistance_coff_qd_16: 1.5
+      resistance_coff_qd_18: 0.55
+      resistance_coff_qd_30: 0.01
+      g: 9.81
+      delay: 0.06
+      dt: 0.001
+      timeout: 0.001
+      publish_rate: 50
+  gimbal_calibration_controller:
+    type: rm_calibration_controllers/MechanicalCalibrationController
+    actuator: [ pitch_joint_motor ]
+    velocity:
+      joint: pitch_joint
+      search_velocity: 6.28
+      vel_threshold: 1e-2
+      pid: { p: 0.3, i: 0, d: 0.0, i_clamp_max: 0.0, i_clamp_min: 0.0, antiwindup: true }
+  trigger_calibration_controller:
+    type: rm_calibration_controllers/MechanicalCalibrationController
+    actuator: [ trigger_joint_motor ]
+    velocity:
+      joint: trigger_joint
+      search_velocity: 3.1415
+      vel_threshold: 0.2
+      pid: { p: 0.3, i: 0, d: 0.0, i_clamp_max: 0.0, i_clamp_min: 0.0, antiwindup: true }
+  shooter_controller:
+    type: rm_shooter_controllers/Controller
+    publish_rate: 50
+    friction_left:
+        joint: "left_friction_wheel_joint"
+        pid: { p: 0.0007, i: 0.005, d: 0.0, i_clamp_max: 0.01, i_clamp_min: -0.01, antiwindup: true, publish_state: true }
+    friction_right:
+        joint: "right_friction_wheel_joint"
+        pid: { p: 0.0007, i: 0.005, d: 0.0, i_clamp_max: 0.01, i_clamp_min: -0.01, antiwindup: true, publish_state: true }
+    trigger:
+      joint: "trigger_joint"
+      pid: { p: 25.0, i: 0.0, d: 0.75, i_clamp_max: 0.0, i_clamp_min: 0.0, antiwindup: true, publish_state: true }
+    push_per_rotation: 9
+    push_qd_threshold: 0.90
+    block_effort: 2.2
+    block_speed: 0.1
+    block_duration: 0.05
+    block_overtime: 0.5
+    anti_block_angle: 0.46
+    anti_block_threshold: 0.1
+    forward_push_threshold: 0.22
+    exit_push_threshold: 0.25

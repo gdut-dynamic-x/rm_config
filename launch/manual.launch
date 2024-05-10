@@ -8,8 +8,8 @@
     <rosparam file="$(find rm_config)/config/rm_manual/$(arg robot_type).yaml" command="load"/>
 
     <group if="$(arg balance)">
-        <param name="taskFile" value="$(find rm_balance_control)/config/mpc/task.info"/>
-        <param name="libFolder" value="$(find rm_balance_control)/auto_generated"/>
+        <param name="taskFile" value="$(find rm_legged_balance_control)/config/mpc/task.info"/>
+        <param name="libFolder" value="$(find rm_legged_balance_control)/auto_generated"/>
     </group>
 
     <node name="rm_manual" pkg="rm_manual" type="rm_manual" respawn="false"/>

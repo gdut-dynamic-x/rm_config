@@ -1,53 +1,36 @@
 rm_referee:
   robot_type: engineer
-  send_ui_queue_delay: 0.15
-  add_ui_frequency: 0.3
+  send_ui_queue_delay: 0.05
+  add_ui_frequency: 0.5
   add_ui_max_times: 3
+  dbus_topic: "/dbus_data"
+  interactive_data:
   ui:
     trigger_change:
-      - name: "step"
-        config: { start_position: [ 850, 700 ], size: 15, width: 2, title: "step:" }
-      - name: "reversal"
-        config: { start_position: [ 50, 550 ], size: 15, width: 2, title: "reversal:" }
       - name: "stone"
         config: { start_position: [ 50, 600 ], size: 15, width: 2, title: "stone:" }
-      - name: "drag"
-        config: { start_position: [ 50, 650 ], size: 15, width: 2, title: "drag:" }
-      - name: "temperature"
-        config: { start_position: [ 50, 750 ], size: 15, width: 2, title: "temp:" }
       - name: "gripper"
-        config: { start_position: [ 50, 700 ], size: 15, width: 2, title: "gripper:" }
-      - name: "exchange"
-        config: { start_position: [ 50, 800 ], size: 15, width: 2, title: "exchange:" }
-      - name: "planning"
-        config: { start_position: [ 850, 650 ], size: 15, width: 2, title: "planning:" }
-    time_change:
-      - name: "temperature"
-        config: { start_position: [ 400, 650 ], size: 15, width: 2, delay: 0.5 }
+        config: { start_position: [ 50, 650 ], size: 15, width: 2, title: "gripper:" }
+      - name: "servo_mode"
+        config: { start_position: [ 50, 700 ], size: 15, width: 2, title: "mode:" }
     fixed:
-      - name: "line1"
-        config: { type: "line", width: 3, color: "orange",
-                  start_position: [ 1900, 540 ], end_position: [ 0, 540 ] }
-      - name: "lf_sky1"
-        config: { type: "line", width: 4, color: "yellow",
-                  start_position: [ 872, 0 ], end_position: [ 874, 1080 ] }
-      - name: "lf_sky5"
-        config: { type: "line", width: 4, color: "yellow",
-                  start_position: [ 1053, 0 ], end_position: [ 1053, 1080 ] }
-
-
-
+      - name: "car_line_left"
+        config: { type: "line", width: 2, color: "orange",
+                  start_position: [ 887, 456 ], end_position: [ 626, 230 ] }
+      - name: "car_line_right"
+        config: { type: "line", width: 2, color: "orange",
+                  start_position: [ 1047, 457 ], end_position: [ 1245, 245 ] }
     flash:
-      - name: "ore"
-        config: { start_position: [ 960, 720 ], size: 15, width: 2,
-                  color: "yellow", content: "Ore will released after 10s", delay: 0.4 }
-      - name: "armor0"
-        config: { type: "circle", width: 3, radius: 50, color: "yellow", delay: 0.75 }
-      - name: "armor1"
-        config: { type: "circle", width: 3, radius: 50, color: "yellow", delay: 0.75 }
-      - name: "armor2"
-        config: { type: "circle", width: 3, radius: 50, color: "yellow", delay: 0.75 }
-      - name: "armor3"
-        config: { type: "circle", width: 3, radius: 50, color: "yellow", delay: 0.75 }
-      - name: "aux"
-        config: { type: "line", width: 2, color: "cyan", delay: 0.1 }
+    time_change:
+      - name: "engineer_joint1"
+        config: { type: "line", width: 5, delay: 0.2,
+                  start_position: [ 850, 100 ], end_position: [ 850, 300 ] }
+        data: { line_length: 100.,  min_val: 0.0025, max_val: 0.45 ,direction: vertical }
+      - name: "engineer_joint2"
+        config: { type: "line", width: 5, delay: 0.2,
+                  start_position: [ 850, 100 ], end_position: [ 950, 200 ] }
+        data: { line_length: 80., min_val: -0.0003 , max_val: 0.2626 ,direction: slant }
+      - name: "engineer_joint3"
+        config: { type: "line", width: 5, delay: 0.2,
+                  start_position: [ 850, 100 ], end_position: [ 1100, 100 ] }
+        data: { line_length: 100., min_val: 0.005 , max_val: -0.2808 ,direction: horizontal }
