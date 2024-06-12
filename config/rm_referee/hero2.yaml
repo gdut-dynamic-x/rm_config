@@ -15,6 +15,8 @@ rm_referee:
         config: { start_position: [ 200, 750 ], size: 15, width: 2, title: "target: " }
       - name: "target_view_angle"
         config: { type: "rectangle", start_position: [ 780, 719 ], end_position: [ 1123,447 ], width: 3 }
+      - name: "friction_speed"
+        config: { type: "int_num", start_position: [ 1190, 650 ], size: 20, width: 2 ,color: "yellow" }
     time_change:
       - name: "bullet"
         config: { type: "int_num", start_position: [ 170, 560 ], size: 30, width: 3 , delay: 0.4 }
@@ -61,6 +63,8 @@ rm_referee:
       - name: "bullet_string"
         config: { type: "string", start_position: [ 30, 600 ], size: 25, width: 2, color: "pink", content: "BULLET:" }
     flash:
+      - name: "hero_hit"
+        config: { type: "circle", width: 20, radius: 10, start_position: [ 960, 540 ], color: "pink", delay: 0.25 }
       - name: "spin"
         config: { start_position: [ 850, 750 ], size: 20, width: 2,
                   color: "yellow", content: "please spin!!", delay: 1.0 }
