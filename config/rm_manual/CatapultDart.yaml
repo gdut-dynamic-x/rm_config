@@ -1,0 +1,118 @@
+rm_manual:
+  robot_type: "CatapultDart"
+  chassis_calibrate_motor: [ ]
+  gimbal_calibrate_motor: [ "chassis_yaw_joint_motor" ]
+  shooter_calibrate_motor: [ "trigger_left_joint_motor","trigger_position_joint_motor"]
+  #  shooter_calibrate_motor: [ "dart_teleportation_joint_motor","dart_push_joint_motor" ]
+
+  #  chassis_calibrate_motor: [ ]
+  #  gimbal_calibrate_motor: [ "left_pitch_joint_motor","right_pitch_joint_motor","yaw_joint_motor" ]
+  #  shooter_calibrate_motor: [ "trigger_joint_motor" ]
+
+  launch_id: [ 23, 25, 24, 26 ]
+  #  trigger_position: [ 0.003251, 0.008298, 0.014457, 0.018 ]
+
+  dart_list:
+    first_dart:
+      id: 23
+      #      param: [ 0.0045, 405.5, -0.0001, 465.0 ]
+      param: [ 0.0045, 405.5, -0.000, 465.0 ]
+      #outpost:dart_position,trigger_position // base:dart_position,trigger_position
+      #outpost:offset,qd//base:offset,qd
+    second_dart:
+      id: 24
+      param: [ 0.004, 408.5, 0.0, 466.5 ]
+      #outpost:offset,qd//base:offset,qd
+    third_dart:
+      id: 25
+      #      param: [ 0.005, 398.0, 0.0002, 457.0 ]
+      param: [ 0.005, 398.0, 0.0000, 470.0 ]
+      #outpost:offset,qd//base:offset,qd
+    fourth_dart:
+      id: 26
+      param: [ 0.004, 400.0, -0.00025, 458.5 ]
+      #      param: [ 0.004, 400.0, -0.00025, 500 ]
+      #outpost:offset,qd//base:offset,qd
+    fifth_dart:
+      id: 27
+      param: [ 0.007, 400.0, 0.004, 457.5 ]
+      #outpost:offset,qd//base:offset,qd
+    sixth_dart:
+      id: 28
+      param: [ 0.007, 398.0, 0.004, 457.0 ]
+      #outpost:offset,qd//base:offset,qd
+    seventh_dart:
+      id: 29
+      param: [ 0.008, 398.0, 0.00065, 460.0 ]
+      #outpost:offset,qd//base:offset,qd
+    eighth_dart:
+      id: 30
+      param: [ 0.008, 398.0, 0.004, 457.0 ]
+      #outpost:offset,qd//base:offset,qd
+
+  targets:
+    outpost:
+      #normal -0.15895, 0.038539
+      #red -0.168064, 0.062967 (第一发偏下一点，第二发偏下)
+      #blue -0.16246, 0.061345（四中二）
+      position: [ 0.061345 ] # yaw
+    base:
+      #blue -0.003613, 0.26805
+      #red -0.003613, 0.26805(偏左一点点，偏下一点点)
+      position: [ 0.26805 ] #pitch yaw-0.003586, 0.26805
+
+  trigger_left:
+    topic: "/controllers/trigger_left_controller/command"
+    joint: "trigger_left_joint"
+  trigger_switch:
+    topic: "controller/trigger_switch_controller/command"
+    joint: "trigger_switch_joint"
+  trigger1_position:
+    topic: "controller/trigger_position_controller/command"
+    joint: "trigger_position_joint"
+  chassis_yaw:
+    topic: "controller/chassis_yaw_controller/command"
+    scale: 0.04
+    scale_micro: 0.0001
+    joint: "chassis_yaw_joint"
+
+  #  trigger:
+  #    topic: "/controllers/trigger_controller/command"
+  #    joint: "trigger_joint"
+  #    upward_vel: -0.003
+
+  controllers_list:
+    state_controllers:
+      - controllers/robot_state_controller
+      - controllers/joint_state_controller
+    main_controllers:
+      - controllers/trigger_left_controller
+      - controllers/trigger_switch_controller
+      - controllers/trigger_position_controller
+      - controllers/chassis_yaw_controller
+      - controllers/trigger_controller
+      - controllers/mimic_joint1_controller
+    calibration_controllers:
+      - controllers/trigger_position_calibration_controller
+      - controllers/trigger_left_calibration_controller
+      - controllers/chassis_yaw_calibration_controller
+      - controllers/trigger_calibration_controller
+  trigger_calibration:
+    - start_controllers:
+        - controllers/trigger_position_calibration_controller
+        - controllers/trigger_left_calibration_controller
+      stop_controllers:
+        - controllers/trigger_switch_controller
+        - controllers/trigger_left_controller
+        - controllers/mimic_joint1_controller
+      services_name:
+        - /controllers/trigger_calibration_controller/is_calibrated
+        - /controllers/trigger_position_calibration_controller/is_calibrated
+        - /controllers/trigger_left_calibration_controller/is_calibrated
+  gimbal_calibration:
+    - start_controllers:
+        - controllers/chassis_yaw_calibration_controller
+      stop_controllers:
+        - controllers/chassis_yaw_controller
+      services_name:
+        - /controllers/chassis_yaw_calibration_controller/is_calibrated
