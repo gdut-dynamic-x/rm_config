@@ -14,13 +14,11 @@ rm_referee:
       - name: "servo_mode"
         config: { start_position: [ 50, 700 ], size: 15, width: 2, title: "mode:" }
     fixed:
-      - name: "car_line_left"
-        config: { type: "line", width: 2, color: "orange",
-                  start_position: [ 887, 456 ], end_position: [ 626, 230 ] }
-      - name: "car_line_right"
-        config: { type: "line", width: 2, color: "orange",
-                  start_position: [ 1047, 457 ], end_position: [ 1245, 245 ] }
     flash:
+      - name: "engineer_flash_ui"
+        data:
+          - { flag: 0, config: { type: "line", width: 2, color: "orange",start_position: [ 887, 456 ], end_position: [ 626, 230 ] } }
+          - { flag: 0, config: { type: "line", width: 2, color: "orange",start_position: [ 1047, 457 ], end_position: [ 1245, 245 ] } }
     time_change:
       - name: "engineer_joint1"
         config: { type: "line", width: 5, delay: 0.2,
