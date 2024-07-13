@@ -55,7 +55,7 @@ controllers:
     pid_right_leg: { p: 600.0, i: 0, d: 35, i_clamp_max: 30.0, i_clamp_min: -30.0, antiwindup: true, publish_state: false }
     pid_theta_diff: { p: 6.0, i: 0.0, d: 0.0, i_max: 0.0, i_min: 0.0, antiwindup: true, publish_state: false }
     pid_roll: { p: 150.0, i: 0, d: 25, i_clamp_max: 15.0, i_clamp_min: -15.0, antiwindup: true, publish_state: false}
-    pid_center_gravity: { p: 0.0, i: 1300.0, d: 0, i_clamp_max: 10.5, i_clamp_min: -10.5, antiwindup: true, publish_state: false }
+    pid_center_gravity: { p: 0.0, i: 0.0, d: 0, i_clamp_max: 10.5, i_clamp_min: -10.5, antiwindup: true, publish_state: false }
     pid_length_diff: { p: 30.0, i: 0, d: 0, i_clamp_max: 0.0, i_clamp_min: -0.0, antiwindup: true, publish_state: false }
     leg_protect_angle: 0.9  #0.9
     pitch_protect_angle: 1.1 #1.1

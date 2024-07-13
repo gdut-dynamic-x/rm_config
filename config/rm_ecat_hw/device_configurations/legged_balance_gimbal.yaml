@@ -21,7 +21,7 @@ can_motors:
     can_bus: 0
     name: "cover_joint_motor"
     type: "M2006"
-  - can_id: 4
+  - can_id: 3
     can_bus: 1
     name: "pitch_joint_motor"
     type: "M3508"

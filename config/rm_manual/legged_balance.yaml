@@ -1,5 +1,6 @@
 rm_manual:
   robot_type: "legged_balance"
+  dbus_topic: "/rm_ecat_hw/dbus"
   chassis_calibrate_motor: [ "left_front_leg_joint_motor", "right_front_leg_joint_motor", "left_back_leg_joint_motor", "right_back_leg_joint_motor" ]
   gimbal_calibrate_motor: [ "pitch_joint_motor" ]
   shooter_calibrate_motor: [ ]
@@ -99,6 +100,7 @@ rm_manual:
       - controllers/legged_balance_controller
       - controllers/orientation_controller
       - controllers/gimbal_controller
+      - controllers/shooter_controller
     calibration_controllers:
       - controllers/leg_lf_calibration_controller
       - controllers/leg_lb_calibration_controller
