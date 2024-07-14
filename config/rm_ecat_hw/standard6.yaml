@@ -4,6 +4,6 @@ ethercat_master:
 ethercat_devices:
   - type: Rm
     name: RmSlave1
-    configuration_file: device_configurations/standard.yaml
-    ethercat_bus: enp89s0
+    configuration_file: device_configurations/standard6.yaml
+    ethercat_bus: enp2s0
     ethercat_address: 1
