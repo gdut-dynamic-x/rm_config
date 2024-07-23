@@ -23,13 +23,13 @@ rm_manual:
     topic: "/cmd_vel"
     power_limit_topic: "/cmd_chassis"
     max_linear_x:
-      - [ 50.0,3.14 ]
-      - [ 80.0,5. ]
-      - [ 240.0, 5. ]
+      - [ 50.0,3.0 ]
+      - [ 80.0, 4.0 ]
+      - [ 240.0, 4.0 ]
     max_linear_y:
-      - [ 50.0,3.14 ]
-      - [ 80.0,4.76 ]
-      - [ 240.0,5.0 ]
+      - [ 50.0,3.0 ]
+      - [ 80.0, 4.0 ]
+      - [ 240.0,4.0 ]
     max_angular_z:
       - [ 50.0,10.1 ]
       - [ 80.0,14.9 ]
@@ -51,8 +51,7 @@ rm_manual:
       timeout: 0.1
   shooter:
     topic: "/controllers/shooter_controller/command"
-    track_armor_error_tolerance: 0.08
-    track_buff_error_tolerance: 0.12
+    gimbal_error_tolerance: 0.12
     target_acceleration_tolerance: 99.0
     accleration_moving_average_num: 50
     speed_10m_per_speed: 10.0
