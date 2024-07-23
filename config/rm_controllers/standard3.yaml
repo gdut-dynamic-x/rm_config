@@ -44,7 +44,7 @@ controllers:
     twist_angular: 0.5233
     max_odom_vel: 10.0
     timeout: 0.1
-    pid_follow: { p: 8.5, i: 0, d: 0.0, i_max: 0.0, i_min: 0.0, antiwindup: true, publish_state: true }
+    pid_follow: { p: 7.5, i: 0, d: 0.0, i_max: 0.0, i_min: 0.0, antiwindup: true, publish_state: true }
     twist_covariance_diagonal: [ 0.001, 0.001, 0.001, 0.001, 0.001, 0.001 ]
 
     # OmniController
@@ -90,8 +90,8 @@ controllers:
       accel: 45.0
     pitch:
       joint: "pitch_joint"
-      pid: { p: 0.75, i: 20.0, d: 0.0, i_clamp_max: 0.2, i_clamp_min: -0.2, antiwindup: true, publish_state: true }
-      pid_pos: { p: 19.0, i: 0, d: 0.0, i_max: 0.0, i_min: 0.0, antiwindup: true, publish_state: true }
+      pid: { p: 0.7, i: 20.0, d: 0.0, i_clamp_max: 0.3, i_clamp_min: -0.3, antiwindup: true, publish_state: true }
+      pid_pos: { p: 25.0, i: 0, d: 0.0, i_max: 0.0, i_min: 0.0, antiwindup: true, publish_state: true }
       k_v: 1.0
       accel: 40.0
     delay: 0.03
