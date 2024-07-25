@@ -15,30 +15,23 @@ controllers:
       joint: trigger_joint
       pid: { p: 0.8, i: 0, d: 0.0, i_clamp_max: 0.0, i_clamp_min: 0.0, antiwindup: true }
 
-  pitch_calibration_controller:
+  scope_calibration_controller:
     type: rm_calibration_controllers/MechanicalCalibrationController
-    actuator: [ pitch_joint_motor ]
+    actuator: [ scope_joint_motor ]
     velocity:
-      search_velocity: 7.0
+      search_velocity: -3.1415
       vel_threshold: 0.001
-      joint: pitch_joint
-      pid: { p: 0.35, i: 0, d: 0.0, i_clamp_max: 0.0, i_clamp_min: 0.0, antiwindup: true }
+      joint: scope_joint
+      pid: { p: 0.3, i: 0, d: 0.0, i_clamp_max: 0.0, i_clamp_min: 0.0, antiwindup: true }
 
-  yaw_calibration_controller:
-    type: rm_calibration_controllers/GpioCalibrationController
-    actuator: [ yaw_joint_motor ]
-    gpio: "yaw"
-    initial_gpio_state: true
+  image_transmission_calibration_controller:
+    type: rm_calibration_controllers/MechanicalCalibrationController
+    actuator: [ image_transmission_joint_motor ]
     velocity:
-      search_velocity: 6.0
-      slow_forward_velocity: 3.0
-      joint: yaw_joint
-      pid: { p: 0.60, i: 0, d: 0.0, i_clamp_max: 0.0, i_clamp_min: 0.0, antiwindup: true }
-    position:
-      pos_threshold: 0.05
-      backward_angle: 0.2
-      joint: yaw_joint
-      pid: { p: 20.0, i: 0, d: 0.8, i_clamp_max: 0.0, i_clamp_min: 0.0, antiwindup: true }
+      search_velocity: 12.56
+      vel_threshold: 0.001
+      joint: image_transmission_joint
+      pid: { p: 0.004, i: 0, d: 0.0, i_clamp_max: 0.0, i_clamp_min: 0.0, antiwindup: true }
 
   chassis_controller:
     type: rm_chassis_controllers/OmniController
@@ -48,7 +41,7 @@ controllers:
     publish_odom_tf: false
     power:
       effort_coeff: 2.6
-      vel_coeff: 0.0092
+      vel_coeff: 0.012
       power_offset: -9.8
     max_odom_vel: 10.0
     twist_angular: 0.5233
@@ -124,19 +117,29 @@ controllers:
       dt: 0.001
       timeout: 0.001
       publish_rate: 50
+      ban_shoot_duration: 0.04
+      gimbal_switch_duration: 0.1
       max_track_target_vel: 1.0
 
   shooter_controller:
     type: rm_shooter_controllers/Controller
     publish_rate: 50
     friction_left:
-      left_friction_wheel:
-        joint: "left_friction_wheel_joint"
+      left_front_friction_wheel:
+        joint: "left_front_friction_wheel_joint"
         pid: { p: 0.001, i: 0.01, d: 0.0, i_clamp_max: 0.01, i_clamp_min: -0.01, antiwindup: true, publish_state: true }
+      left_back_friction_wheel:
+        joint: "left_back_friction_wheel_joint"
+        pid: { p: 0.001, i: 0.01, d: 0.0, i_clamp_max: 0.01, i_clamp_min: -0.01, antiwindup: true, publish_state: true }
+        wheel_speed_offset: -180
     friction_right:
-      right_friction_wheel:
-        joint: "right_friction_wheel_joint"
+      right_front_friction_wheel:
+        joint: "right_front_friction_wheel_joint"
         pid: { p: 0.001, i: 0.01, d: 0.0, i_clamp_max: 0.01, i_clamp_min: -0.01, antiwindup: true, publish_state: true }
+      right_back_friction_wheel:
+        joint: "right_back_friction_wheel_joint"
+        pid: { p: 0.001, i: 0.01, d: 0.0, i_clamp_max: 0.01, i_clamp_min: -0.01, antiwindup: true, publish_state: true }
+        wheel_speed_offset: -180
     trigger:
       joint: "trigger_joint"
       pid: { p: 40.0, i: 0.0, d: 1.0, i_clamp_max: 0.0, i_clamp_min: 0.0, antiwindup: true, publish_state: true }
@@ -150,3 +153,8 @@ controllers:
     anti_block_threshold: 0.1
     forward_push_threshold: 0.2
     exit_push_threshold: 0.23
+
+  scope_controller:
+    type: effort_controllers/JointPositionController
+    joint: "scope_joint"
+    pid: { p: 8.0, i: 0.0, d: 0.3, i_clamp_max: 0.0, i_clamp_min: -0.0, antiwindup: true, publish_state: true }
