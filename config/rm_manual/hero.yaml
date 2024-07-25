@@ -52,17 +52,18 @@ rm_manual:
       timeout: 0.1
   shooter:
     topic: "/controllers/shooter_controller/command"
-    gimbal_error_tolerance: 0.12
+    track_armor_error_tolerance: 0.12
     target_acceleration_tolerance: 1.0
     accleration_moving_average_num: 10
-    speed_10m_per_speed: 15.4
-    speed_15m_per_speed: 14.0
-    speed_16m_per_speed: 15.4
+    speed_10m_per_speed: 15.8
+    speed_15m_per_speed: 15.8
+    speed_16m_per_speed: 15.8
     speed_18m_per_speed: 18.0
     speed_30m_per_speed: 30.0
-    wheel_speed_10: 525.0
-    wheel_speed_16: 525.0
+    wheel_speed_10: 535.0
+    wheel_speed_16: 535.0
     extra_wheel_speed_once: 5.0
+    auto_wheel_speed: true
     heat_limit:
       low_shoot_frequency: 1
       high_shoot_frequency: 3
@@ -71,18 +72,14 @@ rm_manual:
       safe_shoot_frequency: 1
       heat_coeff: 3.5
       type: "ID1_42MM"
-  camera:
-    topic: "/camera_name"
-    camera1_name: "hk_camera"
-    camera2_name: "galaxy_camera"
   scope:
     topic: "/controllers/scope_controller/command"
-    on_pos: 2.2774
+    on_pos: 1.79
     off_pos: 0.1
   image_transmission:
     topic: "/controllers/image_transmission_controller/command"
-    on_pos: -0.69
-    off_pos: -0.327505
+    on_pos: -0.595
+    off_pos: -0.35
   detection_switch:
     fail_limit: 10
     service_name: "/Processor/status_switch"
@@ -132,9 +129,15 @@ controllers:
   scope_controller:
     type: effort_controllers/JointPositionController
     joint: "scope_joint"
-    pid: { p: 8.0, i: 0.0, d: 0.5, i_clamp_max: 0.0, i_clamp_min: 0.0, antiwindup: true, publish_state: true }
+    pid: { p: 8.0, i: 0.0, d: 0.3, i_clamp_max: 0.0, i_clamp_min: -0.0, antiwindup: true, publish_state: true }
 
   image_transmission_controller:
-    type: effort_controllers/JointPositionController
-    joint: "image_transmission_joint"
-    pid: { p: 0.5, i: 1.1, d: 0.008, i_clamp_max: 0.0512, i_clamp_min: -0.0512, antiwindup: true, publish_state: true }
+    type: rm_position_controller/RMPositionController
+    publish_rate: 50
+    pos_controller1:
+      joint: "image_transmission_joint"
+      pid: { p: 1.3, i: 5.0, d: 0.03, i_clamp_max: 0.0, i_clamp_min: -0.05, antiwindup: true, publish_state: true }
+    pos_controller2:
+      joint: "image_transmission_joint"
+      pid: { p: 1.5, i: 20.0, d: 0.035, i_clamp_max: 0.0, i_clamp_min: -0.1, antiwindup: true, publish_state: true }
+    threshold: 0.03

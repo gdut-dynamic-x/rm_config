@@ -52,7 +52,7 @@ rm_manual:
       timeout: 0.1
   shooter:
     topic: "/controllers/shooter_controller/command"
-    gimbal_error_tolerance: 0.1
+    track_armor_error_tolerance: 0.1
     target_acceleration_tolerance: 1.0
     accleration_moving_average_num: 10
     speed_10m_per_speed: 15.4

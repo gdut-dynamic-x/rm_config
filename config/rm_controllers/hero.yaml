@@ -22,16 +22,16 @@ controllers:
       search_velocity: -3.1415
       vel_threshold: 0.001
       joint: scope_joint
-      pid: { p: 0.35, i: 0, d: 0.0, i_clamp_max: 0.0, i_clamp_min: 0.0, antiwindup: true }
+      pid: { p: 0.3, i: 0, d: 0.0, i_clamp_max: 0.0, i_clamp_min: 0.0, antiwindup: true }
 
   image_transmission_calibration_controller:
     type: rm_calibration_controllers/MechanicalCalibrationController
     actuator: [ image_transmission_joint_motor ]
     velocity:
-      search_velocity: 6.28
+      search_velocity: 12.56
       vel_threshold: 0.001
       joint: image_transmission_joint
-      pid: { p: 0.0065, i: 0, d: 0.0, i_clamp_max: 0.0, i_clamp_min: 0.0, antiwindup: true }
+      pid: { p: 0.004, i: 0, d: 0.0, i_clamp_max: 0.0, i_clamp_min: 0.0, antiwindup: true }
 
   chassis_controller:
     type: rm_chassis_controllers/OmniController
@@ -40,7 +40,7 @@ controllers:
     enable_odom_tf: true
     publish_odom_tf: false
     power:
-      effort_coeff: 2.15
+      effort_coeff: 2.35
       vel_coeff: 0.012
       power_offset: -9.8
     twist_angular: 0.5233
@@ -85,17 +85,17 @@ controllers:
     type: rm_gimbal_controllers/Controller
     yaw:
       joint: "yaw_joint"
-      pid: { p: 24.0, i: 0.1, d: 1.9, i_clamp_max: 0.1, i_clamp_min: -0.1, antiwindup: true, publish_state: true }
-      k_chassis_vel: 0.05
-      k_v: 0.0
-      resistance_compensation:
-        resistance: 0.0
-        velocity_dead_zone: 0.0
-        effort_dead_zone: 0.0
+      pid: { p: 2.4, i: 20.0, d: 0.0, i_clamp_max: 0.3, i_clamp_min: -0.3, antiwindup: true, publish_state: true }
+      pid_pos: { p: 16.0, i: 0, d: 0.0, i_max: 0.0, i_min: 0.0, antiwindup: true, publish_state: true }
+      k_chassis_vel: 0.0
+      k_v: 1.0
+      accel: 40.0
     pitch:
       joint: "pitch_joint"
-      pid: { p: 20.0, i: 0.3, d: 1.4, i_clamp_max: 0.2, i_clamp_min: -0.2, antiwindup: true, publish_state: true }
-      k_v: 0.0
+      pid: { p: 1.8, i: 20.0, d: 0.0, i_clamp_max: 0.25, i_clamp_min: -0.25, antiwindup: true, publish_state: true }
+      pid_pos: { p: 17.0, i: 0, d: 0.0, i_max: 0.0, i_min: 0.0, antiwindup: true, publish_state: true }
+      k_v: 1.0
+      accel: 40.0
     imu_name: "gimbal_imu"
     feedforward:
       gravity: 0.0
@@ -112,6 +112,10 @@ controllers:
       dt: 0.001
       timeout: 0.001
       publish_rate: 50
+      max_switch_angle: 50
+      min_switch_angle: 2
+      ban_shoot_duration: 0.0
+      gimbal_switch_duration: 0.0
       max_track_target_vel: 1.0
     chassis_vel:
       num_data: 20

@@ -53,15 +53,16 @@ controllers:
     pid_follow: { p: 7.0, i: 0, d: 0.3, i_max: 0.0, i_min: 0.0, antiwindup: true, publish_state: false }
     pid_left_leg: { p: 600.0, i: 0, d: 35, i_clamp_max: 30.0, i_clamp_min: -30.0, antiwindup: true, publish_state: false }
     pid_right_leg: { p: 600.0, i: 0, d: 35, i_clamp_max: 30.0, i_clamp_min: -30.0, antiwindup: true, publish_state: false }
-    pid_theta_diff: { p: 6.0, i: 0.0, d: 0.0, i_max: 0.0, i_min: 0.0, antiwindup: true, publish_state: false }
-    pid_roll: { p: 150.0, i: 0, d: 25, i_clamp_max: 15.0, i_clamp_min: -15.0, antiwindup: true, publish_state: false}
-    pid_center_gravity: { p: 0.0, i: 0.0, d: 0, i_clamp_max: 10.5, i_clamp_min: -10.5, antiwindup: true, publish_state: false }
+    pid_theta_diff: { p: 10.0, i: 0.0, d: 0.0, i_max: 0.0, i_min: 0.0, antiwindup: true, publish_state: false }
+    pid_roll: { p: 600.0, i: 0, d: 25, i_clamp_max: 15.0, i_clamp_min: -15.0, antiwindup: true, publish_state: false }
+    pid_center_gravity: { p: 0.0, i: 0.0, d: 0, i_clamp_max: 3.5, i_clamp_min: -3.5, antiwindup: true, publish_state: false }
     pid_length_diff: { p: 30.0, i: 0, d: 0, i_clamp_max: 0.0, i_clamp_min: -0.0, antiwindup: true, publish_state: false }
     leg_protect_angle: 0.9  #0.9
     pitch_protect_angle: 1.1 #1.1
     roll_protect_angle: 1.0
     leg_protect_length: 0.1
-    ground_support_threshold: 5
+    leg_protect_speed: 8.0
+    ground_support_threshold: 20
     vmc_bias_angle: 3.49
 
     gravity_compensation_vel_threshold: 0.1
@@ -148,14 +149,16 @@ controllers:
     type: rm_shooter_controllers/Controller
     publish_rate: 50
     friction_left:
+      left_friction_wheel:
         joint: "left_friction_wheel_joint"
         pid: { p: 0.0007, i: 0.005, d: 0.0, i_clamp_max: 0.01, i_clamp_min: -0.01, antiwindup: true, publish_state: false }
     friction_right:
+      right_friction_wheel:
         joint: "right_friction_wheel_joint"
         pid: { p: 0.0007, i: 0.005, d: 0.0, i_clamp_max: 0.01, i_clamp_min: -0.01, antiwindup: true, publish_state: false }
     trigger:
       joint: "trigger_joint"
-      pid: { p: 25.0, i: 0.0, d: 0.75, i_clamp_max: 0.0, i_clamp_min: 0.0, antiwindup: true, publish_state: false }
+      pid: { p: 34.0, i: 0.0, d: 1.0, i_clamp_max: 0.0, i_clamp_min: 0.0, antiwindup: true, publish_state: false }
     push_per_rotation: 9
     push_qd_threshold: 0.90
     block_effort: 2.2
