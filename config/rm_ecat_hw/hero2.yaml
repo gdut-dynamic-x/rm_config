@@ -3,7 +3,13 @@ ethercat_master:
 
 ethercat_devices:
   - type: Rm
-    name: RmSlave1
-    configuration_file: device_configurations/hero2.yaml
+    name: Chassis
+    configuration_file: device_configurations/hero2_chassis.yaml
     ethercat_bus: enp2s0
     ethercat_address: 1
+
+  - type: Rm
+    name: Gimbal
+    configuration_file: device_configurations/hero2_gimbal.yaml
+    ethercat_bus: enp2s0
+    ethercat_address: 2
