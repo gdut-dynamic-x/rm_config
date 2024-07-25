@@ -41,7 +41,7 @@ rm_hw:
       need_calibration: true
     left_friction_wheel_joint_motor:
       bus: can1
-      id: 0x203
+      id: 0x201
       type: rm_3508
       lp_cutoff_frequency: 60
     right_friction_wheel_joint_motor:
@@ -50,8 +50,8 @@ rm_hw:
       type: rm_3508
       lp_cutoff_frequency: 60
     trigger_joint_motor:
-      bus: can1
-      id: 0x205
+      bus: can0
+      id: 0x206
       type: rm_3508
       lp_cutoff_frequency: 150
       need_calibration: true
