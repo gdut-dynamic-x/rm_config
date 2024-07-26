@@ -24,3 +24,6 @@ can_motors:
     name: "trigger_joint_motor"
     type: "M3508"
     need_calibration: true
+dbus:
+  - name: "dbus"
+    
