@@ -12,8 +12,8 @@ controllers:
     velocity:
       joint: right_front_first_leg_joint
       search_velocity: -1.4
-      vel_threshold: 0.1
-      pid: { p: 2.0, i: 0, d: 0.0, i_clamp_max: 0.0, i_clamp_min: 0.0, antiwindup: true }
+      vel_threshold: 0.2
+      pid: { p: 3.0, i: 0, d: 0.0, i_clamp_max: 0.0, i_clamp_min: 0.0, antiwindup: true }
 
   leg_lf_calibration_controller:
     type: rm_calibration_controllers/MechanicalCalibrationController
@@ -21,8 +21,8 @@ controllers:
     velocity:
       joint: left_front_first_leg_joint
       search_velocity: -1.4
-      vel_threshold: 0.1
-      pid: { p: 2.0, i: 0, d: 0.0, i_clamp_max: 0.0, i_clamp_min: 0.0, antiwindup: true }
+      vel_threshold: 0.2
+      pid: { p: 3.0, i: 0, d: 0.0, i_clamp_max: 0.0, i_clamp_min: 0.0, antiwindup: true }
 
   leg_lb_calibration_controller:
     type: rm_calibration_controllers/MechanicalCalibrationController
@@ -30,8 +30,8 @@ controllers:
     velocity:
       joint: left_back_first_leg_joint
       search_velocity: 1.4
-      vel_threshold: 0.1
-      pid: { p: 2.0, i: 0, d: 0.0, i_clamp_max: 0.0, i_clamp_min: 0.0, antiwindup: true }
+      vel_threshold: 0.2
+      pid: { p: 3.0, i: 0, d: 0.0, i_clamp_max: 0.0, i_clamp_min: 0.0, antiwindup: true }
 
   leg_rb_calibration_controller:
     type: rm_calibration_controllers/MechanicalCalibrationController
@@ -39,8 +39,8 @@ controllers:
     velocity:
       joint: right_back_first_leg_joint
       search_velocity: 1.4
-      vel_threshold: 0.1
-      pid: { p: 2.0, i: 0, d: 0.0, i_clamp_max: 0.0, i_clamp_min: 0.0, antiwindup: true }
+      vel_threshold: 0.2
+      pid: { p: 3.0, i: 0, d: 0.0, i_clamp_max: 0.0, i_clamp_min: 0.0, antiwindup: true }
 
   legged_balance_controller:
     type: rm/LeggedBalanceController
@@ -55,7 +55,7 @@ controllers:
     pid_right_leg: { p: 600.0, i: 0, d: 35, i_clamp_max: 30.0, i_clamp_min: -30.0, antiwindup: true, publish_state: false }
     pid_theta_diff: { p: 10.0, i: 0.0, d: 0.0, i_max: 0.0, i_min: 0.0, antiwindup: true, publish_state: false }
     pid_roll: { p: 600.0, i: 0, d: 25, i_clamp_max: 15.0, i_clamp_min: -15.0, antiwindup: true, publish_state: false }
-    pid_center_gravity: { p: 0.0, i: 0.0, d: 0, i_clamp_max: 3.5, i_clamp_min: -3.5, antiwindup: true, publish_state: false }
+    pid_center_gravity: { p: 0.0, i: 10.0, d: 0, i_clamp_max: 3.5, i_clamp_min: -3.5, antiwindup: true, publish_state: false }
     pid_length_diff: { p: 30.0, i: 0, d: 0, i_clamp_max: 0.0, i_clamp_min: -0.0, antiwindup: true, publish_state: false }
     leg_protect_angle: 0.9  #0.9
     pitch_protect_angle: 1.1 #1.1

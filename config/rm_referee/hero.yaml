@@ -4,6 +4,9 @@ rm_referee:
   add_ui_frequency: 0.5
   add_ui_max_times: 3
   dbus_topic: "/rm_ecat_hw/dbus"
+  interactive_data:
+    - name: bullet_num_share
+      config: { delay: 1.0 }
   ui:
     trigger_change:
       - name: "chassis"
@@ -12,8 +15,13 @@ rm_referee:
         config: { start_position: [ 200, 800 ], size: 15, width: 2, title: "shooter: " }
       - name: "target"
         config: { start_position: [ 200, 750 ], size: 15, width: 2, title: "target: " }
+      #      - name: "camera"
+      #        config: { start_position: [ 200, 700 ], size: 15, width: 2, title: "camera: " }
+      #        camera_name: { camera1_name: "hk_camera", camera2_name: "galaxy_camera" }
       - name: "target_view_angle"
         config: { type: "rectangle", start_position: [ 731, 426 ], end_position: [ 1149,755 ], width: 3, color: "yellow" }
+      - name: "friction_speed"
+        config: { type: "int_num", start_position: [ 1190, 650 ], size: 20, width: 2 ,color: "yellow" }
     time_change:
       - name: "bullet"
         config: { type: "int_num", start_position: [ 170, 560 ], size: 30, width: 3 , delay: 0.4 }
@@ -49,15 +57,24 @@ rm_referee:
       - name: "outpose_mid"
         config: { type: "line", width: 3, color: "purple",
                   start_position: [ 941, 397 ], end_position: [ 941, 423 ] }
+      - name: "base_up_20"
+        config: { type: "line", width: 3, color: "blue",
+                  start_position: [ 986, 568 ], end_position: [ 1030, 568 ] }
+      - name: "base_mid_20"
+        config: { type: "line", width: 3, color: "blue",
+                  start_position: [ 1014, 550 ], end_position: [ 1014, 596 ] }
+      - name: "base_down_20"
+        config: { type: "line", width: 3, color: "blue",
+                  start_position: [ 986, 594 ], end_position: [ 1030, 594 ] }
       - name: "base_up"
-        config: { type: "line", width: 3, color: "blue",
-                  start_position: [ 1061, 180 ], end_position: [ 1125, 180 ] }
+        config: { type: "line", width: 3, color: "yellow",
+                  start_position: [ 911, 604 ], end_position: [ 955, 604 ] }
       - name: "base_mid"
-        config: { type: "line", width: 3, color: "blue",
-                  start_position: [ 1095, 160 ], end_position: [ 1095, 260 ] }
+        config: { type: "line", width: 3, color: "yellow",
+                  start_position: [ 930, 560 ], end_position: [ 930, 610 ] }
       - name: "base_down"
-        config: { type: "line", width: 3, color: "blue",
-                  start_position: [ 1061, 205  ], end_position: [ 1125, 205 ] }
+        config: { type: "line", width: 3, color: "yellow",
+                  start_position: [ 908, 596 ], end_position: [ 953, 596 ] }
       #      - name: "ring_highland_up"
       #        config: { type: "line", width: 3, color: "yellow",
       #                  start_position: [ 874, 681 ], end_position: [ 1046, 681 ] }
@@ -99,4 +116,4 @@ rm_referee:
 #      - name: "armor3"
 #        config: { type: "circle", width: 3, radius: 50, color: "yellow", delay: 0.75 }
       - name: "hero_hit"
-        config: { type: "circle", width: 2, radius: 20, start_position: [ 960, 540 ], color: "pink", delay: 0.5 }
+        config: { type: "line", width: 4,  color: "pink", delay: 0.25 }

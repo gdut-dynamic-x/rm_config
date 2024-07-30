@@ -1,5 +1,8 @@
 rm_referee:
   robot_type: standard
+  dbus_topic: "/rm_ecat_hw/dbus"
   interactive_data:
-    - name: "sentry_state"
+    - name: "custom_info"
+    - name: "sentry_to_radar"
+      config: { delay: 0.15 }
   ui:
