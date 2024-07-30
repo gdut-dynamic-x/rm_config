@@ -1,9 +1,12 @@
 rm_referee:
   robot_type: standard
-  send_ui_queue_delay: 0.10
+  send_ui_queue_delay: 0.035
   add_ui_frequency: 0.5
   add_ui_max_times: 3
   dbus_topic: "/rm_ecat_hw/dbus"
+  interactive_data:
+    - name: "bullet_num_share"
+      config: { delay: 1.0 }
   ui:
     trigger_change:
       - name: "chassis"
@@ -23,17 +26,18 @@ rm_referee:
         config: { type: "line", width: 5, delay: 0.5,
                   start_position: [ 610, 100 ], end_position: [ 1210, 100 ] }
       - name: "lane_line"
-        config: { type: "line", width: 4, color: "cyan", delay: 0.15,
+        config: { type: "line", width: 4, color: "cyan", delay: 0.09,
                   start_position: [ 800, 1080 ], end_position: [ 800, 600 ] }
         data: { radius: 0.235, height: 0.4, camera_range: 0.8, surface_coefficient: 0.55 }
         reference_frame: "pitch"
       - name: "rotation"
-        config: { type: "arc", width: 7, delay: 0.15, color: "yellow",
+        config: { type: "arc", width: 7, delay: 0.06, color: "yellow",
                   start_position: [ 960, 520 ], end_position: [ 320, 320 ] , start_angle: 60, end_angle: 120 }
         data: { scale: 50, gimbal_reference_frame: "yaw", chassis_reference_frame: "base_link" }
-
       - name: "target_distance"
         config: { type: "float_num", start_position: [ 190, 650 ], size: 25, width: 3 ,color: "yellow", delay: 0.4 }
+      - name: "friend_bullets"
+        config: { type: "int_num", start_position: [ 1620, 700 ], color: "pink" ,size: 15, width: 2 , delay: 1.0 }
     fixed:
       - name: "capacity_boundary_l"
         config: { type: "line", width: 2, color: "green",
@@ -53,12 +57,13 @@ rm_referee:
       - name: "mid"
         config: { type: "line", width: 2, color: "yellow",
                   start_position: [ 960, 400 ], end_position: [ 960, 540 ] }
+      - name: "target"
+        config: { type: "string", start_position: [ 30, 650 ], size: 25, width: 2, color: "pink", content: "target:" }
       - name: "bullet_string"
         config: { type: "string", start_position: [ 30, 600 ], size: 25, width: 2, color: "pink", content: "BULLET:" }
       - name: "max_bullet"
         config: { type: "string", start_position: [ 30, 560 ], size: 30, width: 3, color: "pink", content: "500/" }
-      - name: "target"
-        config: { type: "string", start_position: [ 30, 650 ], size: 25, width: 2, color: "pink", content: "target:" }
+
     flash:
       - name: "cover"
         config: { start_position: [ 830, 700 ], size: 25, width: 2,
@@ -74,3 +79,5 @@ rm_referee:
         config: { type: "circle", width: 3, radius: 50, color: "yellow", delay: 0.75 }
       - name: "armor3"
         config: { type: "circle", width: 3, radius: 50, color: "yellow", delay: 0.75 }
+
+

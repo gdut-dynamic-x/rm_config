@@ -31,7 +31,7 @@ controllers:
       search_velocity: 12.56
       vel_threshold: 0.001
       joint: image_transmission_joint
-      pid: { p: 0.004, i: 0, d: 0.0, i_clamp_max: 0.0, i_clamp_min: 0.0, antiwindup: true }
+      pid: { p: 0.006, i: 0, d: 0.0, i_clamp_max: 0.0, i_clamp_min: 0.0, antiwindup: true }
 
   chassis_controller:
     type: rm_chassis_controllers/OmniController
@@ -40,7 +40,7 @@ controllers:
     enable_odom_tf: true
     publish_odom_tf: false
     power:
-      effort_coeff: 2.155
+      effort_coeff: 2.35
       vel_coeff: 0.012
       power_offset: -9.8
     twist_angular: 0.5233
