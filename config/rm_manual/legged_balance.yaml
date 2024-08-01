@@ -25,7 +25,7 @@ rm_manual:
     capacitor_threshold: 0.2
     charge_power: 60
     extra_power: 60
-    burst_power: 220
+    burst_power: 200
     buffer_threshold: 10
     minimum_power: 40
     power_gain: 0.9
@@ -35,22 +35,21 @@ rm_manual:
     topic: "/cmd_vel"
     power_limit_topic: "/cmd_chassis"
     max_linear_x:
-      - [ 60.0,1.40 ]
-      - [ 80.0,1.80 ]
-      - [ 100.0,2.10 ]
-      - [ 220.0,2.50 ]
+      - [ 60.0,1.20 ]
+      - [ 80.0,1.30 ]
+      - [ 180.0,2.0 ]
+      - [ 220.0,2.2 ]
     max_linear_y:
-      - [ 60.0,1.40 ]
-      - [ 80.0,1.60 ]
-      - [ 100.0,1.80 ]
-      - [ 220.0,2.50 ]
+      - [ 60.0,1.20 ]
+      - [ 80.0,1.30 ]
+      - [ 100.0,1.40 ]
+      - [ 220.0,1.50 ]
     max_angular_z:
       - [ 60.0,5.5 ]
       - [ 80.0,7.5 ]
-      - [ 100.0,9.5 ]
-      - [ 220.0,11.5 ]
-    gyro_move_reduction: 0.8
-    gyro_rotate_reduction: 0.5
+      - [ 220.0,9.5 ]
+    gyro_move_reduction: 0.5
+    gyro_rotate_reduction: 1.0
   gimbal:
     topic: "/controllers/gimbal_controller/command"
     max_yaw_vel: 12.56
@@ -66,16 +65,16 @@ rm_manual:
       timeout: 0.05
   shooter:
     topic: "/controllers/shooter_controller/command"
-    track_armor_error_tolerance: 0.08
+    gimbal_error_tolerance: 0.08
     target_acceleration_tolerance: 10
     speed_10m_per_speed: 10.0
     speed_15m_per_speed: 28.0
     speed_16m_per_speed: 16.0
     speed_18m_per_speed: 15.72
     speed_30m_per_speed: 27.5
-    wheel_speed_15: 738.0
-    wheel_speed_18: 738.0
-    wheel_speed_30: 738
+    wheel_speed_15: 760.0
+    wheel_speed_18: 760.0
+    wheel_speed_30: 760.0
     extra_wheel_speed_once: 5.0
     heat_limit:
       low_shoot_frequency: 10
@@ -119,7 +118,7 @@ rm_manual:
         - controllers/leg_rf_calibration_controller
         - controllers/leg_rb_calibration_controller
       stop_controllers:
-        - ""
+        - controllers/legged_balance_controller
       services_name:
         - /controllers/leg_lf_calibration_controller/is_calibrated
         - /controllers/leg_lb_calibration_controller/is_calibrated

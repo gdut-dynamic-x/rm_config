@@ -17,20 +17,20 @@ controllers:
       - joint6
       - joint7
     gains:
-      joint1: { p: 10000.0, i: 0, d: 300.0, i_clamp_max: 0, i_clamp_min: 0, antiwindup: true, publish_state: false }
-      joint2: { p: 30000, i: 0, d: 1000.0, i_clamp_max: 0, i_clamp_min: 0, antiwindup: true, publish_state: false }
-      joint3: { p: 9000.0, i: 0, d: 220.0, i_clamp_max: 0, i_clamp_min: 0, antiwindup: true, publish_state: false }
-      joint4: { p: 100.0, i: 0.0, d: 1.5, i_clamp_max: 0, i_clamp_min: 0.0, antiwindup: true, publish_state: false }
-      joint5: { p: 30.0, i: 0, d: 1.8, i_clamp_max: 0, i_clamp_min: 0, antiwindup: true, publish_state: false }
-      joint6: { p: 100.0, i: 0, d: 1.3, i_clamp_max: 0, i_clamp_min: 0, antiwindup: true, publish_state: false }
-      joint7: { p: 4.5, i: 0., d: 0.8, i_max: 0.0, i_min: 0.0, antiwindup: true, publish_state: false }
+      joint1: { p: 10000.0, i: 0.5, d: 300.0, i_clamp_max: 2, i_clamp_min: -2, antiwindup: true, publish_state: false }
+      joint2: { p: 17000, i: 0.5, d: 1000.0, i_clamp_max: 1, i_clamp_min: -1, antiwindup: true, publish_state: false }
+      joint3: { p: 9000.0, i: 0.5, d: 220.0, i_clamp_max: 2, i_clamp_min: -2, antiwindup: true, publish_state: false }
+      joint4: { p: 250.0, i: 0.5, d: 2, i_clamp_max: 1, i_clamp_min: -1, antiwindup: true, publish_state: false }
+      joint5: { p: 50.0, i: 0.5, d: 2.0, i_clamp_max: 1, i_clamp_min: -1, antiwindup: true, publish_state: false }
+      joint6: { p: 150.0, i: 0.5, d: 1.4, i_clamp_max: 1, i_clamp_min: -1, antiwindup: true, publish_state: false }
+      joint7: { p: 8, i: 0.7, d: 1.4, i_clamp_max: 2.0, i_clamp_min: -2.0, antiwindup: true, publish_state: false }
     constraints:
-      joint1: { trajectory: 0.02, goal: 0.01 }
-      joint2: { trajectory: 0.01, goal: 0.01 }
-      joint3: { trajectory: 0.01, goal: 0.01 }
+      joint1: { trajectory: 0.03, goal: 0.01 }
+      joint2: { trajectory: 0.03, goal: 0.01 }
+      joint3: { trajectory: 0.03, goal: 0.01 }
       joint4: { trajectory: 0.03, goal: 0.015 }
-      joint5: { trajectory: 0.03, goal: 0.01 }
-      joint6: { trajectory: 0.01, goal: 0.01 }
+      joint5: { trajectory: 0.05, goal: 0.03 }
+      joint6: { trajectory: 0.03, goal: 0.01 }
       joint7: { trajectory: 0.05, goal: 0.01 }
 
 
@@ -88,7 +88,7 @@ controllers:
     type: rm_gimbal_controllers/Controller
     yaw:
       joint: "yaw_joint"
-      pid: { p: 0.5, i: 0.0, d: 0.0, i_clamp_max: 0.0, i_clamp_min: -0.0, antiwindup: true, publish_state: false }
+      pid: { p: 0.5, i: 0, d: 0.0, i_clamp_max: 0.0, i_clamp_min: -0.0, antiwindup: true, publish_state: false }
     pitch:
       joint: "pitch_joint"
       pid: { p: 0., i: 0.0, d: 0.0, i_clamp_max: 0.0, i_clamp_min: -0.0, antiwindup: true, publish_state: false }
@@ -116,17 +116,17 @@ controllers:
   ore_bin_lifter_controller:
     type: effort_controllers/JointPositionController
     joint: ore_bin_lifter_joint
-    pid: { p: 60000., i: 0., d: 5000, i_max: 0.01, i_min: 0.01, antiwindup: true, publish_state: false }
+    pid: { p: 14000., i: 0., d: 3000, i_max: 0.01, i_min: 0.01, antiwindup: true, publish_state: true }
 
   ore_bin_rotate_controller:
     type: effort_controllers/JointPositionController
     joint: ore_bin_rotate_joint
-    pid: { p: 0.9, i: 0., d: 0.06, i_max: 0.0, i_min: 0.0, antiwindup: true, publish_state: false }
+    pid: { p: 1., i: 0., d: 0.09, i_max: 0.0, i_min: 0.0, antiwindup: true, publish_state: false }
 
   gimbal_lifter_controller:
     type: effort_controllers/JointPositionController
     joint: gimbal_lifter_joint
-    pid: { p: 10000., i: 0., d: 1000, i_max: 0.01, i_min: 0.01, antiwindup: true, publish_state: false }
+    pid: { p: 7000., i: 0., d: 1000, i_max: 0.01, i_min: 0.01, antiwindup: true, publish_state: false }
 
   extend_arm_front_controller:
     type: effort_controllers/JointPositionController
@@ -203,6 +203,19 @@ controllers:
       joint: joint2
       pid: { p: 200, i: 0, d: 0, i_clamp_max: 0.0, i_clamp_min: 0, antiwindup: true, publish_state: false }
 
+  joint2_home_calibration_controller:
+    type: rm_calibration_controllers/MechanicalCalibrationController
+    actuator: [ joint2_motor ]
+    velocity:
+      search_velocity: 0.4
+      vel_threshold: 0.001
+      joint: joint2
+      pid: { p: 200, i: 0, d: 0, i_clamp_max: 0.0, i_clamp_min: 0, antiwindup: true, publish_state: false }
+    return:
+      joint: joint2
+      pid: { p: 1000, i: 0, d: 100, i_clamp_max: 0.0, i_clamp_min: 0, antiwindup: true, publish_state: false }
+      target_position: 0.05
+    pos_threshold: 0.001
 
   joint3_calibration_controller:
     type: rm_calibration_controllers/MechanicalCalibrationController

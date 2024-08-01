@@ -22,6 +22,7 @@ rm_manual:
   vel:
     topic: "/cmd_vel"
     power_limit_topic: "/cmd_chassis"
+    target_vel_yaw_threshold: 3.
     max_linear_x:
       - [ 50.0,2.1 ]
       - [ 80.0,2.8 ]
@@ -41,7 +42,7 @@ rm_manual:
     gyro_rotate_reduction: 0.8
   gimbal:
     topic: "/controllers/gimbal_controller/command"
-    max_yaw_vel: 12.56
+    max_yaw_vel: 15.7
     max_pitch_vel: 8.37
     gimbal_scale: 8.0
     track_timeout: 0.5
@@ -64,15 +65,18 @@ rm_manual:
     speed_30m_per_speed: 27.5
     wheel_speed_15: 450.0
     wheel_speed_18: 500.0
-    wheel_speed_30: 750.0
+    wheel_speed_30: 770.0
     extra_wheel_speed_once: 5.0
+    auto_wheel_speed: true
+    speed_oscillation: 1.0
     heat_limit:
-      low_shoot_frequency: 10
+      low_shoot_frequency: 20
       high_shoot_frequency: 20
       burst_shoot_frequency: 20
       minimal_shoot_frequency: 1.75
-      safe_shoot_frequency: 3
-      heat_coeff: 24.0
+      safe_shoot_frequency: 19
+      heat_coeff: 3.0
+      use_local_heat: false
       type: "ID1_17MM"
   cover:
     topic: "/controllers/cover_controller/command"
