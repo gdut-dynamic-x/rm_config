@@ -19,10 +19,10 @@ controllers:
     type: rm_calibration_controllers/MechanicalCalibrationController
     actuator: [ scope_joint_motor ]
     velocity:
-      search_velocity: -3.1415
+      search_velocity: -3.0
       vel_threshold: 0.001
       joint: scope_joint
-      pid: { p: 0.3, i: 0, d: 0.0, i_clamp_max: 0.0, i_clamp_min: 0.0, antiwindup: true }
+      pid: { p: 0.2, i: 0, d: 0.0, i_clamp_max: 0.0, i_clamp_min: 0.0, antiwindup: true }
 
   image_transmission_calibration_controller:
     type: rm_calibration_controllers/MechanicalCalibrationController
@@ -85,15 +85,17 @@ controllers:
     type: rm_gimbal_controllers/Controller
     yaw:
       joint: "yaw_joint"
-      pid: { p: 3.6, i: 28.0, d: 0.0, i_clamp_max: 0.15, i_clamp_min: -0.15, antiwindup: true, publish_state: true }
-      pid_pos: { p: 15.0, i: 0, d: 0.0, i_clamp_max: 0.0, i_clamp_min: 0.0, antiwindup: true, publish_state: true }
+      pid: { p: 1.6, i: 30.0, d: 0.0, i_clamp_max: 0.25, i_clamp_min: -0.25, antiwindup: true, publish_state: true }
+      pid_pos: { p: 12.5, i: 0, d: 0.0, i_clamp_max: 0.0, i_clamp_min: 0.0, antiwindup: true, publish_state: true }
       k_chassis_vel: 0.035
       k_v: 1.0
+      accel: 20.0
     pitch:
       joint: "pitch_joint"
       pid: { p: 1.5, i: 30.0, d: 0.0, i_clamp_max: 0.3, i_clamp_min: -0.3, antiwindup: true, publish_state: true }
       pid_pos: { p: 17.0, i: 0, d: 0.0, i_clamp_max: 0.0, i_clamp_min: 0.0, antiwindup: true, publish_state: true }
       k_v: 1.0
+      accel: 40.0
     delay: 0.0
     chassis_vel:
       num_data: 30
