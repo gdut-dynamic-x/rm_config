@@ -51,8 +51,8 @@ controllers:
       joint: right_wheel_joint
       pid: { p: 0.6, i: 0, d: 0.0, i_max: 0.0, i_min: 0.0, antiwindup: true, publish_state: false }
     pid_follow: { p: 7.0, i: 0, d: 0.3, i_max: 0.0, i_min: 0.0, antiwindup: true, publish_state: false }
-    pid_left_leg: { p: 600.0, i: 0, d: 35, i_clamp_max: 30.0, i_clamp_min: -30.0, antiwindup: true, publish_state: false }
-    pid_right_leg: { p: 600.0, i: 0, d: 35, i_clamp_max: 30.0, i_clamp_min: -30.0, antiwindup: true, publish_state: false }
+    pid_left_leg: { p: 1200.0, i: 9.5, d: 70, i_clamp_max: 30.0, i_clamp_min: -30.0, antiwindup: true, publish_state: false }
+    pid_right_leg: { p: 1200.0, i: 9.5, d: 70, i_clamp_max: 30.0, i_clamp_min: -30.0, antiwindup: true, publish_state: false }
     pid_theta_diff: { p: 10.0, i: 0.0, d: 0.0, i_max: 0.0, i_min: 0.0, antiwindup: true, publish_state: false }
     pid_roll: { p: 600.0, i: 0, d: 25, i_clamp_max: 15.0, i_clamp_min: -15.0, antiwindup: true, publish_state: false }
     pid_center_gravity: { p: 0.0, i: 10.0, d: 0, i_clamp_max: 3.5, i_clamp_min: -3.5, antiwindup: true, publish_state: false }
@@ -63,7 +63,7 @@ controllers:
     leg_protect_length: 0.1
     leg_protect_speed: 8.0
     ground_support_threshold: 20
-    vmc_bias_angle: 3.49
+    vmc_bias_angle: 3.837
 
     gravity_compensation_vel_threshold: 0.1
     gravity_compensation_pos_threshold: 0.5

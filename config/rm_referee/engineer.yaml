@@ -3,7 +3,7 @@ rm_referee:
   send_ui_queue_delay: 0.05
   add_ui_frequency: 0.5
   add_ui_max_times: 3
-  dbus_topic: "/dbus_data"
+  dbus_topic: "/rm_ecat_hw/dbus"
   interactive_data:
   ui:
     trigger_change:
@@ -14,6 +14,18 @@ rm_referee:
       - name: "servo_mode"
         config: { start_position: [ 50, 700 ], size: 15, width: 2, title: "mode:" }
     fixed:
+      - name: "car_line_left"
+        config: { type: "line", width: 2, color: "orange",
+                  start_position: [ 887, 456 ], end_position: [ 626, 230 ] }
+      - name: "car_line_right"
+        config: { type: "line", width: 2, color: "orange",
+                  start_position: [ 1047, 457 ], end_position: [ 1245, 245 ] }
+      - name: "ore_line_mid"
+        config: { type: "line", width: 3, color: "orange",
+                  start_position: [ 859, 179 ], end_position: [ 1063, 86 ] }
+      - name: "ore_line_side"
+        config: { type: "line", width: 3, color: "orange",
+                  start_position: [ 874, 193 ], end_position: [ 1037, 94 ] }
     flash:
       - name: "engineer_action"
         data:
@@ -22,13 +34,13 @@ rm_referee:
     time_change:
       - name: "engineer_joint1"
         config: { type: "line", width: 5, delay: 0.2,
-                  start_position: [ 850, 100 ], end_position: [ 850, 300 ] }
-        data: { line_length: 100.,  min_val: 0.0025, max_val: 0.45 ,direction: vertical }
+                  start_position: [ 1440, 100 ], end_position: [ 1440, 300 ] }
+        data: { line_length: 100.,  min_val: 0.0025, max_val: 0.475 ,direction: vertical }
       - name: "engineer_joint2"
         config: { type: "line", width: 5, delay: 0.2,
-                  start_position: [ 850, 100 ], end_position: [ 950, 200 ] }
-        data: { line_length: 80., min_val: -0.0003 , max_val: 0.2626 ,direction: slant }
+                  start_position: [ 1440, 100 ], end_position: [ 1540, 200 ] }
+        data: { line_length: 80., min_val: -0.01 , max_val: 0.232 ,direction: slant }
       - name: "engineer_joint3"
         config: { type: "line", width: 5, delay: 0.2,
-                  start_position: [ 850, 100 ], end_position: [ 1100, 100 ] }
-        data: { line_length: 100., min_val: 0.005 , max_val: -0.2808 ,direction: horizontal }
+                  start_position: [ 1440, 100 ], end_position: [ 1690, 100 ] }
+        data: { line_length: 100., min_val: 0.29 , max_val: -0.280 ,direction: horizontal }

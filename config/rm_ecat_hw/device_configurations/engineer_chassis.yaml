@@ -5,7 +5,7 @@ can_motors:
     name: "ore_bin_rotate_joint_motor"
     type: "GM6020"
     need_calibration: false
-  - can_id: 6
+  - can_id: 1
     can_bus: 0
     name: "ore_bin_lifter_joint_motor"
     type: "M3508"
