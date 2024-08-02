@@ -123,7 +123,6 @@ rm_manual:
         - controllers/scope_controller
       services_name:
         - /controllers/scope_calibration_controller/is_calibrated
-
 controllers:
   scope_controller:
     type: effort_controllers/JointPositionController

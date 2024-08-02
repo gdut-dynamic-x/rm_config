@@ -7,7 +7,6 @@ ethercat_devices:
     configuration_file: device_configurations/hero2_chassis.yaml
     ethercat_bus: enp2s0
     ethercat_address: 1
-
   - type: Rm
     name: Gimbal
     configuration_file: device_configurations/hero2_gimbal.yaml
