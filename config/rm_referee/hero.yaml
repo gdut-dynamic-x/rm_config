@@ -70,13 +70,13 @@ rm_referee:
                   start_position: [ 986, 594 ], end_position: [ 1030, 594 ] }
       - name: "base_up"
         config: { type: "line", width: 3, color: "yellow",
-                  start_position: [ 911, 604 ], end_position: [ 955, 604 ] }
+                  start_position: [ 695, 516 ], end_position: [ 770, 516 ] }
       - name: "base_mid"
         config: { type: "line", width: 3, color: "yellow",
-                  start_position: [ 930, 560 ], end_position: [ 930, 610 ] }
+                  start_position: [ 733, 516 ], end_position: [ 733, 496 ] }
       - name: "base_down"
         config: { type: "line", width: 3, color: "yellow",
-                  start_position: [ 908, 596 ], end_position: [ 953, 596 ] }
+                  start_position: [ 695, 496 ], end_position: [ 770, 496 ] }
       #      - name: "ring_highland_up"
       #        config: { type: "line", width: 3, color: "yellow",
       #                  start_position: [ 874, 681 ], end_position: [ 1046, 681 ] }
