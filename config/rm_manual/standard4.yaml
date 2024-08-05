@@ -65,7 +65,7 @@ rm_manual:
     speed_30m_per_speed: 27.5
     wheel_speed_15: 450.0
     wheel_speed_18: 500.0
-    wheel_speed_30: 770.0
+    wheel_speed_30: 790.0
     extra_wheel_speed_once: 5.0
     auto_wheel_speed: true
     speed_oscillation: 1.0

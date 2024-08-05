@@ -87,7 +87,7 @@ controllers:
       accel: 40.0
     pitch:
       joint: "pitch_joint"
-      pid: { p: 0.6, i: 30.0, d: 0.0, i_clamp_max: 0.25, i_clamp_min: -0.25, antiwindup: true, publish_state: true }
+      pid: { p: 0.7, i: 22.0, d: 0.0, i_clamp_max: 0.25, i_clamp_min: -0.25, antiwindup: true, publish_state: true }
       pid_pos: { p: 27.0, i: 0, d: 0.0, i_max: 0.0, i_min: 0.0, antiwindup: true, publish_state: true }
       k_v: 1.0
       accel: 40.0
@@ -96,7 +96,7 @@ controllers:
       debug: true
     imu_name: "gimbal_imu"
     feedforward:
-      gravity: 12.2625
+      gravity: 9.8
       enable_gravity_compensation: false
       mass_origin: [ 0.0293,0.0,0.01 ]
     bullet_solver:
@@ -133,7 +133,7 @@ controllers:
         pid: { p: 0.0007, i: 0.005, d: 0.0, i_clamp_max: 0.01, i_clamp_min: -0.01, antiwindup: true, publish_state: true }
     trigger:
       joint: "trigger_joint"
-      pid: { p: 34.0, i: 0.0, d: 1.0, i_clamp_max: 0.0, i_clamp_min: 0.0, antiwindup: true, publish_state: true }
+      pid: { p: 15.0, i: 0.0, d: 1.0, i_clamp_max: 0.0, i_clamp_min: 0.0, antiwindup: true, publish_state: true }
     push_per_rotation: 9
     push_qd_threshold: 0.90
     block_effort: 3.0

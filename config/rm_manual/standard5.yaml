@@ -70,9 +70,9 @@ rm_manual:
     auto_wheel_speed: true
     speed_oscillation: 1.0
     heat_limit:
-      low_shoot_frequency: 15
-      high_shoot_frequency: 15
-      burst_shoot_frequency: 15
+      low_shoot_frequency: 17
+      high_shoot_frequency: 17
+      burst_shoot_frequency: 17
       minimal_shoot_frequency: 1.5
       safe_shoot_frequency: 3
       safe_speed_limit: 30

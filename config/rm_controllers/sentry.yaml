@@ -27,9 +27,9 @@ controllers:
     actuator: [ barrel_joint_motor ]
     velocity:
       joint: barrel_joint
-      search_velocity: -6.28
+      search_velocity: -3.14
       vel_threshold: 0.001
-      pid: { p: 1.5, i: 6.0, d: 0.0, i_clamp_max: 0.2, i_clamp_min: -0.2, antiwindup: true }
+      pid: { p: 0.6, i: 4.0, d: 0.0, i_clamp_max: 0.2, i_clamp_min: -0.2, antiwindup: true }
 
   chassis_controller:
     # ChassisBase
@@ -103,8 +103,8 @@ controllers:
     type: rm_gimbal_controllers/Controller
     yaw:
       joint: "yaw_joint"
-      pid: { p: 0.375, i: 16.0, d: 0.0, i_clamp_max: 0.18, i_clamp_min: -0.18, antiwindup: true, publish_state: false }
-      pid_pos: { p: 11.0, i: 0.0 , d: 0.0, i_max: 0.0, i_min: 0.0, antiwindup: true, publish_state: false }
+      pid: { p: 0.45, i: 30.0, d: 0.0, i_clamp_max: 0.28, i_clamp_min: -0.28, antiwindup: true, publish_state: false }
+      pid_pos: { p: 12.0, i: 0.0 , d: 0.0, i_max: 0.0, i_min: 0.0, antiwindup: true, publish_state: false }
       k_chassis_vel: 0.01
       k_v: 1.0
       resistance_compensation:
@@ -113,8 +113,8 @@ controllers:
         effort_saturation_point: 0.052
     pitch:
       joint: "pitch_joint"
-      pid: { p: 0.3, i: 15.0, d: 0.0, i_clamp_max: 0.3, i_clamp_min: -0.3, antiwindup: true, publish_state: false }
-      pid_pos: { p: 12.0, i: 0, d: 0.0, i_max: 0.0, i_min: 0.0, antiwindup: true, publish_state: false }
+      pid: { p: 0.65, i: 12.0, d: 0.0, i_clamp_max: 0.3, i_clamp_min: -0.3, antiwindup: true, publish_state: false }
+      pid_pos: { p: 28.0, i: 0, d: 0.0, i_max: 0.0, i_min: 0.0, antiwindup: true, publish_state: false }
       k_v: 1.0
     chassis_vel:
       num_data: 100
@@ -126,7 +126,7 @@ controllers:
     delay2: 0.065
     imu_name: "gimbal_imu"
     feedforward:
-      gravity: 22.412
+      gravity: 12.412
       enable_gravity_compensation: false
       mass_origin: [ 0.03,0.0,0.016 ]
     bullet_solver:
@@ -137,6 +137,8 @@ controllers:
       resistance_coff_qd_30: 0.01
       g: 9.81
       delay: 0.065
+      wait_next_armor_delay: 0.08
+      wait_diagonal_armor_delay: 0.08
       dt: 0.001
       timeout: 0.001
       publish_rate: 50
@@ -146,7 +148,7 @@ controllers:
       gimbal_switch_duration: 0.12
       max_track_target_vel: 12.0
       max_chassis_angular_vel: 12.0
-      track_rotate_target_delay: 0.02
+      track_rotate_target_delay: 0.03
       track_move_target_delay: 0.03
 
   shooter_controller:
@@ -175,3 +177,10 @@ controllers:
     exit_push_threshold: 0.3
     wheel_speed_drop_threshold: 3.3
     wheel_speed_raise_threshold: 1.4
+
+
+  barrel_controller:
+    type: effort_controllers/JointPositionController
+    joint: "barrel_joint"
+    pid: { p: 30.0, i: 15.0, d: 0.3, i_clamp_max: 0.03, i_clamp_min: -0.03, antiwindup: true, publish_state: false }
+

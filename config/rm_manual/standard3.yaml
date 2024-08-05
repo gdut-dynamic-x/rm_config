@@ -23,19 +23,22 @@ rm_manual:
     topic: "/cmd_vel"
     power_limit_topic: "/cmd_chassis"
     max_linear_x:
-      - [ 50.0,3.14 ]
-      - [ 80.0,5. ]
-      - [ 240.0, 5. ]
+      - [ 50.0,2.1 ]
+      - [ 80.0,2.8 ]
+      - [ 100.0,3.2 ]
+      - [ 220.0,7.0 ]
     max_linear_y:
-      - [ 50.0,3.14 ]
-      - [ 80.0,4.76 ]
-      - [ 240.0,5.0 ]
+      - [ 50.0,2.1 ]
+      - [ 80.0,2.8 ]
+      - [ 100.0,3.2 ]
+      - [ 220.0,7.0 ]
     max_angular_z:
-      - [ 50.0,10.1 ]
-      - [ 80.0,14.9 ]
-      - [ 240.0,16.2 ]
-    gyro_move_reduction: 0.3
-    gyro_rotate_reduction: 0.4
+      - [ 50.0,10.5 ]
+      - [ 80.0,11.5 ]
+      - [ 100.0,12.0 ]
+      - [ 220.0,18.0 ]
+    gyro_move_reduction: 0.85
+    gyro_rotate_reduction: 0.6
   gimbal:
     topic: "/controllers/gimbal_controller/command"
     max_yaw_vel: 12.56
@@ -59,11 +62,14 @@ rm_manual:
     speed_15m_per_speed: 13.5
     speed_16m_per_speed: 16.0
     speed_18m_per_speed: 15.72
-    speed_30m_per_speed: 28.0
+    speed_30m_per_speed: 27.5
     wheel_speed_15: 440.0
     wheel_speed_18: 500.0
-    wheel_speed_30: 820.0
+    wheel_speed_30: 780.0
+    wheel_speed_gain: 5.0
     extra_wheel_speed_once: 5.0
+    speed_oscillation: 1.0
+    auto_wheel_speed: true
     heat_limit:
       low_shoot_frequency: 20
       high_shoot_frequency: 20
@@ -71,7 +77,7 @@ rm_manual:
       minimal_shoot_frequency: 1.75
       safe_shoot_frequency: 3
       heat_coeff: 10.0
-      is_local: ture
+      use_local_heat: true
       type: "ID1_17MM"
   cover:
     topic: "/controllers/cover_controller/command"
