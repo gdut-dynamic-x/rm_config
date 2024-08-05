@@ -109,9 +109,9 @@ controllers:
       enable_gravity_compensation: false
       mass_origin: [ 0.0,0.0,0.0 ]
     bullet_solver:
-      resistance_coff_qd_10: 0.0
-      resistance_coff_qd_15: 1.0
-      resistance_coff_qd_16: 0.0
+      resistance_coff_qd_10: 0.001
+      resistance_coff_qd_15: 0.001
+      resistance_coff_qd_16: 0.001
       resistance_coff_qd_18: 0.55
       resistance_coff_qd_30: 3.0
       g: 9.81
@@ -119,6 +119,8 @@ controllers:
       dt: 0.001
       timeout: 0.001
       publish_rate: 50
+      max_switch_angle: 50
+      min_switch_angle: 2
       ban_shoot_duration: 0.04
       gimbal_switch_duration: 0.1
       max_track_target_vel: 1.0
@@ -155,8 +157,3 @@ controllers:
     anti_block_threshold: 0.1
     forward_push_threshold: 0.2
     exit_push_threshold: 0.23
-
-  scope_controller:
-    type: effort_controllers/JointPositionController
-    joint: "scope_joint"
-    pid: { p: 8.0, i: 0.0, d: 0.3, i_clamp_max: 0.0, i_clamp_min: -0.0, antiwindup: true, publish_state: true }
