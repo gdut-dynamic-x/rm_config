@@ -115,12 +115,15 @@ controllers:
       publish_rate: 50
       max_switch_angle: 50
       min_switch_angle: 2
-      ban_shoot_duration: 0.03
+      ban_shoot_duration: 0.025
       gimbal_switch_duration: 0.08
-      max_track_target_vel: 12.0
+      ban_shoot_duration2: 0.015
+      gimbal_switch_duration2: 0.02
+      max_track_target_vel: 13.0
       max_chassis_angular_vel: 12.0
       track_rotate_target_delay: 0.03
       track_move_target_delay: 0.0
+      wait_next_armor_delay: 0.08
       wait_diagonal_armor_delay: 0.08
 
   shooter_controller:
