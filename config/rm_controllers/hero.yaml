@@ -22,16 +22,16 @@ controllers:
       search_velocity: -3.1415
       vel_threshold: 0.001
       joint: scope_joint
-      pid: { p: 0.3, i: 0, d: 0.0, i_clamp_max: 0.0, i_clamp_min: 0.0, antiwindup: true }
+      pid: { p: 0.25, i: 0, d: 0.0, i_clamp_max: 0.0, i_clamp_min: 0.0, antiwindup: true }
 
   image_transmission_calibration_controller:
     type: rm_calibration_controllers/MechanicalCalibrationController
     actuator: [ image_transmission_joint_motor ]
     velocity:
-      search_velocity: 12.56
+      search_velocity: 15.7
       vel_threshold: 0.001
       joint: image_transmission_joint
-      pid: { p: 0.006, i: 0, d: 0.0, i_clamp_max: 0.0, i_clamp_min: 0.0, antiwindup: true }
+      pid: { p: 0.007, i: 0, d: 0.0, i_clamp_max: 0.0, i_clamp_min: 0.0, antiwindup: true }
 
   chassis_controller:
     type: rm_chassis_controllers/OmniController
@@ -40,7 +40,7 @@ controllers:
     enable_odom_tf: true
     publish_odom_tf: false
     power:
-      effort_coeff: 2.30
+      effort_coeff: 2.25
       vel_coeff: 0.012
       power_offset: -9.8
     twist_angular: 0.5233
@@ -93,7 +93,7 @@ controllers:
     pitch:
       joint: "pitch_joint"
       pid: { p: 1.8, i: 20.0, d: 0.0, i_clamp_max: 0.25, i_clamp_min: -0.25, antiwindup: true, publish_state: true }
-      pid_pos: { p: 17.0, i: 0, d: 0.0, i_max: 0.0, i_min: 0.0, antiwindup: true, publish_state: true }
+      pid_pos: { p: 13.0, i: 0, d: 0.0, i_max: 0.0, i_min: 0.0, antiwindup: true, publish_state: true }
       k_v: 1.0
       accel: 40.0
     imu_name: "gimbal_imu"
@@ -109,8 +109,8 @@ controllers:
       resistance_coff_qd_30: 3.0
       g: 9.81
       delay: 0.1195
-      wait_next_armor_delay: 0.1195
-      wait_diagonal_armor_delay: 0.1195
+      wait_next_armor_delay: 0.09
+      wait_diagonal_armor_delay: 0.09
       dt: 0.001
       timeout: 0.001
       publish_rate: 50
@@ -144,7 +144,7 @@ controllers:
         wheel_speed_offset: -220
     trigger:
       joint: "trigger_joint"
-      pid: { p: 20.0, i: 0.0, d: 0.65, i_clamp_max: 0.0, i_clamp_min: 0.0, antiwindup: true, publish_state: true }
+      pid: { p: 25.0, i: 0.0, d: 0.65, i_clamp_max: 0.0, i_clamp_min: 0.0, antiwindup: true, publish_state: true }
     push_per_rotation: 6
     push_qd_threshold: 0.85
     block_effort: 6.8
