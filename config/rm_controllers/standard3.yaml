@@ -80,9 +80,9 @@ controllers:
     type: rm_gimbal_controllers/Controller
     yaw:
       joint: "yaw_joint"
-      pid: { p: 0.6, i: 20.0, d: 0.0, i_clamp_max: 0.3, i_clamp_min: -0.3, antiwindup: true, publish_state: true }
-      pid_pos: { p: 15.0, i: 0, d: 0.0, i_max: 0.0, i_min: 0.0, antiwindup: true, publish_state: true }
-      k_chassis_vel: 0.02
+      pid: { p: 0.75, i: 20.0, d: 0.0, i_clamp_max: 0.3, i_clamp_min: -0.3, antiwindup: true, publish_state: true }
+      pid_pos: { p: 16.5, i: 0, d: 0.0, i_max: 0.0, i_min: 0.0, antiwindup: true, publish_state: true }
+      k_chassis_vel: 0.014
       k_v: 1.0
       accel: 45.0
     pitch:
@@ -113,8 +113,10 @@ controllers:
       publish_rate: 50
       max_switch_angle: 50
       min_switch_angle: 2
-      ban_shoot_duration: 0.02
-      gimbal_switch_duration: 0.1
+      ban_shoot_duration: 0.03
+      ban_shoot_duration2: 0.025
+      gimbal_switch_duration: 0.09
+      gimbal_switch_duration2: 0.027
       max_track_target_vel: 12.0
       max_chassis_angular_vel: 12.0
       track_rotate_target_delay: 0.02
@@ -148,5 +150,5 @@ controllers:
     forward_push_threshold: 0.22
     exit_push_threshold: 0.25
     wheel_speed_drop_threshold: 4.0
-    wheel_speed_raise_threshold: 2.4
+    wheel_speed_raise_threshold: 1.6
     freq_threshold: 15.0
