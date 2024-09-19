@@ -38,7 +38,7 @@ controllers:
     enable_odom_tf: true
     publish_odom_tf: false
     power:
-      effort_coeff: 5.0
+      effort_coeff: 4.0
       vel_coeff: 0.006
       power_offset: -8.41
     twist_angular: 0.5233
@@ -87,8 +87,8 @@ controllers:
       accel: 45.0
     pitch:
       joint: "pitch_joint"
-      pid: { p: 0.7, i: 12.0, d: 0.0, i_clamp_max: 0.23, i_clamp_min: -0.23, antiwindup: true, publish_state: true }
-      pid_pos: { p: 22.0, i: 0, d: 0.0, i_max: 0.0, i_min: 0.0, antiwindup: true, publish_state: true }
+      pid: { p: 0.55, i: 10.0, d: 0.0, i_clamp_max: 0.2, i_clamp_min: -0.2, antiwindup: true, publish_state: true }
+      pid_pos: { p: 20.0, i: 0, d: 0.0, i_max: 0.0, i_min: 0.0, antiwindup: true, publish_state: true }
       k_v: 1.0
       accel: 40.0
     delay: 0.03
@@ -121,7 +121,8 @@ controllers:
       max_chassis_angular_vel: 12.0
       track_rotate_target_delay: 0.02
       track_move_target_delay: 0.03
-      wait_diagonal_armor_delay: 0.07
+      wait_next_armor_delay: 0.05
+      wait_diagonal_armor_delay: 0.05
 
   shooter_controller:
     type: rm_shooter_controllers/Controller

@@ -133,7 +133,7 @@ controllers:
       left_back_friction_wheel:
         joint: "left_back_friction_wheel_joint"
         pid: { p: 0.001, i: 0.01, d: 0.0, i_clamp_max: 0.01, i_clamp_min: -0.01, antiwindup: true, publish_state: true }
-        wheel_speed_offset: -220
+        wheel_speed_offset: -100
     friction_right:
       right_front_friction_wheel:
         joint: "right_front_friction_wheel_joint"
@@ -141,7 +141,7 @@ controllers:
       right_back_friction_wheel:
         joint: "right_back_friction_wheel_joint"
         pid: { p: 0.001, i: 0.01, d: 0.0, i_clamp_max: 0.01, i_clamp_min: -0.01, antiwindup: true, publish_state: true }
-        wheel_speed_offset: -220
+        wheel_speed_offset: -100
     trigger:
       joint: "trigger_joint"
       pid: { p: 25.0, i: 0.0, d: 0.65, i_clamp_max: 0.0, i_clamp_min: 0.0, antiwindup: true, publish_state: true }
