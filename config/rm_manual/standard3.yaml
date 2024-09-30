@@ -26,12 +26,12 @@ rm_manual:
       - [ 50.0,2.1 ]
       - [ 80.0,2.8 ]
       - [ 100.0,3.2 ]
-      - [ 220.0,7.0 ]
+      - [ 220.0,8.5 ]
     max_linear_y:
       - [ 50.0,2.1 ]
       - [ 80.0,2.8 ]
       - [ 100.0,3.2 ]
-      - [ 220.0,7.0 ]
+      - [ 220.0,8.5 ]
     max_angular_z:
       - [ 50.0,10.5 ]
       - [ 80.0,11.5 ]
@@ -54,7 +54,7 @@ rm_manual:
       timeout: 0.1
   shooter:
     topic: "/controllers/shooter_controller/command"
-    track_armor_error_tolerance: 0.08
+    track_armor_error_tolerance: 0.12
     track_buff_error_tolerance: 0.12
     target_acceleration_tolerance: 99.0
     accleration_moving_average_num: 50
@@ -76,7 +76,7 @@ rm_manual:
       burst_shoot_frequency: 20
       minimal_shoot_frequency: 1.75
       safe_shoot_frequency: 3
-      heat_coeff: 10.0
+      heat_coeff: 5.0
       use_local_heat: true
       type: "ID1_17MM"
   cover:
