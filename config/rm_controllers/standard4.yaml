@@ -39,7 +39,7 @@ controllers:
     publish_odom_tf: false
     power:
       effort_coeff: 5.0
-      vel_coeff: 0.006
+      vel_coeff: 0.002
       power_offset: -8.41
     twist_angular: 0.5233
     max_odom_vel: 10.0
@@ -52,22 +52,27 @@ controllers:
       left_front:
         pose: [ 0.147, 0.147, 2.356 ]
         joint: left_front_wheel_joint
-        <<: &wheel_setting
-          roller_angle: 0.
-          radius: 0.07625
-          pid: { p: 0.25, i: 0, d: 0.0, i_max: 0.0, i_min: 0.0, antiwindup: true, publish_state: true }
+        roller_angle: 0.
+        radius: 0.07625
+        pid: { p: 0.33, i: 0, d: 0.0, i_max: 0.0, i_min: 0.0, antiwindup: true, publish_state: true }
       right_front:
         pose: [ 0.147, -0.147, 0.785 ]
         joint: right_front_wheel_joint
-        <<: *wheel_setting
+        roller_angle: 0.
+        radius: 0.07625
+        pid: { p: 0.3, i: 0, d: 0.0, i_max: 0.0, i_min: 0.0, antiwindup: true, publish_state: true }
       left_back:
         pose: [ -0.147, 0.147, -2.356 ]
         joint: left_back_wheel_joint
-        <<: *wheel_setting
+        roller_angle: 0.
+        radius: 0.07625
+        pid: { p: 0.3, i: 0, d: 0.0, i_max: 0.0, i_min: 0.0, antiwindup: true, publish_state: true }
       right_back:
         pose: [ -0.147, -0.147, -0.785 ]
         joint: right_back_wheel_joint
-        <<: *wheel_setting
+        roller_angle: 0.
+        radius: 0.07625
+        pid: { p: 0.37, i: 0, d: 0.0, i_max: 0.0, i_min: 0.0, antiwindup: true, publish_state: true }
 
   orientation_controller:
     type: rm_orientation_controller/Controller
@@ -107,17 +112,20 @@ controllers:
       resistance_coff_qd_30: 0.0
       g: 9.81
       delay: 0.04
+      wait_next_armor_delay: 0.08
       wait_diagonal_armor_delay: 0.08
       dt: 0.001
       timeout: 0.001
       publish_rate: 50
       max_switch_angle: 50
       min_switch_angle: 2
-      ban_shoot_duration: 0.05
+      ban_shoot_duration: 0.03
       gimbal_switch_duration: 0.1
+      ban_shoot_duration2: 0.025
+      gimbal_switch_duration2: 0.027
       max_track_target_vel: 12.0
       max_chassis_angular_vel: 12.0
-      track_rotate_target_delay: 0.02
+      track_rotate_target_delay: 0.03
       track_move_target_delay: 0.04
 
   shooter_controller:
@@ -144,6 +152,6 @@ controllers:
     anti_block_threshold: 0.1
     forward_push_threshold: 0.05
     exit_push_threshold: 0.07
-    wheel_speed_drop_threshold: 6.3
-    wheel_speed_raise_threshold: 3.5
+    wheel_speed_drop_threshold: 5.0
+    wheel_speed_raise_threshold: 1.2
     freq_threshold: 15.0
