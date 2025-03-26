@@ -5,7 +5,7 @@
     <rosparam file="$(find armor_processor)/config/processor_config.yaml" command="load"/>
 
     <node pkg="nodelet" type="nodelet" name="Processor"
-          args="load rm_digtialimg_proc/Processor vision_nodelet">
+          args="load rm_digtialimg_proc/Processor vision_nodelet" respawn="true">
         <rosparam file="$(find rm_digtialimg_proc)/config/weibull_coefficient.yaml" command="load"/>
         <rosparam file="$(find rm_digtialimg_proc)/config/make_dataset.yaml" command="load"/>
         <rosparam file="$(find rm_digtialimg_proc)/config/armor_coefficient.yaml" command="load"/>
@@ -15,20 +15,28 @@
         <remap from="/galaxy_camera/image_raw" to="/$(arg camera_type)/$(arg camera_name)/image_raw"/>
     </node>
 
-    <node pkg="rm_pose_solver" type="pose_solver_node" name="pose_solver_node" output="screen">
+    <node pkg="rm_pose_solver" type="pose_solver_node" name="pose_solver_node" output="screen" respawn="true">
         <rosparam file="$(find rm_pose_solver)/config/pose_solver_config.yaml" command="load"/>
         <remap from="/processor/result_msg" to="/processor/result_msg"/>
         <remap from="/galaxy_camera/camera_info" to="/$(arg camera_type)/$(arg camera_name)/camera_info"/>
         <remap from="/detection" to="/detection"/>
     </node>
 
-    <node name="armor_processor" pkg="armor_processor" type="armor_processor" respawn="false"/>
+    <node name="armor_processor" pkg="armor_processor" type="armor_processor" respawn="true"/>
+
+<!--    <node pkg="nodelet" type="nodelet" name="forecast"-->
+<!--        args="load rm_forecast/Forecast_Node vision_nodelet" >-->
+<!--        <rosparam file="$(find rm_forecast)/config/forecast.yaml" command="load" />-->
+<!--        <rosparam file="$(find rm_forecast)/config/camera.yaml" command="load" />-->
+<!--       <remap from="/hk_camera/image_raw" to="/$(arg camera_type)/$(arg camera_name)/image_raw"/>-->
+<!--    </node>-->
 
     <node pkg="nodelet" type="nodelet" name="forecast"
-        args="load rm_forecast/Forecast_Node vision_nodelet" >
-        <rosparam file="$(find rm_forecast)/config/forecast.yaml" command="load" />
-        <rosparam file="$(find rm_forecast)/config/camera.yaml" command="load" />
-       <remap from="/hk_camera/image_raw" to="/$(arg camera_type)/$(arg camera_name)/image_raw"/>
+          args="load fft_forecast/Forecast_Node vision_nodelet" respawn="true">
+        <rosparam file="$(find fft_forecast)/config/forecast.yaml" command="load" />
+        <rosparam file="$(find fft_forecast)/config/camera.yaml" command="load" />
+        <remap from="/hk_camera/image_raw" to="/$(arg camera_type)/$(arg camera_name)/image_raw"/>
+        <remap from="/hk_camera/camera_info" to="/$(arg camera_type)/$(arg camera_name)/camera_info"/>
     </node>
 
 <!--     <include file="$(find buff_vision)/launch/buff_nodelet.launch"/> -->

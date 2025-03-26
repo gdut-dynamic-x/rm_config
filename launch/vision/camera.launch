@@ -9,13 +9,13 @@
     <rosparam file="$(find rm_config)/config/vision/camera.yaml" command="load"/>
 
     <node pkg="nodelet" type="nodelet" name="vision_nodelet" args="manager"
-          output="screen">
+          output="screen" respawn="true">
         <param name="num_worker_threads" value="8"/>
     </node>
 
     <node pkg="nodelet" type="nodelet" name="$(arg camera_name)"
           args="load $(arg camera_type)/$(arg camera_class) vision_nodelet"
-          output="screen">
+          output="screen" respawn="true">
         <param name="camera_frame_id" value="$(arg camera_frame)"/>
         <param name="enable_imu_trigger" value="$(arg imu_trigger)"/>
         <remap from="$(arg camera_name)/image_raw" to="/$(arg camera_type)/$(arg camera_name)/image_raw"/>
