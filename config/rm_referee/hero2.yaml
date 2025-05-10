@@ -26,7 +26,7 @@ rm_referee:
         config: { type: "line", width: 5, delay: 0.2,
                   start_position: [ 610, 100 ], end_position: [ 1210, 100 ] }
       - name: "image_transmission"
-        config: { type: "string", start_position: [ 775, 180 ], size: 25, width: 4, delay: 0.6, title: "image_transmission: " }
+        config: { type: "string", start_position: [ 775, 180 ], size: 25, width: 4, delay: 0.6, title: "image: " }
       - name: "pitch"
         config: { type: "string", start_position: [ 775, 220 ], size: 25, width: 4, delay: 0.6, title: "pitch: " }
       - name: "lane_line"
@@ -49,16 +49,16 @@ rm_referee:
                   start_position: [ 1210, 110 ], end_position: [ 1210, 90 ] }
       - name: "base_x"
         config: { type: "line", width: 2, color: "purple",
-                  start_position: [ 982, 473 ], end_position: [ 1062, 473 ] }
+                  start_position: [ 1090, 560 ], end_position: [ 1170, 560 ] }
       - name: "base_y"
         config: { type: "line", width: 2, color: "purple",
-                  start_position: [ 1022, 483 ], end_position: [ 1022, 463 ] }
+                  start_position: [ 1130, 570 ], end_position: [ 1130, 550 ] }
       - name: "ring_highland_up"
         config: { type: "line", width: 3, color: "yellow",
-                  start_position: [ 874, 316 ], end_position: [ 1046, 316 ] }
+                  start_position: [ 1090, 605 ], end_position: [ 1170, 605 ] }
       - name: "ring_highland_down"
         config: { type: "line", width: 3, color: "yellow",
-                  start_position: [ 874, 294 ], end_position: [ 1046, 294 ] }
+                  start_position: [ 1130, 615 ], end_position: [ 1130, 595 ] }
       - name: "mid"
         config: { type: "line", width: 2, color: "yellow",
                   start_position: [ 990, 400 ], end_position: [ 990, 540 ] }

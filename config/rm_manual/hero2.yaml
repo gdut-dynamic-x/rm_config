@@ -29,17 +29,19 @@ rm_manual:
     topic: "/cmd_vel"
     power_limit_topic: "/cmd_chassis"
     max_linear_x:
-      - [ 50.0,2.14 ]
-      - [ 80.0,3.5 ]
-      - [ 300.0,4.0 ]
+      - [ 50.0,1.8 ]
+      - [ 80.0,2.0 ]
+      - [ 120.0,2.25 ]
+      - [ 220.0,3.0 ]
     max_linear_y:
-      - [ 50.0,2.14 ]
-      - [ 80.0,3.5 ]
-      - [ 300.0,4.0 ]
+      - [ 50.0,1.8 ]
+      - [ 80.0,2.0 ]
+      - [ 120.0,2.25 ]
+      - [ 220.0,3.0 ]
     max_angular_z:
       - [ 50.0,4.0 ]
       - [ 80.0,6.0 ]
-      - [ 300.0,8.0 ]
+      - [ 220.0,8.0 ]
     gyro_move_reduction: 0.20
     gyro_rotate_reduction: 0.70
   gimbal:
@@ -61,8 +63,10 @@ rm_manual:
       timeout: 0.1
   shooter:
     topic: "/controllers/shooter_controller/command"
-    track_armor_error_tolerance: 0.3
+    track_armor_error_tolerance: 0.12
+    untrack_armor_error_tolerance: 0.12
     target_acceleration_tolerance: 1.0
+    max_track_target_vel: 1.2
     accleration_moving_average_num: 10
     speed_10m_per_speed: 15.9
     speed_15m_per_speed: 15.9
@@ -72,6 +76,7 @@ rm_manual:
     wheel_speed_10: 515.0
     wheel_speed_16: 515.0
     extra_wheel_speed_once: 5.0
+    extra_speed_for_deploy: 85.0
     auto_wheel_speed: false
     speed_oscillation: 0.1
     heat_limit:
@@ -85,7 +90,7 @@ rm_manual:
       type: "ID1_42MM"
   scope:
     topic: "/controllers/scope_controller/command"
-    on_pos: 1.94
+    on_pos: 1.93
     off_pos: 0.1
   image_transmission:
     topic: "/controllers/image_transmission_controller/command"
