@@ -51,9 +51,9 @@ rm_manual:
     time_constant_rc: 0.08
     time_constant_pc: 0.08
     gimbal_scale: 5
-    traj_scale: 0.2
+    traj_scale: 0.05
     track_timeout: 0.5
-    eject_sensitivity: 0.5
+    eject_sensitivity: 0.7
     finish_turning_threshold: 2.9
     target_cost_function:
       k_pos: 1.0
