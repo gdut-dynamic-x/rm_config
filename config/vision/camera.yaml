@@ -2,13 +2,13 @@ camera:
   image_width: 1440
   image_height: 1080
   pixel_format: bgr8
-  camera_info_url: 'file:///home/dynamicx/.ros/camera_info/hk_camera.yaml'
+  camera_info_url: 'file:///home/dynamicx/.ros/camera_info/6mm_hk_camera.yaml'
   camera_name: hk_camera
   camera_frame_id: camera_optical_frame
   camera_sn: 00J90631052
   frame_rate: 1000
   exposure_auto: false
-  exposure_value: 2000
+  exposure_value: 1500
   exposure_value_windmill: 3000
   gamma_selector: 2
   gamma_value: 0.5
