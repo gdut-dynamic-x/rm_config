@@ -4,7 +4,7 @@ controllers:
     publish_rate: 100
   robot_state_controller:
     type: robot_state_controller/RobotStateController
-    publish_rate: 100
+    publish_rate: 200
 
   trigger_calibration_controller:
     type: rm_calibration_controllers/MechanicalCalibrationController
@@ -95,7 +95,7 @@ controllers:
       pitch:
         joint: "pitch_joint"
         pid: { p: 1.2, i: 18.0, d: 0.0, i_clamp_max: 0.25, i_clamp_min: -0.25, antiwindup: true, publish_state: true }
-        pid_pos: { p: 20.0, i: 0, d: 0.0, i_max: 0.0, i_min: 0.0, antiwindup: true, publish_state: true }
+        pid_pos: { p: 18.0, i: 0, d: 0.0, i_max: 0.0, i_min: 0.0, antiwindup: true, publish_state: true }
         k_v: 1.0
         accel: 40.0
     imu_name: "gimbal_imu"
