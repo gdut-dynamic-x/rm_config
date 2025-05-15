@@ -19,6 +19,13 @@ rm_referee:
         config: { start_position: [ 100, 700 ], size: 15, width: 2, title: "target: " }
       - name: "target_view_angle"
         config: { type: "rectangle", start_position: [ 500, 240 ], end_position: [ 1420,840 ], width: 3 }
+      - name: "target_hp"
+        data:
+          - { flag: num, config: { type: "int_num", start_position: [ 1050, 700 ], size: 15, width: 2 } }
+          - { flag: arc, config: { type: "arc", start_position: [ 1070, 690 ], end_position: [ 30, 30 ], size: 5, width: 2 } }
+      #          - { flag: time, config: { type: "int_num", start_position: [ 1200,700 ], size: 15, width: 2 } }
+      #          - { flag: time_arc, config: { type: "arc", start_position: [ 1220,690 ],end_position: [ 30,30 ],size: 15, width: 2 } }
+
     time_change:
       - name: "bullet"
         config: { type: "int_num", start_position: [ 170, 560 ], size: 30, width: 3 , delay: 0.4 }
@@ -64,3 +71,17 @@ rm_referee:
       - name: "target"
         config: { type: "string", start_position: [ 30, 650 ], size: 25, width: 2, color: "pink", content: "target:" }
     flash:
+      - name: "burst"
+        config: { start_position: [ 880, 700 ], size: 35, width: 3,
+                  color: "purple", content: "BURST", delay: 0.5 }
+      - name: "ore"
+        config: { start_position: [ 960, 720 ], size: 15, width: 2,
+                  color: "yellow", content: "Ore will released after 10s", delay: 0.4 }
+      - name: "armor0"
+        config: { type: "circle", width: 3, radius: 50, color: "yellow", delay: 0.75 }
+      - name: "armor1"
+        config: { type: "circle", width: 3, radius: 50, color: "yellow", delay: 0.75 }
+      - name: "armor2"
+        config: { type: "circle", width: 3, radius: 50, color: "yellow", delay: 0.75 }
+      - name: "armor3"
+        config: { type: "circle", width: 3, radius: 50, color: "yellow", delay: 0.75 }
