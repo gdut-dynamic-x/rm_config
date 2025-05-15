@@ -5,8 +5,8 @@ rm_referee:
   add_ui_max_times: 3
   dbus_topic: "/rm_ecat_hw/dbus"
   interactive_data:
-    - name: bullet_num_share
-      config: { delay: 1.0 }
+#    - name: "bullet_num_share"
+#      config: { delay: 1.0 }
   ui:
     trigger_change:
       - name: "chassis"
@@ -19,9 +19,13 @@ rm_referee:
         config: { start_position: [ 100, 700 ], size: 15, width: 2, title: "target: " }
       - name: "target_view_angle"
         config: { type: "rectangle", start_position: [ 500, 240 ], end_position: [ 1420,840 ], width: 3 }
+      - name: "target_hp"
+        data:
+          - { flag: num, config: { type: "int_num", start_position: [ 1100, 700 ], size: 15, width: 2 } }
+          - { flag: arc, config: { type: "arc", start_position: [ 1120, 690 ], end_position: [ 30, 30 ], size: 5, width: 2 } }
     time_change:
-      - name: "bullet"
-        config: { type: "int_num", start_position: [ 170, 560 ], size: 30, width: 3 , delay: 0.4 }
+      #      - name: "bullet"
+      #        config: { type: "int_num", start_position: [ 170, 560 ], size: 30, width: 3 , delay: 0.4 }
       - name: "capacitor"
         config: { type: "line", width: 5, delay: 0.5,
                   start_position: [ 610, 100 ], end_position: [ 1210, 100 ] }
@@ -36,8 +40,8 @@ rm_referee:
         data: { scale: 50, gimbal_reference_frame: "yaw", chassis_reference_frame: "base_link" }
       - name: "target_distance"
         config: { type: "float_num", start_position: [ 190, 650 ], size: 25, width: 3 ,color: "yellow", delay: 0.4 }
-      - name: "friend_bullets"
-        config: { type: "int_num", start_position: [ 1620, 700 ], color: "pink" ,size: 15, width: 2 , delay: 1.0 }
+#      - name: "friend_bullets"
+#        config: { type: "int_num", start_position: [ 1620, 700 ], color: "pink" ,size: 15, width: 2 , delay: 1.0 }
     fixed:
       - name: "capacity_boundary_l"
         config: { type: "line", width: 2, color: "green",
@@ -57,33 +61,27 @@ rm_referee:
       - name: "mid"
         config: { type: "line", width: 2, color: "yellow",
                   start_position: [ 960, 400 ], end_position: [ 960, 540 ] }
-      - name: "vision_switch_l"
-        config: { type: "line", width: 2, color: "blue",
-                  start_position: [ 954, 490 ], end_position: [ 974, 490 ] }
-      - name: "vision_switch_r"
-        config: { type: "line", width: 2, color: "blue",
-                  start_position: [ 964, 480 ], end_position: [ 964, 500 ] }
       - name: "target"
         config: { type: "string", start_position: [ 30, 650 ], size: 25, width: 2, color: "pink", content: "target:" }
-      - name: "bullet_string"
-        config: { type: "string", start_position: [ 30, 600 ], size: 25, width: 2, color: "pink", content: "BULLET:" }
-      - name: "max_bullet"
-        config: { type: "string", start_position: [ 30, 560 ], size: 30, width: 3, color: "pink", content: "500/" }
+#      - name: "bullet_string"
+#        config: { type: "string", start_position: [ 30, 600 ], size: 25, width: 2, color: "pink", content: "BULLET:" }
+#      - name: "max_bullet"
+#        config: { type: "string", start_position: [ 30, 560 ], size: 30, width: 3, color: "pink", content: "500/" }
 
     flash:
-      - name: "cover"
-        config: { start_position: [ 830, 700 ], size: 25, width: 2,
-                  color: "green", content: "cover open!!", delay: 0.4 }
-      - name: "ore"
-        config: { start_position: [ 960, 720 ], size: 15, width: 2,
-                  color: "yellow", content: "Ore will released after 10s", delay: 0.4 }
-      - name: "armor0"
-        config: { type: "circle", width: 3, radius: 50, color: "yellow", delay: 0.75 }
-      - name: "armor1"
-        config: { type: "circle", width: 3, radius: 50, color: "yellow", delay: 0.75 }
-      - name: "armor2"
-        config: { type: "circle", width: 3, radius: 50, color: "yellow", delay: 0.75 }
-      - name: "armor3"
-        config: { type: "circle", width: 3, radius: 50, color: "yellow", delay: 0.75 }
+      - name: "burst"
+        config: { start_position: [ 880, 700 ], size: 35, width: 3,
+                  color: "purple", content: "BURST", delay: 0.75 }
+#      - name: "ore"
+#        config: { start_position: [ 960, 720 ], size: 15, width: 2,
+#                  color: "yellow", content: "Ore will released after 10s", delay: 0.4 }
+#      - name: "armor0"
+#        config: { type: "circle", width: 3, radius: 50, color: "yellow", delay: 0.75 }
+#      - name: "armor1"
+#        config: { type: "circle", width: 3, radius: 50, color: "yellow", delay: 0.75 }
+#      - name: "armor2"
+#        config: { type: "circle", width: 3, radius: 50, color: "yellow", delay: 0.75 }
+#      - name: "armor3"
+#        config: { type: "circle", width: 3, radius: 50, color: "yellow", delay: 0.75 }
 
 

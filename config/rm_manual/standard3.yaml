@@ -4,6 +4,7 @@ rm_manual:
   chassis_calibrate_motor: [ ]
   gimbal_calibrate_motor: [ "pitch_joint_motor" ]
   shooter_calibrate_motor: [ "cover_joint_motor", "trigger_joint_motor" ]
+  buff_gyro_rotate_limit: 10.0
   chassis:
     topic: "/cmd_chassis"
     accel_x:
@@ -13,12 +14,18 @@ rm_manual:
     accel_z:
       - [ 50.0,99.0 ]
     safety_power: 50
-    capacitor_threshold: 0.2
+    capacitor_threshold: 0.3
+    enable_cap_gyro_threshold: 0.8
+    disable_cap_gyro_threshold: 0.7
     charge_power: 20
-    extra_power: 80
+    extra_power: 20
+    standard_power: 120
     burst_power: 220
+    max_power_limit: 70
     buffer_threshold: 10
-    power_gain: 0.85
+    power_gain: 0.0
+    total_burst_time: 20
+    is_new_capacitor: true
   vel:
     topic: "/cmd_vel"
     power_limit_topic: "/cmd_chassis"
@@ -26,63 +33,72 @@ rm_manual:
       - [ 50.0,2.1 ]
       - [ 80.0,2.8 ]
       - [ 100.0,3.2 ]
-      - [ 220.0,7.0 ]
+      - [ 220.0,5.2 ]
     max_linear_y:
       - [ 50.0,2.1 ]
       - [ 80.0,2.8 ]
       - [ 100.0,3.2 ]
-      - [ 220.0,7.0 ]
+      - [ 220.0,5.2 ]
     max_angular_z:
-      - [ 50.0,10.5 ]
-      - [ 80.0,11.5 ]
-      - [ 100.0,12.0 ]
-      - [ 220.0,18.0 ]
-    gyro_move_reduction: 0.85
-    gyro_rotate_reduction: 0.6
+      - [ 50.0,12.0 ]
+      - [ 80.0,15.0 ]
+      - [ 100.0,18.0 ]
+      - [ 220.0,20.0 ]
+    gyro_move_reduction: 0.9
+    gyro_rotate_reduction: 0.25
+    sin_gyro_base_scale: 0.9
+    sin_gyro_amplitude: 0.1
+    sin_gyro_period: 1.5
+    sin_gyro_phase: 0.0
   gimbal:
     topic: "/controllers/gimbal_controller/command"
-    max_yaw_vel: 12.56
-    max_pitch_vel: 8.37
-    gimbal_scale: 8
+    max_yaw_vel: 6.28
+    max_pitch_vel: 6.28
+#    time_constant_rc: 0.03
+#    time_constant_pc: 0.05
+    gimbal_scale: 8.0
     track_timeout: 0.5
+    eject_sensitivity: 0.5
     finish_turning_threshold: 2.9
+    pass_hole_angle: 0.1286
     target_cost_function:
       k_pos: 1.0
       k_vel: 1.0
       k_hp: 1.0
       k_freq: 1.0
-      timeout: 0.1
+      timeout: 0.05
   shooter:
     topic: "/controllers/shooter_controller/command"
-    track_armor_error_tolerance: 0.08
+    track_armor_error_tolerance: 0.10
+    untrack_armor_error_tolerance: 0.08
     track_buff_error_tolerance: 0.12
-    target_acceleration_tolerance: 99.0
-    accleration_moving_average_num: 50
-    speed_10m_per_speed: 10.0
-    speed_15m_per_speed: 13.5
-    speed_16m_per_speed: 16.0
-    speed_18m_per_speed: 15.72
-    speed_30m_per_speed: 27.5
-    wheel_speed_15: 440.0
-    wheel_speed_18: 500.0
-    wheel_speed_30: 780.0
-    wheel_speed_gain: 5.0
+    max_track_target_vel: 10.0
+    target_acceleration_tolerance: 99.
+    speed_10m_per_speed: 23.5
+    speed_15m_per_speed: 23.5
+    speed_16m_per_speed: 23.5
+    speed_18m_per_speed: 23.5
+    speed_30m_per_speed: 23.5
+    wheel_speed_15: 710
+    wheel_speed_18: 710
+    wheel_speed_30: 710
+    wheel_speed_gain: 0.5
     extra_wheel_speed_once: 5.0
     speed_oscillation: 1.0
-    auto_wheel_speed: true
+    auto_wheel_speed: false
     heat_limit:
       low_shoot_frequency: 20
       high_shoot_frequency: 20
       burst_shoot_frequency: 20
       minimal_shoot_frequency: 1.75
       safe_shoot_frequency: 3
-      heat_coeff: 10.0
-      use_local_heat: true
+      heat_coeff: 20.0
+      use_local_heat_: true
       type: "ID1_17MM"
   cover:
     topic: "/controllers/cover_controller/command"
-    on_pos: 2.0
-    off_pos: 0.05
+    on_pos: 1.94
+    off_pos: 0.013
   buff_switch:
     fail_limit: 10
     service_name: "/buff_status_switch"
@@ -92,6 +108,9 @@ rm_manual:
   detection_switch:
     fail_limit: 10
     service_name: "/Processor/status_switch"
+  exposure_switch:
+    fail_limit: 10
+    service_name: "/exposure_status_switch"
 
   controllers_list:
     state_controllers:
@@ -133,4 +152,4 @@ controllers:
   cover_controller:
     type: effort_controllers/JointPositionController
     joint: "cover_joint"
-    pid: { p: 15.0, i: 0.0, d: 1.2, i_clamp_max: 0.0, i_clamp_min: 0.0, antiwindup: true, publish_state: true }
+    pid: { p: 5.0, i: 2.5, d: 0.5, i_clamp_max: 0.0, i_clamp_min: 0.0, antiwindup: true, publish_state: true }
