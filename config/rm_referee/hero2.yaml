@@ -29,6 +29,8 @@ rm_referee:
         config: { type: "string", start_position: [ 775, 180 ], size: 25, width: 4, delay: 0.6, title: "image: " }
       - name: "pitch"
         config: { type: "string", start_position: [ 775, 220 ], size: 25, width: 4, delay: 0.6, title: "pitch: " }
+      - name: "distance"
+        config: { type: "string", start_position: [ 775, 260 ], size: 25, width: 4, delay: 0.6, title: "distance: " }
       - name: "lane_line"
         config: { type: "line", width: 4, color: "cyan", delay: 0.08,
                   start_position: [ 800, 1080 ], end_position: [ 800, 600 ] }
