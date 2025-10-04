@@ -1,0 +1,140 @@
+controllers:
+  joint_state_controller:
+    type: joint_state_controller/JointStateController
+    publish_rate: 100
+  robot_state_controller:
+    type: robot_state_controller/RobotStateController
+    publish_rate: 100
+
+  left_belt_controller:
+    type: effort_controllers/JointVelocityController
+    joint: "left_belt_joint"
+    pid: { p: 2.2, i: 0, d: 0.01, i_clamp_max: 0.0, i_clamp_min: -0.0, antiwindup: true, publish_state: true }
+  right_belt_controller:
+    type: effort_controllers/JointVelocityController
+    joint: "right_belt_joint"
+    pid: { p: 2.5, i: 0, d: 0.01, i_clamp_max: 0.0, i_clamp_min: -0.0, antiwindup: true, publish_state: true }
+  yaw_controller:
+    type: effort_controllers/JointPositionController
+    joint: "yaw_joint"
+    pid: { p: 2000000, i: 0, d: 1000, i_clamp_max: 0.4, i_clamp_min: -0.4, antiwindup: true, publish_state: true }
+  trigger_controller:
+    type: effort_controllers/JointPositionController
+    joint: "trigger_joint"
+    pid: { p: 15.0, i: 0, d: 0.8, i_clamp_max: 0.0, i_clamp_min: 0.0, antiwindup: true, publish_state: true }
+  range_controller:
+    type: effort_controllers/JointPositionController
+    joint: "range_joint"
+    pid: { p: 2000000, i: 0, d: 1000, i_clamp_max: 0.4, i_clamp_min: -0.4, antiwindup: true, publish_state: true }
+  rotate_controller:
+    type: effort_controllers/JointPositionController
+    joint: "rotate_joint"
+    pid: { p: 2.0, i: 0, d: 0.05, i_clamp_max: 0.0, i_clamp_min: -0.0 , antiwindup: true, publish_state: true }
+  left_clamp_controller:
+    type: effort_controllers/JointPositionController
+    joint: "left_clamp_joint"
+    pid: { p: 15.0, i: 0, d: 0.5, i_clamp_max: 0.0, i_clamp_min: -0.0, antiwindup: true, publish_state: true }
+  mid_clamp_controller:
+    type: effort_controllers/JointPositionController
+    joint: "mid_clamp_joint"
+    pid: { p: 15.0, i: 0, d: 0.5, i_clamp_max: 0.0, i_clamp_min: -0.0, antiwindup: true, publish_state: true }
+  right_clamp_controller:
+    type: effort_controllers/JointPositionController
+    joint: "right_clamp_joint"
+    pid: { p: 15.0, i: 0, d: 0.5, i_clamp_max: 0.0, i_clamp_min: -0.0, antiwindup: true, publish_state: true }
+
+  trigger_calibration_controller:
+    type: rm_calibration_controllers/MechanicalCalibrationController
+    joint: "trigger_joint"
+    actuator: [ trigger_joint_motor ]
+    velocity:
+      search_velocity: -3.0
+      vel_threshold: 0.3
+      joint: trigger_joint
+      pid: { p: 0.5, i: 0, d: 0.0, i_clamp_max: 0.0, i_clamp_min: 0.0, antiwindup: true }
+
+  left_clamp_calibration_controller:
+    type: rm_calibration_controllers/MechanicalCalibrationController
+    joint: "left_clamp_joint"
+    actuator: [ left_clamp_joint_motor ]
+    velocity:
+      search_velocity: 1.5
+      vel_threshold: 0.5
+      joint: left_clamp_joint
+      pid: { p: 0.5, i: 0, d: 0.0, i_clamp_max: 0.0, i_clamp_min: 0.0, antiwindup: true }
+
+  mid_clamp_calibration_controller:
+    type: rm_calibration_controllers/MechanicalCalibrationController
+    joint: "mid_clamp_joint"
+    actuator: [ mid_clamp_joint_motor ]
+    velocity:
+      search_velocity: 1.5
+      vel_threshold: 0.3
+      joint: mid_clamp_joint
+      pid: { p: 0.5, i: 0, d: 0.0, i_clamp_max: 0.0, i_clamp_min: 0.0, antiwindup: true }
+
+  right_clamp_calibration_controller:
+    type: rm_calibration_controllers/MechanicalCalibrationController
+    joint: "right_clamp_joint"
+    actuator: [ right_clamp_joint_motor ]
+    velocity:
+      search_velocity: 1.5
+      vel_threshold: 0.3
+      joint: right_clamp_joint
+      pid: { p: 0.5, i: 0, d: 0.0, i_clamp_max: 0.0, i_clamp_min: 0.0, antiwindup: true }
+
+  left_belt_calibration_controller:
+    type: rm_calibration_controllers/MechanicalCalibrationController
+    joint: left_belt_joint
+    actuator: [ left_belt_joint_motor ]
+    velocity:
+      search_velocity: -5.0
+      vel_threshold: 0.2
+      joint: left_belt_joint
+      pid: { p: 0.3, i: 0, d: 0.0, i_clamp_max: 0.0, i_clamp_min: 0.0, antiwindup: true }
+
+  right_belt_calibration_controller:
+    type: rm_calibration_controllers/MechanicalCalibrationController
+    joint: right_belt_joint
+    actuator: [ right_belt_joint_motor ]
+    velocity:
+      search_velocity: -5.0
+      vel_threshold: 0.2
+      joint: right_belt_joint
+      pid: { p: 0.3, i: 0, d: 0.0, i_clamp_max: 0.0, i_clamp_min: 0.0, antiwindup: true }
+
+  range_calibration_controller:
+    type: rm_calibration_controllers/GpioCalibrationController
+    joint: range_joint
+    actuator: [ range_joint_motor ]
+    gpio: "calibration_range"
+    initial_gpio_state: false
+    velocity:
+      search_velocity: -8.0
+      slow_forward_velocity: -4.0
+      joint: range_joint
+      pid: { p: 185.0, i: 0, d: 0.0, i_clamp_max: 0.0, i_clamp_min: 0.0, antiwindup: true }
+    position:
+      pos_threshold: 0.1
+      backward_angle: -0.11
+      joint: range_joint
+      pid: { p: 2000000, i: 0, d: 1000, i_clamp_max: 0.4, i_clamp_min: -0.4, antiwindup: true, publish_state: true }
+
+  yaw_calibration_controller:
+    type: rm_calibration_controllers/GpioCalibrationController
+    joint: yaw_joint
+    actuator: [ yaw_joint_motor ]
+    gpio: "calibration_yaw"
+    initial_gpio_state: false
+    velocity:
+      search_velocity: -8.0
+      slow_forward_velocity:  -4.0
+      joint: yaw_joint
+      pid: { p: 185.0, i: 0, d: 0.0, i_clamp_max: 0.0, i_clamp_min: 0.0, antiwindup: true }
+    position:
+      pos_threshold: 0.1
+      backward_angle: -0.11
+      joint: yaw_joint
+      pid: { p: 2000000, i: 0, d: 1000, i_clamp_max: 0.4, i_clamp_min: -0.4, antiwindup: true, publish_state: true }
+
+

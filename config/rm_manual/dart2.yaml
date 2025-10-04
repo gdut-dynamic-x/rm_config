@@ -1,0 +1,200 @@
+rm_manual:
+  robot_type: "dart2"
+  dbus_topic: "/rm_ecat_hw/dbus"
+  chassis_calibrate_motor: [ ]
+  gimbal_calibrate_motor: [ "yaw_joint_motor","range_joint_motor" ]
+  shooter_calibrate_motor: [ "trigger_joint_motor","left_belt_joint_motor","right_belt_joint_motor" ]
+
+  launch_id: [6,8,2,1] #6  8  2  1     2 5 3 6
+
+  dart_list:
+    # 0.004 大概半块装甲板
+    first_dart:
+      id: 1
+      param: [0.000, 0.0, -0.008, 0.031]  #6号新镖
+      #outpost:offset,tension//base:offset,tension
+    second_dart:
+      id: 2
+      param: [ -0.0, 0.0, -0.002, 0.026]  #3号新镖
+    third_dart:
+      id: 3
+      param: [ 0.0, -0.0, -0.001, 0.024 ]
+      #outpost:offset,qd//base:offset,qd
+    fourth_dart:
+      id: 4
+      param: [ 0.0, 0.0, -0.001, 0.024]
+      #outpost:offset,qd//base:offset,qd
+    fifth_dart:
+      id: 5
+      param: [ 0.0, 0.0, -0.001, 0.024]
+      #outpost:offset,tension//base:offset,tension
+    sixth_dart:
+      id: 6
+      param: [ 0.0, 0.0, 0.0005, -0.002] #2
+      #outpost:offset,tension//base:offset,tension
+    seventh_dart:
+      id: 7
+      param: [ 0.0, 0.0, -0.001, 0.018] #8号新镖
+      #outpost:offset,tension//base:offset,tension
+    eighth_dart:
+      id: 8
+      param: [ 0.0, 0.0, -0.002, 0.025] #5号新镖
+      #outpost:offset,tension//base:offset,tension
+    ninth_dart:
+      id: 9
+      param: [ 0.0, 0.0, 0.00, 0.00]
+      #outpost:offset,tension//base:offset,tension
+    tenth_dart:
+      id: 10
+      param: [ 0.0, 0.0, 0.005, 0.025] #5
+      #outpost:offset,tension//base:offset,tension
+
+  targets:
+    outpost:
+      position: [ 0.01, 0.0]
+    base:
+      #position: [0.048, 0.28]  #轻镖
+      position: [ 0.035, 0.265]   #7.31 。。 6号镖
+      #position: [ 0.043, 0.275]  #蓝方
+      # 8:  0.0347  0.261
+      #position: [0.05, 0.34] # 2 6号镖  6不改 2：[0,0.002]  蓝方
+      #position: [ 0.026, 0.338427]
+      #position: [0.116223, 0.261356]  # 重复度
+      #position: [ 0.0410869, 0.43]
+#blue:  0.042  0.46
+#red:   0.043 0.46
+
+# 减少往左   增大往右
+  rotate_positions:
+    - name: first_position
+      angle: [ 5.5, 5.5 ]
+      #  place  back
+      #  放置位置   放置前的位置
+    - name: second_position
+      angle: [ 4.253, 5.1 ]
+    - name: third_position
+      angle: [ 2.65, 3.43 ]
+    - name: fourth_position
+      angle: [ 1.0, 1.877 ]
+
+  clamp_positions:
+    clamp_left_position: -0.6
+    clamp_mid_position: -0.6
+    clamp_right_position: -0.6
+    release_position: -0.2
+    clamp_finish_position: 0.02
+    check_place: false
+
+  yaw:
+    topic: "/controllers/yaw_controller/command"
+    joint: "yaw_joint"
+  belt_left:
+    topic: "/controllers/left_belt_controller/command"
+    joint: "left_belt_joint"
+    belt_left_max: 22.4  #22.4
+    belt_left_min: 0.5
+    belt_left_place: 15.98
+    belt_left_placed: 6.37
+    downward_vel: 6.0
+    upward_vel: -10.0
+  belt_right:
+    topic: "/controllers/right_belt_controller/command"
+    joint: "right_belt_joint"
+    belt_right_max: 22.4    #22.4
+    belt_right_min: 0.5
+    belt_right_place: 15.98
+    belt_right_placed: 6.31
+    downward_vel: 6.0
+    upward_vel: -10.0
+  clamp_left:
+    topic: "/controllers/left_clamp_controller/command"
+    joint: "left_clamp_joint"
+  clamp_mid:
+    topic: "/controllers/mid_clamp_controller/command"
+    joint: "mid_clamp_joint"
+  clamp_right:
+    topic: "/controllers/right_clamp_controller/command"
+    joint: "right_clamp_joint"
+  trigger:
+    topic: "/controllers/trigger_controller/command"
+    joint: "trigger_joint"
+    trigger_home_command: 1.2
+    trigger_work_command: 2.45
+    trigger_confirm_home: 1.4
+    trigger_confirm_work: 2.38
+  range:
+    topic: "/controllers/range_controller/command"
+    joint: "range_joint"
+  rotate:
+    topic: "/controllers/rotate_controller/command"
+    joint: "rotate_joint"
+  camera:
+    camera_x_offset: 0.0
+    camera_y_offset: 0.0
+    long_camera_p_x: -0.00000005
+    short_camera_p_x: -0.00000005
+    long_camera_p_y: 0.0
+    long_camera_x_threshold: 15
+    retarget_threshold: 30
+    use_auto_aim: false
+  controllers_list:
+    state_controllers:
+      - controllers/robot_state_controller
+      - controllers/joint_state_controller
+    main_controllers:
+      - controllers/left_belt_controller
+      - controllers/right_belt_controller
+      - controllers/yaw_controller
+      - controllers/trigger_controller
+      - controllers/range_controller
+      - controllers/rotate_controller
+      - controllers/left_clamp_controller
+      - controllers/mid_clamp_controller
+      - controllers/right_clamp_controller
+    calibration_controllers:
+      - controllers/left_belt_calibration_controller
+      - controllers/right_belt_calibration_controller
+      - controllers/yaw_calibration_controller
+      - controllers/trigger_calibration_controller
+      - controllers/range_calibration_controller
+      - controllers/left_clamp_calibration_controller
+      - controllers/mid_clamp_calibration_controller
+      - controllers/right_clamp_calibration_controller
+  shooter_calibration:
+    - start_controllers:
+        - controllers/trigger_calibration_controller
+        - controllers/left_belt_calibration_controller
+        - controllers/right_belt_calibration_controller
+      stop_controllers:
+        - controllers/trigger_controller
+        - controllers/left_belt_controller
+        - controllers/right_belt_controller
+      services_name:
+        - /controllers/trigger_calibration_controller/is_calibrated
+        - /controllers/left_belt_calibration_controller/is_calibrated
+        - /controllers/right_belt_calibration_controller/is_calibrated
+  gimbal_calibration:
+    - start_controllers:
+        - controllers/yaw_calibration_controller
+        - controllers/range_calibration_controller
+      stop_controllers:
+        - controllers/yaw_controller
+        - controllers/range_controller
+      services_name:
+        - /controllers/yaw_calibration_controller/is_calibrated
+        - /controllers/range_calibration_controller/is_calibrated
+
+  clamp_calibration:
+    - start_controllers:
+        - controllers/left_clamp_calibration_controller
+        - controllers/mid_clamp_calibration_controller
+        - controllers/right_clamp_calibration_controller
+      stop_controllers:
+        - controllers/left_clamp_controller
+        - controllers/mid_clamp_controller
+        - controllers/right_clamp_controller
+      services_name:
+        - /controllers/left_clamp_calibration_controller/is_calibrated
+        - /controllers/mid_clamp_calibration_controller/is_calibrated
+        - /controllers/right_clamp_calibration_controller/is_calibrated
+
