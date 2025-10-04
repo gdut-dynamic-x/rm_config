@@ -1,0 +1,10 @@
+rm_referee:
+  robot_type: dart
+  send_ui_queue_delay: 0.15
+  add_ui_frequency: 5
+  add_ui_max_times: 10
+  ui:
+    trigger_change:
+    time_change:
+    fixed:
+    flash:
