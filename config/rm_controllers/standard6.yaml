@@ -11,9 +11,9 @@ controllers:
     actuator: [ trigger_joint_motor ]
     velocity:
       joint: trigger_joint
-      search_velocity: 3.1415
-      vel_threshold: 0.2
-      pid: { p: 0.3, i: 0, d: 0.0, i_clamp_max: 0.0, i_clamp_min: 0.0, antiwindup: true }
+      search_velocity: 9.283
+      vel_threshold: 0.1
+      pid: { p: 0.7, i: 0, d: 0.0, i_clamp_max: 0.0, i_clamp_min: 0.0, antiwindup: true }
   cover_calibration_controller:
     type: rm_calibration_controllers/MechanicalCalibrationController
     actuator: [ cover_joint_motor ]
@@ -73,18 +73,18 @@ controllers:
     controllers:
       yaw:
         joint: "yaw_joint"
-        pid: { p: 0.7, i: 15.0, d: 0.0, i_clamp_max: 0.2, i_clamp_min: -0.2, antiwindup: true, publish_state: true }
-        pid_pos: { p: 20.0, i: 0, d: 0.01, i_max: 0.0, i_min: 0.0, antiwindup: true, publish_state: true }
-        chassis_comp_a: 1.68e-2
-        chassis_comp_b: 1.777e-1
-        chassis_comp_c: -1.2548
-        chassis_comp_d: 4.93e-2
+        pid: { p: 0.6, i: 16.0, d: 0.0, i_clamp_max: 0.25, i_clamp_min: -0.25, antiwindup: true, publish_state: true }
+        pid_pos: { p: 16.0, i: 0, d: 0, i_max: 0.0, i_min: 0.0, antiwindup: true, publish_state: true }
+        chassis_comp_a: 0.01287
+        chassis_comp_b: 0.20944
+        chassis_comp_c: -1.58123
+        chassis_comp_d: 0.02317
         k_v: 1.0
         accel: 28.0
       pitch:
         joint: "pitch_joint"
-        pid: { p: 0.5, i: 12.0, d: 0.0, i_clamp_max: 0.22, i_clamp_min: -0.22, antiwindup: true, publish_state: true }
-        pid_pos: { p: 20.0, i: 0, d: 0.0, i_max: 0.0, i_min: 0.0, antiwindup: true, publish_state: true }
+        pid: { p: 0.7, i: 15.0, d: 0.0, i_clamp_max: 0.1, i_clamp_min: -0.1, antiwindup: true, publish_state: true }
+        pid_pos: { p: 25.0, i: 0, d: 0.0, i_max: 0.0, i_min: 0.0, antiwindup: true, publish_state: true }
         k_v: 1.0
         accel: 40.0
     chassis_vel:
@@ -96,13 +96,26 @@ controllers:
       enable_gravity_compensation: false
       mass_origin: [ 0.006,-0.000093,0.026159 ]
     bullet_solver:
+#      resistance_coff_qd_16: 0.001
+#      resistance_coff_qd_30: 0.001
+#      g: 9.81
+#      delay: 0.072
+#      dt: 0.001
+#      timeout: 0.001
+#      min_switch_angle: 2
+#      min_switch_count: 8
+#      max_track_target_vel: 10.0
+#      track_rotate_target_delay: 0.0
+#      track_move_target_delay: 0.0
+#      gimbal_switch_duration:
+#        - [ 50.0,0.0 ]
       resistance_coff_qd_10: 0.001
       resistance_coff_qd_15: 0.001
       resistance_coff_qd_16: 0.001
       resistance_coff_qd_18: 0.001
       resistance_coff_qd_30: 0.001
       g: 9.81
-      delay: 0.028
+      delay: 0.036
       dt: 0.001
       timeout: 0.001
       publish_rate: 50
@@ -110,12 +123,13 @@ controllers:
       min_switch_angle: 2
       ban_shoot_duration: 0.032
       gimbal_switch_duration: 0.076
-      max_track_target_vel: 10.8
+      max_track_target_vel: 10.0
       max_chassis_angular_vel: 12.0
-      track_rotate_target_delay: 0.032
-      track_move_target_delay: 0.0
-      wait_next_armor_delay: 0.02
-      wait_diagonal_armor_delay: 0.02
+      track_rotate_target_delay: 0.042
+      track_move_target_delay: 0.04
+      wait_next_armor_delay: 0.10
+      wait_diagonal_armor_delay: 0.10
+      switch_hysteresis: 1.0
 
   shooter_controller:
     type: rm_shooter_controllers/Controller
@@ -139,10 +153,10 @@ controllers:
     block_speed: 0.1
     block_duration: 0.05
     block_overtime: 0.5
-    anti_block_angle: 0.46
+    anti_block_angle: 0.4
     anti_block_threshold: 0.1
     forward_push_threshold: 0.05
     exit_push_threshold: 0.07
-    wheel_speed_drop_threshold: 4.8
-    wheel_speed_raise_threshold: 1.7
+    wheel_speed_drop_threshold: 1.4
+    wheel_speed_raise_threshold: -1.4
     freq_threshold: 15.0

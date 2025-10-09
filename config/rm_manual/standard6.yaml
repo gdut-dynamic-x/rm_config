@@ -4,7 +4,7 @@ rm_manual:
   chassis_calibrate_motor: [ ]
   gimbal_calibrate_motor: [ ]
   shooter_calibrate_motor: [ "cover_joint_motor", "trigger_joint_motor" ]
-  buff_gyro_rotate_limit: 6.0
+  gyro_speed_limit: 6.0
   chassis:
     topic: "/cmd_chassis"
     accel_x:
@@ -19,9 +19,9 @@ rm_manual:
     disable_cap_gyro_threshold: 0.7
     charge_power: 20
     extra_power: 20
-    standard_power: 120
+    standard_power: 160
     burst_power: 220
-    max_power_limit: 70
+    max_power_limit: 120
     buffer_threshold: 10
     power_gain: 0.0
     total_burst_time: 20
@@ -44,8 +44,8 @@ rm_manual:
       - [ 80.0,15.0 ]
       - [ 100.0,18.0 ]
       - [ 220.0,20.0 ]
-    gyro_move_reduction: 0.9
-    gyro_rotate_reduction: 0.25
+    gyro_move_reduction: 0.85
+    gyro_rotate_reduction: 0.4
     sin_gyro_base_scale: 0.9
     sin_gyro_amplitude: 0.1
     sin_gyro_period: 1.5
@@ -69,31 +69,31 @@ rm_manual:
       timeout: 0.05
   shooter:
     topic: "/controllers/shooter_controller/command"
-    track_armor_error_tolerance: 0.12
-    untrack_armor_error_tolerance: 0.04
+    track_armor_error_tolerance: 0.10
+    untrack_armor_error_tolerance: 0.08
     track_buff_error_tolerance: 0.12
-    max_track_target_vel: 10.5
+    max_track_target_vel: 10.0
     target_acceleration_tolerance: 99.
     speed_10m_per_speed: 23.5
     speed_15m_per_speed: 23.5
     speed_16m_per_speed: 23.5
     speed_18m_per_speed: 23.5
     speed_30m_per_speed: 23.5
-    wheel_speed_15: 700.0
-    wheel_speed_18: 700.0
-    wheel_speed_30: 700.0
+    wheel_speed_15: 695.0
+    wheel_speed_18: 695.0
+    wheel_speed_30: 695.0
     wheel_speed_gain: 0.5
     extra_wheel_speed_once: 5.0
-    speed_oscillation: 1.0
+    speed_oscillation: 0.5
     auto_wheel_speed: false
     heat_limit:
       low_shoot_frequency: 20
       high_shoot_frequency: 20
       burst_shoot_frequency: 20
-      minimal_shoot_frequency: 1.75
+      minimal_shoot_frequency: 1.5
       safe_shoot_frequency: 3
       heat_coeff: 20.0
-      use_local_heat_: false
+      use_local_heat_: true
       type: "ID1_17MM"
   cover:
     topic: "/controllers/cover_controller/command"
@@ -121,10 +121,25 @@ rm_manual:
       - controllers/orientation_controller
       - controllers/gimbal_controller
       - controllers/shooter_controller
+      - controllers/cover_controller
     calibration_controllers:
       - controllers/trigger_calibration_controller
+      - controllers/cover_calibration_controller
+  #      - controllers/gimbal_calibration_controller
 
   gimbal_calibration:
+    #    - start_controllers:
+    #        - controllers/gimbal_calibration_controller
+    #      stop_controllers:
+    #        - controllers/gimbal_controller
+    #      services_name:
+    #        - /controllers/gimbal_calibration_controller/is_calibrated
+    - start_controllers:
+        - controllers/cover_calibration_controller
+      stop_controllers:
+        - controllers/cover_controller
+      services_name:
+        - /controllers/cover_calibration_controller/is_calibrated
   shooter_calibration:
     - start_controllers:
         - controllers/trigger_calibration_controller
@@ -132,3 +147,9 @@ rm_manual:
         - controllers/shooter_controller
       services_name:
         - /controllers/trigger_calibration_controller/is_calibrated
+
+controllers:
+  cover_controller:
+    type: effort_controllers/JointPositionController
+    joint: "cover_joint"
+    pid: { p: 5.0, i: 2.5, d: 0.5, i_clamp_max: 0.0, i_clamp_min: 0.0, antiwindup: true, publish_state: true }
