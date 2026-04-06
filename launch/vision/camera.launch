@@ -1,25 +1,22 @@
 <launch>
     <arg name="imu_trigger" default="false"/>
-    <arg name="camera_type" default="$(env CAMERA_TYPE)" doc="Camera type"/>
-    <arg name="camera_class" default="$(env CAMERA_CLASS)"/>
-    <arg name="camera_name" default="camera"/>
-    <arg name="camera_frame" default="camera_optical_frame"/>
-    <arg name="hw_name" default="$(env HW_NAME)" doc="[rm_ecat_hw, rm_hw]"/>
+    <arg name="manager_name" default="vision_nodelet"/>
+    <arg name="camera_class" default="HKCameraNodelet"/>
+    <arg name="camera_type" default="hk_camera"/>
+    <arg name="suffix" default=""/>
+    <arg name="hw_name" default="rm_ecat_hw" doc="[rm_ecat_hw, rm_hw]"/>
+    <arg name="image_topic"
+         default="$(eval '/' + arg('camera_type') + ('_' + arg('suffix') if arg('suffix') else '') + '/image_raw')"/>
+    <arg name="camera_info_topic"
+         default="$(eval '/' + arg('camera_type') + ('_' + arg('suffix') if arg('suffix') else '') + '/camera_info')"/>
 
-    <rosparam file="$(find rm_config)/config/vision/camera.yaml" command="load"/>
-
-    <node pkg="nodelet" type="nodelet" name="vision_nodelet" args="manager"
+    <rosparam file="$(eval find('rm_detection_tradition') + '/config/camera' + ('_' + arg('suffix') if arg('suffix') else '') + '.yaml')" command="load"/>
+    <node pkg="nodelet" type="nodelet" name="$(eval arg('camera_type') + ('_' + arg('suffix') if arg('suffix') else ''))"
+          args="load $(arg camera_type)/$(arg camera_class) $(arg manager_name)"
           output="screen" respawn="true">
-        <param name="num_worker_threads" value="8"/>
-    </node>
-
-    <node pkg="nodelet" type="nodelet" name="$(arg camera_name)"
-          args="load $(arg camera_type)/$(arg camera_class) vision_nodelet"
-          output="screen" respawn="true">
-        <param name="camera_frame_id" value="$(arg camera_frame)"/>
         <param name="enable_imu_trigger" value="$(arg imu_trigger)"/>
-        <remap from="$(arg camera_name)/image_raw" to="/$(arg camera_type)/$(arg camera_name)/image_raw"/>
-        <remap from="/$(arg camera_name)/imu_trigger" to="/$(arg hw_name)/imu_trigger"/>
+        <remap from="$(arg camera_type)/image_raw" to="$(arg image_topic)"/>
+        <remap from="$(arg camera_type)/camera_info" to="$(arg camera_info_topic)"/>
         <remap from="/rm_hw/gimbal_imu/trigger_time" to="/$(arg hw_name)/gimbal_imu/trigger_time"/>
     </node>
 </launch>

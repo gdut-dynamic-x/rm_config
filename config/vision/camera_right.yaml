@@ -1,0 +1,17 @@
+hk_camera_right:
+#  1280×1024 640×512
+  image_width: 1280
+  image_height: 1024
+  pixel_format: bgr8
+  camera_info_url: 'file:///home/hiling/.ros/camera_info/test_cam_right.yaml'
+  camera_name: hk_camera_right
+  camera_frame_id: camera_optical_frame_right
+  frame_id: camera_optical_frame_right
+  camera_sn: DA8835803
+  frame_rate: 15
+  exposure_auto: false
+  exposure_value: 1000
+  gamma_selector: 2
+  gamma_value: 0.5
+  enable_imu_trigger: true
+  sleep_time: 1

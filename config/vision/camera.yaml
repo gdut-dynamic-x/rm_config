@@ -1,4 +1,4 @@
-camera:
+hk_camera:
   image_width: 1440
   image_height: 1080
   pixel_format: bgr8
@@ -8,8 +8,10 @@ camera:
   camera_sn: 00J90631052
   frame_rate: 1000
   exposure_auto: false
-  exposure_value: 1500
+  exposure_value: 1000
   exposure_value_windmill: 3000
   gamma_selector: 2
   gamma_value: 0.5
-  enable_imu_trigger: true
+  enable_imu_trigger: false
+  is_fps_down: false
+  target_fps: 40.0

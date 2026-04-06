@@ -1,0 +1,99 @@
+<launch>
+    <arg name="camera_type" default="hk_camera"/>
+    <arg name="manager_name" default="vision_nodelet"/>
+
+    <!-- nodelet manager name -->
+    <arg name="use_back" default="false"/>
+
+    <arg name="use_left" default="false"/>
+    <arg name="use_right" default="false"/>
+
+    <!-- ========== main thread ========== -->
+    <!-- main nodelet manager -->
+    <node pkg="nodelet" type="nodelet" name="$(arg manager_name)" args="manager" output="screen"/>
+
+    <!-- Camera -->
+    <include file="$(find rm_target_tracker)/launch/camera.launch">
+        <arg name="camera_type" value="$(arg camera_type)"/>
+        <arg name="manager_name" value="$(arg manager_name)"/>
+        <arg name="suffix" value=""/>
+    </include>
+
+    <!-- Detection -->
+    <include file="$(find rm_detection_tradition)/launch/detection_tradition.launch">
+        <arg name="manager_name" value="$(arg manager_name)"/>
+        <arg name="camera_type" value="$(arg camera_type)"/>
+        <arg name="suffix" value=""/>
+    </include>
+
+    <!-- Pose solver -->
+    <include file="$(find rm_pose_solver)/launch/pose_solver.launch">
+        <arg name="manager_name" value="$(arg manager_name)"/>
+        <arg name="camera_type" value="$(arg camera_type)"/>
+        <arg name="suffix" value=""/>
+    </include>
+
+    <!-- Target Tracker -->
+    <include file="$(find rm_target_tracker)/launch/target_tracker.launch">
+        <arg name="manager_name" value="$(arg manager_name)"/>
+        <arg name="camera_type" value="$(arg camera_type)"/>
+        <arg name="suffix" value=""/>
+    </include>
+
+    <!-- ========== back thread ========== -->
+    <group if="$(arg use_back)">
+        <arg name="sub_manager_name" default="vision_nodelet_back"/>
+
+        <node pkg="nodelet" type="nodelet" name="$(arg sub_manager_name)" args="manager" output="screen"/>
+
+        <include file="$(find rm_target_tracker)/launch/camera.launch">
+            <arg name="manager_name" value="$(arg sub_manager_name)"/>
+            <arg name="camera_type" value="$(arg camera_type)"/>
+            <arg name="suffix" value="back"/>
+        </include>
+
+        <include file="$(find rm_detection_tradition)/launch/detection_tradition.launch">
+            <arg name="manager_name" value="$(arg sub_manager_name)"/>
+            <arg name="camera_type" value="$(arg camera_type)"/>
+            <arg name="suffix" value="back"/>
+        </include>
+    </group>
+
+    <!-- ========== left thread ========== -->
+    <group if="$(arg use_left)">
+        <arg name="sub_manager_name" default="vision_nodelet_left"/>
+
+        <node pkg="nodelet" type="nodelet" name="$(arg sub_manager_name)" args="manager" output="screen"/>
+
+        <include file="$(find rm_target_tracker)/launch/camera.launch">
+            <arg name="manager_name" value="$(arg sub_manager_name)"/>
+            <arg name="camera_type" value="$(arg camera_type)"/>
+            <arg name="suffix" value="left"/>
+        </include>
+
+        <include file="$(find rm_detection_tradition)/launch/detection_tradition.launch">
+            <arg name="manager_name" value="$(arg sub_manager_name)"/>
+            <arg name="camera_type" value="$(arg camera_type)"/>
+            <arg name="suffix" value="left"/>
+        </include>
+    </group>
+
+    <!-- ========== right thread ========== -->
+    <group if="$(arg use_right)">
+        <arg name="sub_manager_name" default="vision_nodelet_right"/>
+
+        <node pkg="nodelet" type="nodelet" name="$(arg sub_manager_name)" args="manager" output="screen"/>
+
+        <include file="$(find rm_target_tracker)/launch/camera.launch">
+            <arg name="manager_name" value="$(arg sub_manager_name)"/>
+            <arg name="camera_type" value="$(arg camera_type)"/>
+            <arg name="suffix" value="right"/>
+        </include>
+
+        <include file="$(find rm_detection_tradition)/launch/detection_tradition.launch">
+            <arg name="manager_name" value="$(arg sub_manager_name)"/>
+            <arg name="camera_type" value="$(arg camera_type)"/>
+            <arg name="suffix" value="right"/>
+        </include>
+    </group>
+</launch>
