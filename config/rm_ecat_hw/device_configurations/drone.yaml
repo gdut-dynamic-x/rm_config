@@ -1,0 +1,45 @@
+can_motors:
+  - can_id: 3
+    can_bus: 0
+    name: "left_friction_wheel_joint_motor"
+    type: "M3508"
+    need_calibration: false
+  - can_id: 2
+    can_bus: 1
+    name: "right_friction_wheel_joint_motor"
+    type: "M3508"
+    need_calibration: false
+  - can_id: 1
+    can_bus: 0
+    name: "trigger_joint_motor"
+    type: "M2006"
+    need_calibration: true
+  - can_id: 7
+    can_bus: 0
+    name: "pitch_joint_motor"
+    type: "M3508"
+    need_calibration: true
+  - can_id: 5
+    can_bus: 0
+    name: "yaw_joint_motor"
+    type: "GM6020"
+
+# dshot_motors:
+#   - channel: 4
+#     name: "left_friction_wheel_joint_motor"
+#     type: "A2212KV980"
+#     need_change_direction: true
+#   - channel: 1
+#     name: "right_friction_wheel_joint_motor"
+#     type: "A2212KV980"
+#     need_change_direction: false
+#   - channel: 3
+#     name: "mid_friction_wheel_joint_motor"  
+#     type: "A2212KV980"
+#     need_change_direction: false
+can_imus:
+  - can_bus: 0
+    name: "gimbal_imu"
+    bias: [  0.0005827, 0.000203466, -0.00362083 ]
+dbus:
+  - name: "dbus"
