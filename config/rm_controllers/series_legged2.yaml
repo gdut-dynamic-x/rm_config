@@ -15,12 +15,18 @@ controllers:
 
   gimbal_controller:
     type: rm_gimbal_controllers/Controller
+
+    track_solver_type: "bullet_solver"       # bullet_solver | external_aim | external_mpc_aim
+    external_aim_topic: "/sp_vision/gimbal_aim"
+    external_mpc_aim_topic: "/sp_vision/mpc_gimbal_aim"
+    external_aim_timeout: 0.1
+
     controllers:
       yaw:
         joint: "yaw_joint"
-        pid: { p: 0.35, i: 18, d: 0.0, i_clamp_max: 0.12, i_clamp_min: -0.12, antiwindup: true, publish_state: false }
-        pid_pos: { p: 20.0, i: 0, d: 0.0, i_max: 0.0, i_min: 0.0, antiwindup: true, publish_state: false }
-        chassis_comp_a: 0.0
+        pid: { p: 0.7, i: 22, d: 0.0, i_clamp_max: 0.2, i_clamp_min: -0.2, antiwindup: true, publish_state: false }
+        pid_pos: { p: 14.0, i: 0, d: 0.0, i_max: 0.0, i_min: 0.0, antiwindup: true, publish_state: false }
+        chassis_comp_a: 0.0015
         chassis_comp_b: 0.0
         chassis_comp_c: 0.0
         chassis_comp_d: 0.0
@@ -29,8 +35,8 @@ controllers:
       pitch:
         joint: "pitch_joint"
         #2/28 p from 0.45 to 0.5 and i form 7 to 10 is all accaptable
-        pid: { p: 0.5, i: 7, d: 0.0, i_clamp_max: 0.1, i_clamp_min: -0.1, antiwindup: true, publish_state: true }
-        pid_pos: { p: 15.0, i: 0, d: 0.0, i_max: 0.0, i_min: 0.0, antiwindup: true, publish_state: true }
+        pid: { p: 0.6, i: 18, d: 0.0, i_clamp_max: 0.2, i_clamp_min: -0.2, antiwindup: true, publish_state: true }
+        pid_pos: { p: 24.0, i: 0, d: 0.0, i_max: 0.0, i_min: 0.0, antiwindup: true, publish_state: true }
         k_v: 1.0
         accel: 40.0
     delay: 0.03
@@ -39,9 +45,9 @@ controllers:
       debug: true
     imu_name: "gimbal_imu"
     feedforward:
-      gravity: 6.725
+      gravity: 10.5
       enable_gravity_compensation: false
-      mass_origin: [ 0.0185,0.0,0.01 ]
+      mass_origin: [ -0.024495,0.024,0.048 ]
     bullet_solver:
       resistance_coff_qd_10: 0.001
       resistance_coff_qd_15: 0.001
@@ -49,21 +55,18 @@ controllers:
       resistance_coff_qd_18: 0.001
       resistance_coff_qd_30: 0.001
       g: 9.81
-      delay: 0.035
-      wait_next_armor_delay: 0.0
-      wait_diagonal_armor_delay: 0.0
+      delay: 0.05
       dt: 0.001
       timeout: 0.5
       publish_rate: 50
-      max_switch_angle: 50
-      min_switch_angle: 2
-      ban_shoot_duration: 0.035
-      gimbal_switch_duration: 0.09
+      center_delay: 0.092
+      switch_angle_offset: 0.7
       max_track_target_vel: 10.0
       switch_hysteresis: 1.0
       max_chassis_angular_vel: 12.0
-      track_rotate_target_delay: 0.03
-      track_move_target_delay: 0.04
+      track_rotate_target_delay: 0.0
+      track_move_target_delay: 0.2
+      track_rotate_outpost_delay: 0.0
 
   gimbal_calibration_controller:
     type: rm_calibration_controllers/MechanicalCalibrationController
@@ -80,38 +83,38 @@ controllers:
     velocity:
       joint: trigger_joint
       search_velocity: 3.1415
-      vel_threshold: 0.2
-      pid: { p: 0.3, i: 0, d: 0.0, i_clamp_max: 0.0, i_clamp_min: 0.0, antiwindup: true }
+      vel_threshold: 0.1
+      pid: { p: 0.4, i: 0, d: 0.0, i_clamp_max: 0.0, i_clamp_min: 0.0, antiwindup: true }
 
   shooter_controller:
     type: rm_shooter_controllers/Controller
     publish_rate: 50
     friction:
-      friction_left:
-        left_friction_wheel:
-          joint: "left_friction_wheel_joint"
-          pid: { p: 0.0007, i: 0.005, d: 0.0, i_clamp_max: 0.01, i_clamp_min: -0.01, antiwindup: true, publish_state: false }
-          wheel_speed_direction: 1.0
       friction_right:
         right_friction_wheel:
           joint: "right_friction_wheel_joint"
           pid: { p: 0.0007, i: 0.005, d: 0.0, i_clamp_max: 0.01, i_clamp_min: -0.01, antiwindup: true, publish_state: false }
           wheel_speed_direction: -1.0
+      friction_left:
+        left_friction_wheel:
+          joint: "left_friction_wheel_joint"
+          pid: { p: 0.0007, i: 0.005, d: 0.0, i_clamp_max: 0.01, i_clamp_min: -0.01, antiwindup: true, publish_state: false }
+          wheel_speed_direction: 1.0
     trigger:
       joint: "trigger_joint"
-      pid: { p: 36.0, i: 0.0, d: 0.4, i_clamp_max: 0.0, i_clamp_min: 0.0, antiwindup: true, publish_state: false }
+      pid: { p: 36.0, i: 0.0, d: 0.5, i_clamp_max: 0.0, i_clamp_min: 0.0, antiwindup: true, publish_state: false }
     push_per_rotation: 8
     push_qd_threshold: 0.90
-    block_effort: 2.2
+    block_effort: 4.2
     block_speed: 0.1
-    block_duration: 0.05
+    block_duration: 0.1
     block_overtime: 0.5
-    anti_block_angle: 0.46
+    anti_block_angle: 0.20
     anti_block_threshold: 0.1
     forward_push_threshold: 0.28
     exit_push_threshold: 0.3
-    wheel_speed_drop_threshold: 3.3
-    wheel_speed_raise_threshold: 1.4
+    wheel_speed_drop_threshold: 3.8
+    wheel_speed_raise_threshold: 0.7
     freq_threshold: 15.0
 
   chassis_controller:
@@ -127,34 +130,50 @@ controllers:
     twist_angular: 0.5233
     max_odom_vel: 10.0
     timeout: 0.1
-    pid_follow: { p: 3.5, i: 0, d: 0.5, i_max: 0.0, i_min: 0.0, antiwindup: true, publish_state: true }
+    raw_yaw_feedforward_k: -0.15
+    pid_follow: { p: 1.75, i: 0, d: 0.3, i_max: 0.0, i_min: 0.0, antiwindup: true, publish_state: true }
     pid_block_error: { p: 0, i: 0, d: 0.0, i_max: 0.0, i_min: 0.0, antiwindup: true, publish_state: true }
     twist_covariance_diagonal: [ 0.001, 0.001, 0.001, 0.001, 0.001, 0.001 ]
 
     # BipedalController
-    pid_left_leg: { p: 500.0, i: 100., d: 50, i_clamp_max: 20.0, i_clamp_min: -20.0, antiwindup: true, publish_state: true }
-    pid_right_leg: { p: 500.0, i: 100., d: 50, i_clamp_max: 20.0, i_clamp_min: -20.0, antiwindup: true, publish_state: true }
-    pid_theta_diff: { p: 160.0, i: 0.0, d: 2.0, i_max: 0.0, i_min: 0.0, antiwindup: true, publish_state: true }
-    pid_roll: { p: 1100.0, i: 0, d: 30., i_clamp_max: 30.0, i_clamp_min: -30.0, antiwindup: true, publish_state: true }
-    #    pid_yaw_pos: { p: 2.0, i: 1.0, d: 0.0, i_clamp_max: 3.0, i_clamp_min: 3.0, antiwindup: true, publish_state: true }
+    pid_left_leg: { p: 1000.0, i: 100., d: 125, i_clamp_max: 10.0, i_clamp_min: -10.0, antiwindup: true, publish_state: true }
+    pid_right_leg: { p: 1000.0, i: 100., d: 125, i_clamp_max: 10.0, i_clamp_min: -10.0, antiwindup: true, publish_state: true }
+    # use in gazebo
+    #    pid_left_leg: { p: 800.0, i: 50., d: 60, i_clamp_max: 20.0, i_clamp_min: -20.0, antiwindup: true, publish_state: true }
+    #    pid_right_leg: { p: 800.0, i: 50., d: 60, i_clamp_max: 20.0, i_clamp_min: -20.0, antiwindup: true, publish_state: true }
+    pid_theta_diff: { p: 400.0, i: 0.0, d: 3.5, i_max: 0.0, i_min: 0.0, antiwindup: true, publish_state: true }
+    pid_roll: { p: 1500.0, i: 0, d: 35., i_clamp_max: 30.0, i_clamp_min: -30.0, antiwindup: true, publish_state: true }
     pid_yaw_pos: { p: 0.0, i: 0.0, d: 0.0, i_clamp_max: 3.0, i_clamp_min: 3.0, antiwindup: true, publish_state: true }
-    pid_yaw_vel: { p: 0.35, i: 1.7, d: 0., i_clamp_max: 1.0, i_clamp_min: -1.0, antiwindup: true, publish_state: true }
-    pid_left_leg_theta: { p: 40.0, i: 0., d: 3., i_clamp_max: 2.0, i_clamp_min: -2.0, antiwindup: true, publish_state: true }
-    pid_right_leg_theta: { p: 40.0, i: 0., d: 3., i_clamp_max: 2.0, i_clamp_min: -2.0, antiwindup: true, publish_state: true }
+    pid_yaw_vel: { p: 0.7, i: 4.0, d: 0., i_clamp_max: 1.5, i_clamp_min: -1.5, antiwindup: true, publish_state: true }
+    pid_left_leg_theta: { p: 45.0, i: 0., d: 5., i_clamp_max: 2.0, i_clamp_min: -2.0, antiwindup: true, publish_state: true }
+    pid_right_leg_theta: { p: 45.0, i: 0., d: 5., i_clamp_max: 2.0, i_clamp_min: -2.0, antiwindup: true, publish_state: true }
     pid_left_leg_theta_vel: { p: 6.0, i: 3.0, d: 0., i_clamp_max: 10.0, i_clamp_min: -10.0, antiwindup: true, publish_state: true }
     pid_right_leg_theta_vel: { p: 6.0, i: 3.0, d: 0., i_clamp_max: 10.0, i_clamp_min: -10.0, antiwindup: true, publish_state: true }
-    pid_left_wheel_vel: { p: 0.1, i: 0.01, d: 0.0, i_clamp_max: 0.01, i_clamp_min: -0.01, antiwindup: true, publish_state: true }
-    pid_right_wheel_vel: { p: 0.1, i: 0.01, d: 0.0, i_clamp_max: 0.01, i_clamp_min: -0.01, antiwindup: true, publish_state: true }
+    pid_left_wheel_vel: { p: 0.35, i: 0.0, d: 0.0, i_clamp_max: 0.01, i_clamp_min: -0.01, antiwindup: true, publish_state: true }
+    pid_right_wheel_vel: { p: 0.35, i: 0.0, d: 0.0, i_clamp_max: 0.01, i_clamp_min: -0.01, antiwindup: true, publish_state: true }
+    pid_wheel_vel_diff: { p: 0.25, i: 0.0, d: 0.0, i_clamp_max: 0.1, i_clamp_min: -0.1, antiwindup: true, publish_state: true }
 
-    pid_left_leg_stand_up: { p: 600.0, i: 0.0, d: 30.0, i_clamp_max: 20.0, i_clamp_min: -20.0, antiwindup: true, publish_state: true }
-    pid_right_leg_stand_up: { p: 600.0, i: 0.0, d: 30.0, i_clamp_max: 20.0, i_clamp_min: -20.0, antiwindup: true, publish_state: true }
+    pid_left_leg_stand_up: { p: 800.0, i: 0.0, d: 35.0, i_clamp_max: 20.0, i_clamp_min: -20.0, antiwindup: true, publish_state: true }
+    pid_right_leg_stand_up: { p: 800.0, i: 0.0, d: 35.0, i_clamp_max: 20.0, i_clamp_min: -20.0, antiwindup: true, publish_state: true }
 
-    gravity_force: 50
+    spring_s2: 0.0486
+    spring_s3: 0.20
+    spring_alpha_s: 0.2448
+    #    gravity_force: 110
+    #    spring_force: 250
+    # use in gazebo
+    gravity_force: 70
     spring_force: 0
-    default_leg_length: 0.2
+    default_leg_length: 0.12
+
+    unstick_threshold: 5
     # VMC config
+    vmc_type: five_link
     l1: 0.21
     l2: 0.248
+    l3: 0.248
+    l4: 0.21
+    l5: 0.0
 
     # LQR model config
     L_weight: 0.53
@@ -164,57 +183,71 @@ controllers:
     # 轮子质量
     m_w: 0.563518
     # 摆杆质量
-    #    m_p: 1.554
-    m_p: 1.068
+    m_p: 1.571
     # 机体质量
-    M: 6.4
+    M: 12
     # 轮子转动惯量
-    i_w: 0.0010134
-    #    i_w: 0.002028
+    i_w: 0.00528
     # 摆杆转动惯量
-    #    i_p: 0.0029816
-    i_p: 0.01316
+    i_p: 0.038
     # 机体转动惯量
-    i_m: 0.2467
+    i_m: 0.1267
 
     g: 9.81
     # 轮子半径
     wheel_radius: 0.06
+    # 轮距
+    wheel_track: 0.446
+    # 底盘高度
+    chassis_high: 0.115
 
     # theta d_theta x dx phi d_phi
-    #    q: [ 100.0, 1, 1000.0, 100, 5025.0, 1 ]
-    #    r: [ 50, 2.0 ]
-
-    # gazebo better
-    q: [ 100.0, 1, 500.0, 250, 7500.0, 1 ]
-    r: [ 10, 2.0 ]
+    # 05-17
+    q: [ 35000.0, 1, 12500.0, 500, 90000.0, 1 ]
+    r: [ 450, 7.5 ]
 
     x_bias: 0.05
-    theta_bias: 0.09
+    theta_bias: 0.13
     pitch_bias: -0.0
     roll_bias: 0.
+
+    # [leg_len, leg_theta_offset] (m, rad)
+    leg_theta_offset:
+      - [ 0.15, 0.13 ]
+      - [ 0.2, 0.11 ]
+      - [ 0.25, 0.09 ]
+      - [ 0.3, 0.07 ]
+    # not tested 6-8
+    #    raw_pitch_bias: 0.13
     raw_pitch_bias: 0.
-    raw_theta_bias: 0.
+    raw_theta_bias: 0.13
+
+    # use in gazebo
+    #    raw_theta_bias: 0.0
 
     # under_lower_threshold: -M_PI / 2 + 0.7
     under_lower_threshold: -0.8708
-    # under_upper_threshold: M_PI / 2 - 1.4
-    under_upper_threshold: 0.1708
+    # under_upper_threshold: - 0.8
+    under_upper_threshold: -0.8
     # front_lower_threshold: -M_PI / 2 + 0.7
     front_lower_threshold: -0.8708
     # front_upper_threshold: M_PI - 0.5
     front_upper_threshold: 2.6416
-    # behind_lower_threshold: M_PI / 2 - 1.4
-    behind_lower_threshold: 0.1708
+    # behind_lower_threshold: - 0.8
+    behind_lower_threshold: -0.8
     # behind_upper_threshold: M_PI - 0.5
     behind_upper_threshold: 2.6416
-    # upstair_exit_threshold: M_PI_2 - 0.65
-    upstair_exit_threshold: 0.9208
+    upstair_des_theta: 1.1
+    #    upstair_des_length: 0.34
+    upstair_des_length: 0.14
+    upstair_exit_theta_threshold: 1.0
+    upstair_exit_length_threshold: 0.24
     # upstair_des_theta: M_PI_2 - 0.6
-    upstair_des_theta: 0.9708
-
+    arrive_time_threshold: 1.5
     jumpOverTime: 2.0
-    p1: -241100
-    p2: 170300
-    p3: 39310
-    p4: 3234
+    #    jump_up_force: 225
+    #    off_ground_force: 150
+    jump_up_force: 210
+    off_ground_force: 90
+    down5cmStairPitchThreshold: 0.1
+    down5cmStairThetaThreshold: 0.2

@@ -6,27 +6,30 @@ rm_manual:
   gimbal_calibrate_motor: [ "" ]
   shooter_calibrate_motor: [ "trigger_joint_motor" ]
   supply_frame: "yaw"
+  debug_gimbal_flag: false
   chassis:
     topic: "/cmd_chassis"
     accel_x:
-      - [ 60.0,1.5 ]
-      - [ 80.0,1.8 ]
-      - [ 100.0,1.9 ]
-      - [ 250.0,2.3 ]
+      #      - [ 60.0,1.5 ]
+      #      - [ 80.0,1.8 ]
+      #      - [ 100.0,1.9 ]
+      #      - [ 250.0,2.5 ]
+      - [ 50.0,2.5 ]
     accel_y:
       - [ 60.0,3.0 ]
     accel_z:
-      - [ 60.0,11.0 ]
-      - [ 80.0,12.0 ]
-      - [ 100.0,14.0 ]
-      - [ 250.0,18.5 ]
+      - [ 60.0,12.0 ]
+      - [ 80.0,15.0 ]
+      - [ 100.0,18.0 ]
+      - [ 280.0,29.0 ]
     safety_power: 80
-    capacitor_threshold: 0.2
-    charge_power: 40
-    extra_power: 60
-    burst_power: 280
+    capacitor_threshold: 0.1
+    charge_power: 80
+    extra_power: 0
+    burst_power: 150
     standard_power: 85
     buffer_threshold: 10
+    max_power_limit: 110
     minimum_power: 40
     power_gain: 0.0
     total_burst_time: 10
@@ -37,27 +40,24 @@ rm_manual:
     legged_wheel_chassis:
       topic: "/leg_cmd"
       unstick_topic: "/controllers/chassis_controller/unstick/two_leg_unstick"
-      short_leg_length: 0.2
-      mid_leg_length: 0.32
-      high_leg_length: 0.36
+      short_leg_length: 0.15
+      mid_leg_length: 0.21
+      high_leg_length: 0.348
   vel:
     topic: "/cmd_vel"
     power_limit_topic: "/cmd_chassis"
     max_linear_x:
-      - [ 60.0,1.20 ]
-      - [ 80.0,1.30 ]
-      - [ 180.0,1.90 ]
-      - [ 280.0,2.30 ]
+      - [ 35.0,2.0 ]
+      - [ 60.0,2.28 ]
+      - [ 80.0,2.3 ]
     max_linear_y:
-      - [ 60.0,1.20 ]
-      - [ 80.0,1.30 ]
-      - [ 100.0,1.40 ]
-      - [ 280.0,1.50 ]
+      - [ 35.0,2.3 ]
+      - [ 60.0,2.35 ]
+      - [ 80.0,2.4 ]
     max_angular_z:
-      - [ 60.0,9.3 ]
-      - [ 80.0,9.4 ]
-      - [ 280.0,10.5 ]
-
+      - [ 60.0,9.5 ]
+      - [ 80.0,10.0 ]
+      - [ 100.0,10.5 ]
     gyro_move_reduction: 0.5
     gyro_rotate_reduction: 1.0
   gimbal:
@@ -75,9 +75,9 @@ rm_manual:
       timeout: 0.05
   shooter:
     topic: "/controllers/shooter_controller/command"
-    track_armor_error_tolerance: 0.10
-    untrack_armor_error_tolerance: 0.05
-    max_track_target_vel: 10.0
+    track_armor_error_tolerance: 0.07
+    untrack_armor_error_tolerance: 0.08
+    max_track_target_vel: 11.0
     track_buff_error_tolerance: 0.12
     target_acceleration_tolerance: 99.0
     speed_10m_per_speed: 23.5
@@ -85,9 +85,9 @@ rm_manual:
     speed_16m_per_speed: 23.5
     speed_18m_per_speed: 23.5
     speed_30m_per_speed: 23.5
-    wheel_speed_15: 700.0
-    wheel_speed_18: 700.0
-    wheel_speed_30: 700.0 # 715
+    wheel_speed_15: 680.0
+    wheel_speed_18: 680.0
+    wheel_speed_30: 680.0 # 715
     extra_wheel_speed_once: 5.0
     heat_limit:
       low_shoot_frequency: 10
@@ -96,7 +96,8 @@ rm_manual:
       minimal_shoot_frequency: 1.75
       safe_shoot_frequency: 3
       safe_speed_limit: 30
-      heat_coeff: 10.0
+      heat_coeff: 5.0
+      local_heat_protect_threshold: 40
       is_local: false
       type: "ID1_17MM"
   cover:
@@ -105,7 +106,7 @@ rm_manual:
     off_pos: -0.02
   detection_switch:
     fail_limit: 10
-    service_name: "/Processor/status_switch"
+    service_name: "/Processor/status_change"
   buff_switch:
     fail_limit: 10
     service_name: "/buff_status_switch"
@@ -144,9 +145,3 @@ rm_manual:
         - controllers/shooter_controller
       services_name:
         - /controllers/trigger_calibration_controller/is_calibrated
-
-#controllers:
-#  cover_controller:
-#    type: effort_controllers/JointPositionController
-#    joint: "cover_joint"
-#    pid: { p: 7.0, i: 0.0, d: 0.5, i_clamp_max: 0.0, i_clamp_min: 0.0, antiwindup: true, publish_state: true }

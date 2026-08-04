@@ -4,6 +4,7 @@ rm_referee:
   add_ui_frequency: 0.5
   add_ui_max_times: 3
   dbus_topic: "/rm_ecat_hw/dbus"
+  legged_chassis_status_topic: "/controllers/chassis_controller/legged_chassis_status"
   interactive_data:
   ui:
     trigger_change:
@@ -14,65 +15,69 @@ rm_referee:
       - name: "shooter"
         config: { start_position: [ 100, 750 ], size: 15, width: 2, title: "shooter: " }
       - name: "target"
-        config: { start_position: [ 100, 700 ], size: 15, width: 2, title: "target: " }
+        config: { start_position: [ 520, 820 ], size: 15, width: 2, title: "target: " }
       - name: "target_view_angle"
         config: { type: "rectangle", start_position: [ 500, 240 ], end_position: [ 1420,840 ], width: 3 }
 
     time_change:
       - name: "capacitor"
-        config: { type: "line", width: 5, delay: 0.15,
+        config: { type: "line", width: 10, delay: 0.15,
                   start_position: [ 610, 100 ], end_position: [ 1210, 100 ] }
-      #- name: "lane_line"
-      #  config: { type: "line", width: 4, color: "cyan", delay: 0.15,
-      #            start_position: [ 800, 1080 ], end_position: [ 800, 600 ] }
-      #  data: { radius: 0.38, height: 0.5, camera_range: 1.0, surface_coefficient: 1.0 }
-      #  reference_frame: "pitch"
       - name: "rotation"
         config: { type: "arc", width: 4, delay: 0.15, color: "yellow",
                   start_position: [ 960, 520 ], end_position: [ 320, 320 ] , start_angle: 60, end_angle: 120 }
         data: { scale: 50, gimbal_reference_frame: "yaw", chassis_reference_frame: "base_link" }
-      - name: "balance_leg_length"
-        config: { type: "line", width: 15, delay: 0.15,
-                  start_position: [ 1600, 250 ], end_position: [ 1600, 400 ] }
-      - name: "balance_leg_state"
-        config: { type: "line", width: 4, color: "main_color", delay: 0.2 }
-        data: { ori_x: 750, ori_y: 250 , distance: 250, line_ae_length: 90 }
+      - name: "leg_theta_left"
+        # Two-link leg visualization (chassis rectangle + 2 links).
+        # Screen convention: origin at bottom-left; x right, y up; theta=0 points down; clockwise positive; [-pi, pi].
+        config:
+          { type: "line",
+            color: "cyan",
+            width: 4,
+            delay: 0.15,
+            # Optional overrides used by the implementation:
+            chassis_color: "yellow" }
+        data:
+          { # Chassis rectangle (left = rear, right = front)
+            chassis_start: [ 120, 660 ], chassis_end: [ 270, 720 ],
+            link1_length: 0.218, link2_length: 0.26,
+            pixels_per_meter: 500.0,
+            leg_side: "left",
+            draw_chassis: true }
+
+      - name: "leg_theta_right"
+        config:
+          { type: "line",
+            color: "cyan",
+            width: 4,
+            delay: 0.15,
+            # Optional overrides used by the implementation:
+            chassis_color: "yellow" }
+        data:
+          {
+            chassis_start: [ 340, 660 ], chassis_end: [ 490, 720 ],
+            link1_length: 0.218, link2_length: 0.26,
+            pixels_per_meter: 500.0,
+            # Read right leg from LeggedChassisStatus
+            leg_side: "right",
+            draw_chassis: true }
 
     fixed:
       - name: "capacity_boundary_l"
-        config: { type: "line", width: 2, color: "green",
-                  start_position: [ 610, 110 ], end_position: [ 610, 90 ] }
+        config: { type: "line", width: 4, color: "green",
+                  start_position: [ 610, 120 ], end_position: [ 610, 80 ] }
       - name: "capacity_boundary_r"
-        config: { type: "line", width: 2, color: "green",
-                  start_position: [ 1210, 110 ], end_position: [ 1210, 90 ] }
-      - name: "2m"
-        config: { type: "line", width: 2, color: "yellow",
-                  start_position: [ 925, 435 ], end_position: [ 995, 435 ] }
+        config: { type: "line", width: 4, color: "green",
+                  start_position: [ 1210, 120 ], end_position: [ 1210, 80 ] }
       - name: "3m"
         config: { type: "line", width: 2, color: "yellow",
-                  start_position: [ 935, 420 ], end_position: [ 985, 420 ] }
-      - name: "5m"
-        config: { type: "line", width: 2, color: "yellow",
-                  start_position: [ 948, 400 ], end_position: [ 972, 400 ] }
-      - name: "mid"
-        config: { type: "line", width: 2, color: "yellow",
-                  start_position: [ 960, 400 ], end_position: [ 960, 540 ] }
-      - name: "fixed_lane_line_1"
-        config: { type: "line", width: 2, color: "green",
-                  start_position: [ 1049, 713 ], end_position: [ 1351, 0 ] }
-      - name: "fixed_lane_line_2"
-        config: { type: "line", width: 2, color: "green",
-                  start_position: [ 871, 713 ], end_position: [ 569, 0 ] }
-      - name: "legged_balance_length"
-        config: { type: "line", width: 2, color: "green",
-                  start_position: [ 1550, 560 ], end_position: [ 1750, 560 ] }
+                  start_position: [ 950, 505 ], end_position: [ 990, 505 ] }
+
     flash:
-      - name: "cover"
-        config: { start_position: [ 830, 700 ], size: 25, width: 2,
-                  color: "green", content: "cover open!!", delay: 0.8 }
-      - name: "ore"
-        config: { start_position: [ 960, 720 ], size: 15, width: 2,
-                  color: "yellow", content: "Ore will released after 10s", delay: 0.4 }
+      - name: "capacity_run_out"
+        config: { type: "string", start_position: [ 760, 320 ], size: 30, width: 4,
+                  color: "pink", content: "capacity run out!!!", delay: 0.75 }
+        data: { threshold_low: 0.15, threshold_high: 0.20 }
       - name: "armor0"
         config: { type: "circle", width: 3, radius: 50, color: "yellow", delay: 0.75 }
       - name: "armor1"

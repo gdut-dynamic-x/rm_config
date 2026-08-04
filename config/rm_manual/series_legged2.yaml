@@ -3,28 +3,23 @@ rm_manual:
   dbus_topic: "/rm_ecat_hw/dbus"
   tof_topic: "/tof"
   chassis_calibrate_motor: [ "left_hip_motor", "right_hip_motor", "left_knee_motor", "right_knee_motor" ]
-  gimbal_calibrate_motor: [ "pitch_joint_motor" ]
+  gimbal_calibrate_motor: [ "" ]
   shooter_calibrate_motor: [ "trigger_joint_motor" ]
   supply_frame: "yaw"
+  debug_gimbal_flag: false
   chassis:
     topic: "/cmd_chassis"
     accel_x:
-      - [ 60.0,1.5 ]
-      - [ 80.0,1.8 ]
-      - [ 100.0,2.2 ]
-      - [ 250.0,2.9 ]
+      - [ 45.0,13.5 ]
     accel_y:
-      - [ 60.0,3.0 ]
+      - [ 45.0,13.5 ]
     accel_z:
-      - [ 60.0,11.0 ]
-      - [ 80.0,12.0 ]
-      - [ 100.0,14.0 ]
-      - [ 250.0,17.5 ]
-    safety_power: 260
-    capacitor_threshold: 0.2
+      - [ 45.0,30.0 ]
+    safety_power: 70
+    capacitor_threshold: 0.25
     charge_power: 40
     extra_power: 60
-    burst_power: 280
+    burst_power: 90
     standard_power: 85
     buffer_threshold: 10
     minimum_power: 40
@@ -37,33 +32,35 @@ rm_manual:
     legged_wheel_chassis:
       topic: "/leg_cmd"
       unstick_topic: "/controllers/chassis_controller/unstick/two_leg_unstick"
-      short_leg_length: 0.2
-      mid_leg_length: 0.32
-      high_leg_length: 0.37
+      short_leg_length: 0.15
+      mid_leg_length: 0.21
+      high_leg_length: 0.348
+      retraction_leg_length: 0.12
+      jump_up_range_threshold: 0.9
   vel:
     topic: "/cmd_vel"
     power_limit_topic: "/cmd_chassis"
     max_linear_x:
-      - [ 60.0,1.20 ]
-      - [ 80.0,1.30 ]
-      - [ 180.0,1.90 ]
-      - [ 280.0,2.40 ]
+      - [ 35.0,2.0 ]
+      - [ 60.0,2.28 ]
+      - [ 80.0,2.3 ]
     max_linear_y:
-      - [ 60.0,1.20 ]
-      - [ 80.0,1.30 ]
-      - [ 100.0,1.40 ]
-      - [ 280.0,1.50 ]
+      - [ 35.0,2.3 ]
+      - [ 60.0,2.35 ]
+      - [ 80.0,2.4 ]
     max_angular_z:
-      - [ 60.0,9.3 ]
-      - [ 80.0,9.4 ]
-      - [ 280.0,10.0 ]
+      - [ 60.0,9.5 ]
+      - [ 80.0,10.0 ]
+      - [ 100.0,10.5 ]
 
-    gyro_move_reduction: 0.5
-    gyro_rotate_reduction: 1.0
+    gyro_move_reduction: 0.4
+    gyro_rotate_reduction: 0.7
   gimbal:
     topic: "/controllers/gimbal_controller/command"
     max_yaw_vel: 6.28
     max_pitch_vel: 5.0
+    time_constant_rc: 0.02
+    time_constant_pc: 0.08
     gimbal_scale: 10.0
     track_timeout: 0.5
     finish_turning_threshold: 2.9
@@ -75,8 +72,8 @@ rm_manual:
       timeout: 0.05
   shooter:
     topic: "/controllers/shooter_controller/command"
-    track_armor_error_tolerance: 0.10
-    untrack_armor_error_tolerance: 0.05
+    track_armor_error_tolerance: 0.12
+    untrack_armor_error_tolerance: 0.12
     max_track_target_vel: 10.0
     track_buff_error_tolerance: 0.12
     target_acceleration_tolerance: 99.0
@@ -85,27 +82,24 @@ rm_manual:
     speed_16m_per_speed: 23.5
     speed_18m_per_speed: 23.5
     speed_30m_per_speed: 23.5
-    wheel_speed_15: 700.0
-    wheel_speed_18: 700.0
-    wheel_speed_30: 700.0 # 715
+    wheel_speed_15: 688.0
+    wheel_speed_18: 688.0
+    wheel_speed_30: 688.0
     extra_wheel_speed_once: 5.0
     heat_limit:
-      low_shoot_frequency: 20
-      high_shoot_frequency: 20
-      burst_shoot_frequency: 20
+      low_shoot_frequency: 15.0
+      high_shoot_frequency: 15.0
+      burst_shoot_frequency: 15.0
       minimal_shoot_frequency: 1.75
       safe_shoot_frequency: 3
       safe_speed_limit: 30
-      heat_coeff: 10.0
-      is_local: false
+      heat_coeff: 15.0
+      use_local_heat_: true
+      local_heat_protect_threshold: 40
       type: "ID1_17MM"
-  cover:
-    topic: "/controllers/cover_controller/command"
-    on_pos: -1.460
-    off_pos: -0.02
   detection_switch:
     fail_limit: 10
-    service_name: "/Processor/status_switch"
+    service_name: "/Processor/status_change"
   buff_switch:
     fail_limit: 10
     service_name: "/buff_status_switch"
@@ -123,10 +117,9 @@ rm_manual:
     main_controllers:
       - controllers/orientation_controller
       - controllers/chassis_controller
-      #      - controllers/gimbal_controller
-    #      - controllers/shooter_controller
+      - controllers/gimbal_controller
+      - controllers/shooter_controller
     calibration_controllers:
-      #      - controllers/gimbal_calibration_controller
       - controllers/trigger_calibration_controller
 
   chassis_calibration:
@@ -137,12 +130,6 @@ rm_manual:
       services_name:
         - ""
   gimbal_calibration:
-    - start_controllers:
-        - controllers/gimbal_calibration_controller
-      stop_controllers:
-        - controllers/gimbal_controller
-      services_name:
-        - /controllers/gimbal_calibration_controller/is_calibrated
   shooter_calibration:
     - start_controllers:
         - controllers/trigger_calibration_controller

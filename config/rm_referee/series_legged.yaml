@@ -1,6 +1,6 @@
 rm_referee:
   robot_type: standard
-  send_ui_queue_delay: 0.036
+  send_ui_queue_delay: 0.035
   add_ui_frequency: 0.5
   add_ui_max_times: 3
   dbus_topic: "/rm_ecat_hw/dbus"
