@@ -3,87 +3,83 @@ rm_manual:
   dbus_topic: "/rm_ecat_hw/dbus"
   chassis_calibrate_motor: [ ]
   gimbal_calibrate_motor: [ "yaw_joint_motor","range_joint_motor" ]
-  shooter_calibrate_motor: [ "trigger_joint_motor","left_belt_joint_motor","right_belt_joint_motor" ]
+#  shooter_calibrate_motor: [ "trigger_joint_motor","left_belt_joint_motor","right_belt_joint_motor" ]
+  shooter_calibrate_motor: [ "trigger_joint_motor","left_belt_joint_motor","right_belt_joint_motor","load_dart_joint_motor" ]
 
-  launch_id: [6,8,2,1] #6  8  2  1     2 5 3 6
+  launch_id: [6,10,8,7] #
 
   dart_list:
-    # 0.004 大概半块装甲板
+    # 0.0010 4.5 cm of yaw
+    # 0.0030 13.5 cm of yaw
+
+    # 0.001 4.5cm of distance
+    # 0.001 1.5cm of height
+    # 0.0012  ->  3cm        0.0016 -> 4cm
+
+    # 0.010 45cm of distance
+    # 0.010 15cm of height
+
+    #param: [ 0.0, 0.0, 0.000, 0.000]
+
+    #aim red-base:  yaw + 0.0012
+    #aim blue-base: yaw + 0.0012
+
     first_dart:
       id: 1
-      param: [0.000, 0.0, -0.008, 0.031]  #6号新镖
+      param: [ 0.0, 0.0, 0.0034, 0.0005]   #
       #outpost:offset,tension//base:offset,tension
     second_dart:
       id: 2
-      param: [ -0.0, 0.0, -0.002, 0.026]  #3号新镖
+      #param: [ 0.0, 0.0, 0.0060, 0.0032]
+      param: [ 0.0, 0.0, 0.0035, -0.0015]   #
+      #outpost:offset,tension//base:offset,tension
     third_dart:
       id: 3
-      param: [ 0.0, -0.0, -0.001, 0.024 ]
-      #outpost:offset,qd//base:offset,qd
+      param: [ 0.0, 0.0, 0.0030, 0.0030]   #
+      #outpost:offset,tension//base:offset,tension
     fourth_dart:
       id: 4
-      param: [ 0.0, 0.0, -0.001, 0.024]
-      #outpost:offset,qd//base:offset,qd
+      #param: [ 0.0, 0.0, 0.0074, 0.0050]
+      param: [ 0.0, 0.0, 0.0025, -0.0010]  #
+      #outpost:offset,tension//base:offset,tension
     fifth_dart:
       id: 5
-      param: [ 0.0, 0.0, -0.001, 0.024]
+      #param: [ 0.0, 0.0, 0.0075, 0.0056]
+      param: [ 0.0, 0.0, 0.0015, 0.0040]   #
       #outpost:offset,tension//base:offset,tension
     sixth_dart:
       id: 6
-      param: [ 0.0, 0.0, 0.0005, -0.002] #2
+      param: [ 0.0, 0.0, 0.0038, 0.0024]   #111111
       #outpost:offset,tension//base:offset,tension
     seventh_dart:
       id: 7
-      param: [ 0.0, 0.0, -0.001, 0.018] #8号新镖
+      param: [ 0.0, 0.0, 0.0012, 0.0028]   #444444
       #outpost:offset,tension//base:offset,tension
     eighth_dart:
       id: 8
-      param: [ 0.0, 0.0, -0.002, 0.025] #5号新镖
+      param: [ 0.0, 0.0, 0.0028, 0.0025]  #333333
       #outpost:offset,tension//base:offset,tension
     ninth_dart:
       id: 9
-      param: [ 0.0, 0.0, 0.00, 0.00]
+      #param: [ 0.0, 0.0, 0.0080, 0.0038]
+      param: [ 0.0, 0.0, 0.0047, 0.0022]   #
       #outpost:offset,tension//base:offset,tension
     tenth_dart:
       id: 10
-      param: [ 0.0, 0.0, 0.005, 0.025] #5
+      #param: [ 0.0, 0.0, 0.01, 0.0021]
+      param: [ 0.0, 0.0, 0.0021, -0.0014]   #222222
       #outpost:offset,tension//base:offset,tension
 
   targets:
     outpost:
-      position: [ 0.01, 0.0]
+      position: [0.0180, 0.1510]
     base:
-      #position: [0.048, 0.28]  #轻镖
-      position: [ 0.035, 0.265]   #7.31 。。 6号镖
-      #position: [ 0.043, 0.275]  #蓝方
-      # 8:  0.0347  0.261
-      #position: [0.05, 0.34] # 2 6号镖  6不改 2：[0,0.002]  蓝方
-      #position: [ 0.026, 0.338427]
-      #position: [0.116223, 0.261356]  # 重复度
-      #position: [ 0.0410869, 0.43]
-#blue:  0.042  0.46
-#red:   0.043 0.46
+      position: [0.0180, 0.1510]
 
-# 减少往左   增大往右
-  rotate_positions:
-    - name: first_position
-      angle: [ 5.5, 5.5 ]
-      #  place  back
-      #  放置位置   放置前的位置
-    - name: second_position
-      angle: [ 4.253, 5.1 ]
-    - name: third_position
-      angle: [ 2.65, 3.43 ]
-    - name: fourth_position
-      angle: [ 1.0, 1.877 ]
+#      position: [ 0.027, 0.1560]    aim red-base
+#      position: [ 0.027, 0.1530]    aim blue-base
 
-  clamp_positions:
-    clamp_left_position: -0.6
-    clamp_mid_position: -0.6
-    clamp_right_position: -0.6
-    release_position: -0.2
-    clamp_finish_position: 0.02
-    check_place: false
+#
 
   yaw:
     topic: "/controllers/yaw_controller/command"
@@ -91,21 +87,80 @@ rm_manual:
   belt_left:
     topic: "/controllers/left_belt_controller/command"
     joint: "left_belt_joint"
-    belt_left_max: 22.4  #22.4
-    belt_left_min: 0.5
-    belt_left_place: 15.98
-    belt_left_placed: 6.37
-    downward_vel: 6.0
-    upward_vel: -10.0
+    belt_left_max: 38.25
+    belt_left_slow: 5.0
+    belt_left_min: 0.8
+    belt_left_downward_vel: 19.4    # 19.4
+    belt_left_upward_vel: -31.6     # -31.6
+    belt_left_upward_slow_vel: -10.6
   belt_right:
     topic: "/controllers/right_belt_controller/command"
     joint: "right_belt_joint"
-    belt_right_max: 22.4    #22.4
-    belt_right_min: 0.5
-    belt_right_place: 15.98
-    belt_right_placed: 6.31
-    downward_vel: 6.0
-    upward_vel: -10.0
+    belt_right_max: 38.25
+    belt_right_slow: 5.0
+    belt_right_min: 0.8
+    belt_right_downward_vel: 19.4   # 19.4
+    belt_right_upward_vel: -32.7    # -32.7
+    belt_right_upward_slow_vel: -10.3
+
+  trigger:
+    topic: "/controllers/trigger_controller/command"
+    joint: "trigger_joint"
+    trigger_home_command: 0.2
+    trigger_work_command: 1.72
+    trigger_confirm_home: 0.33
+    trigger_confirm_work: 1.60
+    trigger_status: [true, true, true, true]    #first, second, third, fourth
+    false_engage_time: 2.0
+
+    auto_push: false
+    auto_dart: false
+    auto_fire_restriction: false
+    auto_fire_num: 4
+
+    pulldown_timeout_detect: true
+    pulldown_timeout_s: 4.0
+    pullup_timeout_detect: true
+    pullup_timeout_s: 4.0
+
+    recycle_mode: true
+    recycle_timeout_detect: true
+    recycle_pulldown_timeout_detect: true
+
+    pc_target_detection: false
+    pc_once_fire_num: 4
+    referee_data_okay: true
+
+    enemy_outpost_ignore: false
+    enemy_outpost_danger_detect: false
+
+  range:
+    topic: "/controllers/range_controller/command"
+    joint: "range_joint"
+
+    random_fixed_compensation: false
+    get_reference_yaw_position_in_15s: true
+    random_fixed_reference_yaw_position: 0.0147
+    random_fixed_compensation_coefficient: -0.11
+    # -3.5  ----    3.5cm      -0.1212
+
+  load:
+    topic: "/controllers/load_dart_controller/command"
+    joint: "load_dart_joint"
+    use_load: true
+
+    load_init_position: 0.022
+    load_left_position: 0.1495
+    load_mid_position: 0.2305
+    load_right_position: 0.3260
+
+  clamp_positions:
+    clamp_left_release_position: 1.25
+    clamp_mid_release_position: 1.20
+    clamp_right_release_position: 1.25
+    clamp_default_position: 0.05
+    clamp_manual: true
+
   clamp_left:
     topic: "/controllers/left_clamp_controller/command"
     joint: "left_clamp_joint"
@@ -115,28 +170,33 @@ rm_manual:
   clamp_right:
     topic: "/controllers/right_clamp_controller/command"
     joint: "right_clamp_joint"
-  trigger:
-    topic: "/controllers/trigger_controller/command"
-    joint: "trigger_joint"
-    trigger_home_command: 1.2
-    trigger_work_command: 2.45
-    trigger_confirm_home: 1.4
-    trigger_confirm_work: 2.38
-  range:
-    topic: "/controllers/range_controller/command"
-    joint: "range_joint"
-  rotate:
-    topic: "/controllers/rotate_controller/command"
-    joint: "rotate_joint"
+
   camera:
+    use_auto_aim: true
+    keep_auto_aim_effect_on_timeout: true
+
+    random_fixed_target: true
+
+    custom_auto_aim: false
+    auto_aim_status: [true, true, true, true]    # first, second, third, fourth
+
     camera_x_offset: 0.0
     camera_y_offset: 0.0
+
+    camera_fast_p_x:   -0.0000015
+    camera_normal_p_x: -0.0000013
+    camera_slow_p_x:   -0.0000006
+    camera_retarget_slow_p_x: -0.0000009
+    camera_fast_x_threshold: 120
+    camera_normal_x_threshold: 28
+    camera_slow_x_threshold: 3
+    retarget_threshold: 1000
+
     long_camera_p_x: -0.00000005
     short_camera_p_x: -0.00000005
     long_camera_p_y: 0.0
-    long_camera_x_threshold: 15
-    retarget_threshold: 30
-    use_auto_aim: false
+    long_camera_x_threshold: 10
+
   controllers_list:
     state_controllers:
       - controllers/robot_state_controller
@@ -147,7 +207,7 @@ rm_manual:
       - controllers/yaw_controller
       - controllers/trigger_controller
       - controllers/range_controller
-      - controllers/rotate_controller
+      - controllers/load_dart_controller
       - controllers/left_clamp_controller
       - controllers/mid_clamp_controller
       - controllers/right_clamp_controller
@@ -157,6 +217,7 @@ rm_manual:
       - controllers/yaw_calibration_controller
       - controllers/trigger_calibration_controller
       - controllers/range_calibration_controller
+      - controllers/load_dart_calibration_controller
       - controllers/left_clamp_calibration_controller
       - controllers/mid_clamp_calibration_controller
       - controllers/right_clamp_calibration_controller
@@ -165,14 +226,17 @@ rm_manual:
         - controllers/trigger_calibration_controller
         - controllers/left_belt_calibration_controller
         - controllers/right_belt_calibration_controller
+        - controllers/load_dart_calibration_controller
       stop_controllers:
         - controllers/trigger_controller
         - controllers/left_belt_controller
         - controllers/right_belt_controller
+        - controllers/load_dart_controller
       services_name:
         - /controllers/trigger_calibration_controller/is_calibrated
         - /controllers/left_belt_calibration_controller/is_calibrated
         - /controllers/right_belt_calibration_controller/is_calibrated
+        - /controllers/load_dart_calibration_controller/is_calibrated
   gimbal_calibration:
     - start_controllers:
         - controllers/yaw_calibration_controller
