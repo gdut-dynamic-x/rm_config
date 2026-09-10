@@ -1,0 +1,22 @@
+can_motors:
+  - can_id: 1
+    can_bus: 0
+    name: "base_pitch_joint_motor"
+    type: "DM4340"
+    TMAX: 27.0
+    PMAX: 12.5
+    VMAX: 5.44
+  - can_id: 2
+    can_bus: 1
+    name: "base_yaw_joint_motor"
+    type: "DM6006"
+    TMAX: 10.0
+    PMAX: 3.14159
+    VMAX: 30.0
+  - can_id: 3
+    can_bus: 0
+    name: "pitch_joint_motor"
+    type: "DM4310"
+    TMAX: 18.0
+    PMAX: 12.56
+    VMAX: 45.0

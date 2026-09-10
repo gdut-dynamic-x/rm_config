@@ -6,6 +6,13 @@ controllers:
     type: robot_state_controller/RobotStateController
     publish_rate: 200
 
+  gimbal_calibration_controller:
+    type: rm_calibration_controllers/MechanicalCalibrationController
+    velocity:
+      joint: pitch_joint
+      search_velocity: 6.28
+      vel_threshold: 1e-2
+      pid: { p: 0.3, i: 0, d: 0.0, i_clamp_max: 0.0, i_clamp_min: 0.0, antiwindup: true }
   trigger_calibration_controller:
     type: rm_calibration_controllers/MechanicalCalibrationController
     actuator: [ trigger_joint_motor ]
@@ -14,76 +21,48 @@ controllers:
       search_velocity: 3.1415
       vel_threshold: 0.2
       pid: { p: 0.3, i: 0, d: 0.0, i_clamp_max: 0.0, i_clamp_min: 0.0, antiwindup: true }
-  cover_calibration_controller:
-    type: rm_calibration_controllers/MechanicalCalibrationController
-    actuator: [ cover_joint_motor ]
-    velocity:
-      joint: cover_joint
-      search_velocity: -2
-      vel_threshold: 0.05
-      pid: { p: 0.3, i: 0, d: 0.0, i_clamp_max: 0.0, i_clamp_min: 0.0, antiwindup: true }
 
   chassis_controller:
-    type: rm_chassis_controllers/SwerveController
+    type: rm_chassis_controllers/OmniController
     # ChassisBase
     publish_rate: 100
     publish_map_tf: false
     publish_odom_tf: true
-    slam_topic: "/Odometry"
-    localization_topic: "/hdl_global_localization/result"
     power:
-      effort_coeff: 3.0
-      vel_coeff: 0.006
-      power_offset: -8.2
-      pivot_max_power: 50
-      pivot_effort_coeff: 50.0
-      pivot_vel_coeff: 0.008
-      pivot_power_ratio: 0.8
+      effort_coeff: 3.2
+      vel_coeff: 0.2
+      power_offset: 5.0
+      use_rls: true
+      use_K_angle: true
+    raw_yaw_feedforward_k: -0.015
     twist_angular: 0.5233
     max_odom_vel: 10.0
     timeout: 0.1
-    pid_follow: { p: 6.5, i: 0, d: 0.0, i_max: 0.0, i_min: 0.0, antiwindup: true, publish_state: true }
+    pid_follow: { p: 5.5, i: 0, d: 0.1, i_max: 0.0, i_min: 0.0, antiwindup: true, publish_state: true }
     twist_covariance_diagonal: [ 0.001, 0.001, 0.001, 0.001, 0.001, 0.001 ]
 
-    # SwerveController
-    modules:
+    # OmniController
+    wheels:
       left_front:
-        position: [ 0.200, 0.200 ]
-        pivot:
-          joint: left_front_pivot_joint
-          <<: &pivot_setting
-            buffer_threshold: 10.0
-            offset: 0.
-            pid: { p: 1.2, i: 0, d: 0.01, i_clamp_max: 0.0, i_clamp_min: -0.0, antiwindup: true, publish_state: false }
-        wheel:
-          joint: left_front_wheel_joint
-          <<: &wheel_setting
-            radius: 0.061
-            pid: { p: 0.35, i: 0, d: 0.0, i_max: 0.0, i_min: 0.0, antiwindup: true, publish_state: false }
+        pose: [ 0.186, 0.186, 2.356 ]
+        joint: left_front_wheel_joint
+        <<: &wheel_setting
+          roller_angle: 0.
+          radius: 0.07625
+          pid: { p: 0.25, i: 0, d: 0.0, i_max: 0.0, i_min: 0.0, antiwindup: true, publish_state: true }
       right_front:
-        position: [ 0.200, -0.200 ]
-        pivot:
-          joint: right_front_pivot_joint
-          <<: *pivot_setting
-        wheel:
-          joint: right_front_wheel_joint
-          <<: *wheel_setting
+        pose: [ 0.186, -0.186, 0.785 ]
+        joint: right_front_wheel_joint
+        <<: *wheel_setting
       left_back:
-        position: [ -0.200, 0.200 ]
-        pivot:
-          joint: left_back_pivot_joint
-          <<: *pivot_setting
-        wheel:
-          joint: left_back_wheel_joint
-          <<: *wheel_setting
+        pose: [ -0.186, 0.186, -2.356 ]
+        joint: left_back_wheel_joint
+        <<: *wheel_setting
       right_back:
-        position: [ -0.200, -0.200 ]
-        pivot:
-          joint: right_back_pivot_joint
-          <<: *pivot_setting
-        wheel:
-          joint: right_back_wheel_joint
-          <<: *wheel_setting
+        pose: [ -0.186, -0.186, -0.785 ]
+        joint: right_back_wheel_joint
+        <<: *wheel_setting
+
   orientation_controller:
     type: rm_orientation_controller/Controller
     publish_rate: 100
@@ -92,58 +71,28 @@ controllers:
     frame_target: "base_link"
 
   gimbal_controller:
-    type: rm_gimbal_controllers/Controller
+    type: rm_gimbal_controllers/DualYawController
+
+    moment_of_inertia: 0.008
+    track_solver_type: "external_mpc_aim"       # bullet_solver | external_mpc_aim
+    external_mpc_aim_topic: "/sp_vision/mpc_gimbal_aim"
+    external_aim_timeout: 0.1
+
     controllers:
+      base_yaw:
+        joint: "base_yaw_joint"
+        pid: { p: 0.7, i: 0.0, d: 0.0, i_clamp_max: 2.0, i_clamp_min: -2.0, antiwindup: true, publish_state: true }
+        pid_pos: { p: 20.0, i: 0, d: 1.0, i_max: 0.0, i_min: 0.0, antiwindup: true, publish_state: true }
       yaw:
         joint: "yaw_joint"
-        pid:
-          {
-            p: 0.7,
-            i: 15.0,
-            d: 0.0,
-            i_clamp_max: 0.2,
-            i_clamp_min: -0.2,
-            antiwindup: true,
-            publish_state: true,
-          }
-        pid_pos:
-          {
-            p: 20.0,
-            i: 0,
-            d: 0.01,
-            i_max: 0.0,
-            i_min: 0.0,
-            antiwindup: true,
-            publish_state: true,
-          }
-        chassis_comp_a: 1.68e-2
-        chassis_comp_b: 1.777e-1
-        chassis_comp_c: -1.2548
-        chassis_comp_d: 4.93e-2
+        pid: { p: 0.6, i: 15., d: 0.0, i_clamp_max: 0.1, i_clamp_min: -0.1, antiwindup: true, publish_state: true }
+        pid_pos: { p: 25., i: 0, d: 0.0, i_max: 0.0, i_min: 0.0, antiwindup: true, publish_state: true }
         k_v: 1.0
         accel: 28.0
       pitch:
         joint: "pitch_joint"
-        pid:
-          {
-            p: 0.5,
-            i: 12.0,
-            d: 0.0,
-            i_clamp_max: 0.22,
-            i_clamp_min: -0.22,
-            antiwindup: true,
-            publish_state: true,
-          }
-        pid_pos:
-          {
-            p: 20.0,
-            i: 0,
-            d: 0.0,
-            i_max: 0.0,
-            i_min: 0.0,
-            antiwindup: true,
-            publish_state: true,
-          }
+        pid: { p: 1.0, i: 15.0, d: 0.0, i_clamp_max: 0.25, i_clamp_min: -0.25, antiwindup: true, publish_state: true }
+        pid_pos: { p: 15.0, i: 0.0, d: 0.0, i_max: 0.0, i_min: 0.0, antiwindup: true, publish_state: true }
         k_v: 1.0
         accel: 40.0
     chassis_vel:
@@ -151,36 +100,38 @@ controllers:
       debug: true
     imu_name: "gimbal_imu"
     feedforward:
-      gravity: 8.2625
+      gravity: 13.0
       enable_gravity_compensation: false
-      mass_origin: [0.006, -0.000093, 0.026159]
+      mass_origin: [0.155777, -0.008377, 0.00007]
     bullet_solver:
       resistance_coff_qd_10: 0.001
       resistance_coff_qd_15: 0.001
       resistance_coff_qd_16: 0.001
       resistance_coff_qd_18: 0.001
       resistance_coff_qd_30: 0.001
+      resistance_coff_qd_800: 0.001
       g: 9.81
-      delay: 0.048
+      delay: 0.02
       dt: 0.001
       timeout: 0.001
       publish_rate: 50
-      max_switch_angle: 50
-      min_switch_angle: 2
-      ban_shoot_duration: 0.032
-      gimbal_switch_duration: 0.076
-      max_track_target_vel: 10.8
+      max_track_target_vel: 10.0
+      switch_hysteresis: 0.7
       max_chassis_angular_vel: 12.0
-      track_rotate_target_delay: 0.01
-      track_move_target_delay: 0.0
-      wait_next_armor_delay: 0.02
-      wait_diagonal_armor_delay: 0.02
-      traject_ahead_: 0.95
-      clean_shoot_num_: 1
+      track_rotate_target_delay: -0.02
+      track_move_target_delay: 0.03
+      center_delay: 0.104
+      traject_k_vel_: 0.55
       switch_angle_offset: 0.7
-      switch_duration_scale: 0.023215
-      switch_duration_rate: -0.015866
-      switch_duration_offset: 0.069815
+      yaw_max_acc: 100.0
+      traject_start_fit_: 40
+
+
+  base_pitch_controller:
+    type: effort_controllers/JointPositionController
+    publish_rate: 100
+    joint: "base_pitch_joint"
+    pid: { p: 55.0, i: 0.0, d: 10.0, i_clamp_max: 0.0, i_clamp_min: 0.0, antiwindup: true, publish_state: true }
 
   shooter_controller:
     type: rm_shooter_controllers/Controller
@@ -189,52 +140,25 @@ controllers:
       friction_left:
         left_friction_wheel:
           joint: "left_friction_wheel_joint"
-          pid:
-            {
-              p: 0.0007,
-              i: 0.005,
-              d: 0.0,
-              i_clamp_max: 0.01,
-              i_clamp_min: -0.01,
-              antiwindup: true,
-              publish_state: true,
-            }
+          pid: { p: 0.0007, i: 0.005, d: 0.0, i_clamp_max: 0.01, i_clamp_min: -0.01, antiwindup: true, publish_state: true }
       friction_right:
         right_friction_wheel:
           joint: "right_friction_wheel_joint"
-          pid:
-            {
-              p: 0.0007,
-              i: 0.005,
-              d: 0.0,
-              i_clamp_max: 0.01,
-              i_clamp_min: -0.01,
-              antiwindup: true,
-              publish_state: true,
-            }
+          pid: { p: 0.0007, i: 0.005, d: 0.0, i_clamp_max: 0.01, i_clamp_min: -0.01, antiwindup: true, publish_state: true }
           wheel_speed_direction: -1.0
     trigger:
       joint: "trigger_joint"
-      pid:
-        {
-          p: 35.0,
-          i: 0.0,
-          d: 1.0,
-          i_clamp_max: 0.0,
-          i_clamp_min: 0.0,
-          antiwindup: true,
-          publish_state: true,
-        }
-    push_per_rotation: 9
+      pid: { p: 8, i: 0.0, d: 0.25, i_clamp_max: 0.0, i_clamp_min: 0.0, antiwindup: true, publish_state: true }
+    push_per_rotation: 8
     push_qd_threshold: 0.90
-    block_effort: 6.0
+    block_effort: 1.2
     block_speed: 0.1
-    block_duration: 0.05
-    block_overtime: 0.5
-    anti_block_angle: 0.46
+    block_duration: 0.1
+    block_overtime: 0.25
+    anti_block_angle: 0.26
     anti_block_threshold: 0.1
-    forward_push_threshold: 0.05
-    exit_push_threshold: 0.07
-    wheel_speed_drop_threshold: 4.8
-    wheel_speed_raise_threshold: 1.7
-    freq_threshold: 15.0
+    forward_push_threshold: 0.28
+    exit_push_threshold: 0.33
+    wheel_speed_drop_threshold: 3.8
+    wheel_speed_raise_threshold: 0.7
+    freq_threshold: 20.0

@@ -2,13 +2,13 @@ ethercat_master:
   time_step: 0.001
 
 ethercat_devices:
-  - type: Rm
-    name: Chassis
-    configuration_file: device_configurations/standard6_chassis.yaml
+  - type: Mit
+    name: MitSlave1
+    configuration_file: device_configurations/standard6_mit.yaml
     ethercat_bus: enp114s0
     ethercat_address: 1
   - type: Rm
-    name: Gimbal
-    configuration_file: device_configurations/standard6_gimbal.yaml
+    name: RmSlave1
+    configuration_file: device_configurations/standard6_rm.yaml
     ethercat_bus: enp114s0
     ethercat_address: 2
